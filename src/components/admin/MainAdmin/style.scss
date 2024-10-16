@@ -1,0 +1,38 @@
+.main-admin-wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+
+  .menu-wrapper {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .content-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .header {
+      background-color: #f0f2f5;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      background-color: #fff;
+
+      .layout-content {
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+      }
+    }
+  }
+}

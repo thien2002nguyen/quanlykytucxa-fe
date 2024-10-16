@@ -1,0 +1,20 @@
+@import "../../../styles/variables.scss";
+
+.card-dashboard {
+  h2 {
+    color: $color-white !important;
+    text-align: center;
+  }
+
+  .title {
+    color: $color-white !important;
+  }
+}
+
+.card-views {
+  background-color: $color-blue !important;
+}
+
+.card-total-students {
+  background-color: $color-orange !important;
+}

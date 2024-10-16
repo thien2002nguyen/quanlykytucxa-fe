@@ -1,0 +1,27 @@
+.head-admin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+
+  &--collapsed {
+    justify-content: center;
+    .toggle-button {
+      margin-left: 0 !important;
+    }
+  }
+
+  .avatar {
+    margin-left: 12px;
+  }
+
+  .admin-name {
+    margin-left: 8px;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+
+  .toggle-button {
+    margin-left: auto;
+  }
+}

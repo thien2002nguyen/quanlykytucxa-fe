@@ -1,0 +1,14 @@
+.menu-admin {
+  width: 300px;
+  height: 100vh;
+  transition: width 0.3s ease;
+
+  &--collapsed {
+    width: 80px;
+  }
+
+  .menu {
+    height: 100%;
+    overflow-y: auto;
+  }
+}
