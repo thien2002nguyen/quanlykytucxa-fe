@@ -1,5 +1,5 @@
 import { instanceAxios } from "@/config/axios";
-import { LoginResponse, ParamLogin } from "./admin.type";
+import { LoginResponse, ParamLogin } from "./auth-admin.type";
 
 const admin = {
   login({ userName, password }: ParamLogin): Promise<LoginResponse> {

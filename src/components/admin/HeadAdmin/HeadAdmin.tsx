@@ -17,7 +17,7 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
   collapsed,
   toggleCollapsed,
 }) => {
-  const { admin } = useAppSelector((state) => state.adminSlice);
+  const { admin } = useAppSelector((state) => state.authAdminSlice);
 
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
 
@@ -37,7 +37,7 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
             size={40}
             className="avatar"
           />
-          <span className="admin-name">{admin.fullName || "Admin"}</span>
+          <span className="admin-name">ADMIN</span>
         </>
       )}
       <Button

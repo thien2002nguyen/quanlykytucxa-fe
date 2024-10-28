@@ -1,8 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import { jwtDecode } from "jwt-decode";
 
-// Các URL không được tự động làm mới token
-const routerNotRefreshed = ["/admin/dang-nhap"];
+// Các URL không cần làm mới token tự động
+const routerNotRefreshed = ["/admin/dang-nhap", "/dang-nhap"];
 
 // Thiết lập baseURL từ biến môi trường
 export const baseURL = process.env.NEXT_PUBLIC_API_URL;
@@ -15,16 +14,38 @@ export const instanceAxios: AxiosInstance = axios.create({
   },
 });
 
-// Interceptor cho yêu cầu
-instanceAxios.interceptors.request.use((config) => {
-  const userInfo = localStorage.getItem("persist:auth-quanlykytucxa") ?? "";
+// Hàm xử lý khi token không hợp lệ hoặc tài khoản bị xóa
+function handleTokenError(isAdmin: boolean) {
+  const currentURL = new URL(window.location.href);
+  const storageKey = isAdmin ? "auth-quanlykytucxa" : "auth-sinhvienkytucxa";
 
-  // Biến lưu trữ thông tin người dùng
+  // Xóa token và thông tin người dùng khỏi localStorage
+  localStorage.setItem(
+    `persist:${storageKey}`,
+    JSON.stringify({
+      token: "", // Xóa token
+      [isAdmin ? "admin" : "student"]: "", // Xóa admin hoặc student
+    })
+  );
+
+  // Điều hướng đến trang đăng nhập phù hợp
+  const loginPath = isAdmin ? "/admin/dang-nhap" : "/";
+  window.location.href = `${currentURL.origin}${loginPath}`;
+}
+
+// Interceptor xử lý trước khi gửi yêu cầu
+instanceAxios.interceptors.request.use((config) => {
+  const currentURL = new URL(window.location.href);
+  const isAdmin = currentURL.pathname.includes("admin");
+  const storageKey = isAdmin
+    ? "persist:auth-quanlykytucxa"
+    : "persist:auth-sinhvienkytucxa";
+
+  const userInfo = localStorage.getItem(storageKey) ?? "";
   let persist;
   let tokenInfo;
 
   if (userInfo) {
-    // Nếu userInfo tồn tại, chuyển đổi sang object
     persist = typeof userInfo === "string" ? JSON.parse(userInfo) : userInfo;
     tokenInfo =
       typeof persist.token === "object"
@@ -35,7 +56,7 @@ instanceAxios.interceptors.request.use((config) => {
     tokenInfo = {};
   }
 
-  // Nếu có accessToken, thêm vào headers
+  // Nếu có accessToken, thêm nó vào headers
   if (tokenInfo.accessToken) {
     const modifiedConfig = { ...config };
     modifiedConfig.headers.Authorization = `Bearer ${tokenInfo.accessToken}`;
@@ -45,29 +66,10 @@ instanceAxios.interceptors.request.use((config) => {
   return config;
 });
 
-// Hàm xử lý khi token không hợp lệ
-function handleTokenError() {
-  const currentURL = new URL(window.location.href);
-  // Xóa thông tin người dùng trong localStorage
-  localStorage.setItem(
-    "persist:auth-quanlykytucxa",
-    JSON.stringify({
-      token: "",
-      user: "",
-    })
-  );
-  // Điều hướng đến trang đăng nhập hoặc trang chính
-  if (currentURL.pathname.includes("admin")) {
-    window.location.href = `${currentURL.origin}/admin/dang-nhap`;
-  } else {
-    window.location.href = `${currentURL.origin}`;
-  }
-}
-
-// Interceptor cho phản hồi
+// Interceptor xử lý phản hồi từ server
 instanceAxios.interceptors.response.use(
   (response) => {
-    // Nếu phản hồi hợp lệ, trả về dữ liệu
+    // Trả về dữ liệu nếu phản hồi hợp lệ
     if (response && response.data) {
       return response.data;
     }
@@ -75,13 +77,18 @@ instanceAxios.interceptors.response.use(
   },
   (error: AxiosError) => {
     const originalRequest = error.config as AxiosRequestConfig;
+    const currentURL = new URL(window.location.href);
+    const isAdmin = currentURL.pathname.includes("admin");
+    const storageKey = isAdmin
+      ? "persist:auth-quanlykytucxa"
+      : "persist:auth-sinhvienkytucxa";
 
-    const persistString = localStorage.getItem("persist:auth-quanlykytucxa");
+    const persistString = localStorage.getItem(storageKey);
     const persist = persistString ? JSON.parse(persistString) : null;
 
-    // Kiểm tra xem có tồn tại token trong localStorage không
+    // Nếu không có token trong localStorage, điều hướng đến trang đăng nhập
     if (!persist || !persist.token) {
-      handleTokenError();
+      handleTokenError(isAdmin);
       return Promise.reject(error);
     }
 
@@ -90,54 +97,61 @@ instanceAxios.interceptors.response.use(
         ? persist.token
         : JSON.parse(persist.token);
 
-    // Khi API trả về lỗi 401 (Unauthorized)
+    // Khi gặp lỗi 401 (Unauthorized), kiểm tra token và refresh token nếu cần
     if (
       error.response?.status === 401 &&
       !routerNotRefreshed.includes(originalRequest.url as string)
     ) {
-      // Kiểm tra sự tồn tại của refreshToken và accessToken
+      // Nếu không có refreshToken hoặc accessToken, điều hướng đến đăng nhập
       if (!tokenInfo?.refreshToken || !tokenInfo?.accessToken) {
-        handleTokenError();
+        handleTokenError(isAdmin);
       }
 
-      // Giải mã refreshToken để kiểm tra thời gian hết hạn
-      const decodedRefreshToken =
-        tokenInfo?.refreshToken && jwtDecode(tokenInfo?.refreshToken || "");
-      // Nếu refreshToken đã hết hạn, điều hướng đến trang đăng nhập
-      if (decodedRefreshToken.exp! * 1000 < new Date().getTime()) {
-        handleTokenError();
+      // RefreshToken để kiểm tra thời gian hết hạn
+      const decodedRefreshToken = tokenInfo?.refreshExpiresIn;
+
+      // Nếu refreshToken đã hết hạn, điều hướng đến đăng nhập
+      if (decodedRefreshToken < new Date().getTime()) {
+        handleTokenError(isAdmin);
       }
 
-      const headersWithRefreshToken = {
+      const refreshTokenData = {
         refreshToken: `${tokenInfo.refreshToken}`,
       };
 
       // Thực hiện yêu cầu làm mới token
       if (!routerNotRefreshed.includes(originalRequest.url as string)) {
+        const refreshTokenURL = isAdmin
+          ? `${baseURL}/admin/refresh-token`
+          : `${baseURL}/students/refresh-token`;
+
         return axios
-          .post(`${baseURL}/admin/refresh-token`, null, {
-            headers: headersWithRefreshToken,
+          .post(refreshTokenURL, refreshTokenData, {
+            // Gửi refreshToken trong body
+            headers: {
+              "Content-Type": "application/json", // Đảm bảo loại nội dung được chỉ định
+            },
           })
           .then((response) => {
             // Cập nhật token mới vào localStorage
             localStorage.setItem(
-              "persist:auth-quanlykytucxa",
+              storageKey,
               JSON.stringify({
-                token: response.data.data,
-                user: persist.user,
+                token: {
+                  ...tokenInfo,
+                  accessToken: response.data.accessToken,
+                },
+                [isAdmin ? "admin" : "student"]:
+                  persist[isAdmin ? "admin" : "student"],
               })
             );
 
-            // Tiến hành thực hiện lại yêu cầu gốc với token mới
+            // Thực hiện lại yêu cầu gốc với token mới
             return instanceAxios(originalRequest);
           })
           .catch((err) => {
-            // Xử lý khi người dùng đã bị xóa tài khoản
-            if (err?.response?.data?.messageCode === "USER_NOT_FOUND") {
-              handleTokenError();
-            } else {
-              handleTokenError();
-            }
+            // Nếu refreshToken không hợp lệ hoặc người dùng đã bị xóa tài khoản
+            handleTokenError(isAdmin);
             return Promise.reject(err);
           });
       }

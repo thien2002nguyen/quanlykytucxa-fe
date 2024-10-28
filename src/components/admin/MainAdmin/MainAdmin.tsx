@@ -6,11 +6,12 @@ import { Button, ConfigProvider, Flex, Image } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { adminRoutes } from "../MenuAdmin/routes";
-import { logout } from "@/store/admin/admin.reducer";
+import { logout } from "@/store/auth-admin/auth-admin.reducer";
 import { LogoutOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import MenuAdmin from "../MenuAdmin/MenuAdmin";
 import "./style.scss";
+import { toast } from "react-toastify";
 
 const MainAdmin = ({
   children,
@@ -22,9 +23,10 @@ const MainAdmin = ({
   const pathname = usePathname();
   const isLoginPage = pathname.includes("admin/dang-nhap");
 
-  const { admin, token } = useAppSelector((state) => state.adminSlice);
+  const { admin, token } = useAppSelector((state) => state.authAdminSlice);
 
   const [pageLabel, setPageLabel] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!token.accessToken && !admin._id) {
@@ -32,6 +34,17 @@ const MainAdmin = ({
       return;
     }
   }, [token, admin]);
+
+  // Cập nhật label dựa trên pathname
+  useEffect(() => {
+    const label = findLabelByPath(adminRoutes, pathname) || "Thống kê";
+    setPageLabel(label);
+  }, [pathname]);
+
+  // loading xong thì trả về dữ liệu
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   // Hàm để tìm label tương ứng với key từ pathname
   const findLabelByPath = (routes: any[], path: string): string | undefined => {
@@ -51,11 +64,21 @@ const MainAdmin = ({
     }
   };
 
-  // Cập nhật label dựa trên pathname
-  useEffect(() => {
-    const label = findLabelByPath(adminRoutes, pathname) || "Thống kê";
-    setPageLabel(label);
-  }, [pathname]);
+  const handleLogout = () => {
+    // Hiển thị thông báo
+    toast.success("🦄 Đăng xuất thành công.");
+
+    // Delay 2 giây rồi logout
+    setTimeout(() => {
+      dispatch(logout());
+      router.push("/admin/dang-nhap");
+    }, 2000);
+  };
+
+  // Nếu đang loading thì không render gì
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <ConfigProvider theme={themeAntdAdmin}>
@@ -88,10 +111,7 @@ const MainAdmin = ({
                     type="text"
                     size="large"
                     icon={<LogoutOutlined />}
-                    onClick={() => {
-                      dispatch(logout());
-                      router.push("/admin/dang-nhap");
-                    }}
+                    onClick={handleLogout}
                   >
                     Đăng xuất
                   </Button>

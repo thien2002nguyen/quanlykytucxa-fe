@@ -1,11 +1,11 @@
 "use client";
 
 import { useDispatch } from "react-redux";
-import { loginAction } from "@/store/admin/admin.action";
+import { loginAction } from "@/store/auth-admin/auth-admin.action";
 import { Button, Flex, Form, FormProps, Image, Input } from "antd";
 import React, { useEffect, useRef } from "react";
-import { ParamLogin } from "@/store/admin/admin.type";
-import { AppDispatch } from "@/store";
+import { ParamLogin } from "@/store/auth-admin/auth-admin.type";
+import { AppDispatch, useAppSelector } from "@/store";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
@@ -13,21 +13,7 @@ const LoginAdmin = () => {
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-
-  const onFinish: FormProps<ParamLogin>["onFinish"] = async (
-    values: ParamLogin
-  ) => {
-    const response: any = await dispatch(loginAction(values));
-    if (response?.payload?.error) {
-      toast.error("🦄 Đăng nhập thất bại");
-    } else {
-      toast.success("🦄 Đăng nhập thành công", { autoClose: 2000 });
-
-      timeoutIdRef.current = setTimeout(() => {
-        router.push("/admin");
-      }, 2000);
-    }
-  };
+  const { loading, error } = useAppSelector((state) => state.authAdminSlice);
 
   useEffect(() => {
     return () => {
@@ -36,6 +22,21 @@ const LoginAdmin = () => {
       }
     };
   }, []);
+
+  const onFinish: FormProps<ParamLogin>["onFinish"] = async (
+    values: ParamLogin
+  ) => {
+    await dispatch(loginAction(values));
+    if (error) {
+      toast.error(`🦄 ${error}`);
+    } else {
+      toast.success("🦄 Đăng nhập thành công.", { autoClose: 2000 });
+
+      timeoutIdRef.current = setTimeout(() => {
+        router.push("/admin");
+      }, 2000);
+    }
+  };
 
   return (
     <Flex
@@ -82,7 +83,12 @@ const LoginAdmin = () => {
 
         <Flex justify="center" style={{ marginTop: 32 }}>
           <Form.Item>
-            <Button type="primary" htmlType="submit" size="large">
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              loading={loading}
+            >
               Đăng nhập
             </Button>
           </Form.Item>

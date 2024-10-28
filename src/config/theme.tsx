@@ -62,6 +62,11 @@ export const themeAntdAdmin: ThemeConfig = {
     Spin: {
       colorPrimary: "#cd0101",
     },
+    Pagination: {
+      colorPrimary: "#cd0101",
+      colorPrimaryHover: "#cd0101",
+      colorPrimaryActive: "#cd0101",
+    },
   },
 
   hashed: false,

@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Flex, Typography } from "antd";
+import { v4 as uuidv4 } from "uuid";
 
 interface HeadAdminContentProps {
   title?: string;
@@ -17,9 +18,9 @@ const HeadAdminContent: React.FC<HeadAdminContentProps> = ({
   onBack,
 }) => {
   return (
-    <Flex vertical gap={12} style={{ marginBottom: 16 }}>
-      {(title || subtitle || onBack) && (
-        <Flex justify="space-between">
+    (title || subtitle || onBack || extra) && (
+      <Flex justify="space-between" style={{ marginBottom: 16 }}>
+        {title ? (
           <Flex vertical>
             {title && (
               <Title level={4} style={{ marginBottom: 0 }}>
@@ -28,18 +29,20 @@ const HeadAdminContent: React.FC<HeadAdminContentProps> = ({
             )}
             {subtitle && <Text>{subtitle}</Text>}
           </Flex>
-          {onBack && (
-            <Button type="primary" onClick={onBack}>
-              Quay lại
-            </Button>
-          )}
-        </Flex>
-      )}
-      <Flex justify="flex-end" gap={8}>
-        {extra &&
-          extra.map((button, index) => <span key={index}>{button}</span>)}
+        ) : (
+          <div />
+        )}
+        {onBack ? (
+          <Button type="primary" onClick={onBack}>
+            Quay lại
+          </Button>
+        ) : (
+          <Flex align="center" gap={8}>
+            {extra && extra.map((item) => <div key={uuidv4()}>{item}</div>)}
+          </Flex>
+        )}
       </Flex>
-    </Flex>
+    )
   );
 };
 

@@ -1,6 +1,6 @@
-import admin from "@/store/admin/admin.api";
+import admin from "@/store/auth-admin/auth-admin.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ParamLogin } from "./admin.type";
+import { ParamLogin } from "./auth-admin.type";
 
 const loginAction = createAsyncThunk(
   "admin/loginAction", // Tên action

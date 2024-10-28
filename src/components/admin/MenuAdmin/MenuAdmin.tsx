@@ -5,31 +5,30 @@ import Link from "next/link";
 import { adminRoutes, MenuItem } from "./routes";
 import "./style.scss";
 
-const renderMenuItems = (items: MenuItem[], parentKey?: string) => {
-  return items.map((item: MenuItem) => {
+const flattenMenuItems = (items: MenuItem[], parentKey?: string): any[] => {
+  return items.flatMap((item) => {
     const currentPath = parentKey ? `${parentKey}/${item.key}` : item.key;
-    const fullPath = `admin/${currentPath}`;
 
     if (item.items) {
-      return (
-        <Menu.SubMenu key={item.key} icon={item.icon} title={item.label}>
-          {renderMenuItems(item.items, currentPath)}
-        </Menu.SubMenu>
-      );
+      return {
+        key: currentPath,
+        icon: item.icon,
+        label: item.label,
+        children: flattenMenuItems(item.items, currentPath),
+      };
     }
 
-    return (
-      <Menu.Item key={item.key} icon={item.icon}>
-        <Link href={`/${fullPath}`} scroll={false}>
-          {item.label}
-        </Link>
-      </Menu.Item>
-    );
+    return {
+      key: currentPath,
+      icon: item.icon,
+      label: item.label,
+    };
   });
 };
 
 const MenuAdmin: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const flatMenuItems = flattenMenuItems(adminRoutes);
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
@@ -38,9 +37,33 @@ const MenuAdmin: React.FC = () => {
   return (
     <div className={`menu-admin ${collapsed ? "menu-admin--collapsed" : ""}`}>
       <HeadAdmin collapsed={collapsed} toggleCollapsed={toggleCollapsed} />
-      <Menu mode="inline" inlineCollapsed={collapsed} className="menu">
-        {renderMenuItems(adminRoutes)}
-      </Menu>
+      <Menu
+        mode="inline"
+        className="menu"
+        inlineCollapsed={collapsed}
+        items={flatMenuItems.map((item) => ({
+          key: item.key,
+          icon: item.icon,
+          label: item.children ? (
+            <span>{item.label}</span>
+          ) : (
+            <Link href={`/admin/${item.key}`} scroll={false}>
+              {item.label}
+            </Link>
+          ),
+          children: item.children
+            ? item.children.map((subItem: MenuItem) => ({
+                key: subItem.key,
+                icon: subItem.icon,
+                label: (
+                  <Link href={`/admin/${subItem.key}`} scroll={false}>
+                    {subItem.label}
+                  </Link>
+                ),
+              }))
+            : null,
+        }))}
+      />
     </div>
   );
 };

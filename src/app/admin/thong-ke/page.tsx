@@ -1,14 +1,26 @@
 "use client";
 
 import { Card, Flex } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Title from "antd/es/typography/Title";
 import "./style.scss";
 import CardLineChart from "@/components/admin/CardLineChart/CardLineChart";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { getVisitsByYearAction } from "@/store/monthly-visits/monthly-visits.action";
 
 const Dashboard = () => {
-  const pageViews = 1200;
-  const studentCount = 250;
+  const studentCount = 2500;
+
+  const dispatch = useAppDispatch();
+  const { dataMonthlyVisit } = useAppSelector(
+    (state) => state.monthlyVisitsSlice
+  );
+
+  const year = new Date().getFullYear();
+
+  useEffect(() => {
+    dispatch(getVisitsByYearAction(year));
+  }, [dispatch]);
 
   const labels = [
     "Tháng 1",
@@ -24,10 +36,8 @@ const Dashboard = () => {
     "Tháng 11",
     "Tháng 12",
   ];
-  const label = `Lượng truy cập - ${new Date().getFullYear()}`;
-  const data = [
-    100, 2000, 1800, 2200, 2500, 3000, 2800, 3200, 3500, 3700, 4000, 8200,
-  ];
+  const label = `Lượng truy cập - ${year}`;
+  const data = dataMonthlyVisit?.data?.map((mv) => mv.visitCount);
 
   return (
     <Flex vertical gap={3}>
@@ -41,7 +51,7 @@ const Dashboard = () => {
           bordered={false}
           className="card-dashboard card-views"
         >
-          <h2>{pageViews}</h2>
+          <h2>{dataMonthlyVisit.totalVisits}</h2>
         </Card>
         <Card
           title={

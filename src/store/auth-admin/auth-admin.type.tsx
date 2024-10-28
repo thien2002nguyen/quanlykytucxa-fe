@@ -33,7 +33,7 @@ export enum RoleAdmin {
 }
 
 // Trạng thái admin
-export interface AdminState {
+export interface AuthAdminState {
   admin: {
     _id: string;
     fullName: string;
@@ -47,7 +47,6 @@ export interface AdminState {
   token: {
     accessToken: string;
     refreshToken: string;
-    expiresIn: number;
     refreshExpiresIn: number;
   };
   loading: boolean;

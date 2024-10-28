@@ -2,8 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import adminSlice from "./admin/admin.reducer";
-import { AdminState } from "./admin/admin.type";
+import authAdminSlice from "./auth-admin/auth-admin.reducer";
+import { AuthAdminState } from "./auth-admin/auth-admin.type";
+import monthlyVisitsSlice from "./monthly-visits/monthly-visits.reducer";
+import bannersSlice from "./banners/banners.reducer";
 
 // Tạo storage cho redux-persist
 const createNoopStorage = () => ({
@@ -19,7 +21,7 @@ const storage =
     : createNoopStorage();
 
 // Cấu hình cho redux-persist
-const authPersistConfig = {
+const authAdminPersistConfig = {
   key: "auth-quanlykytucxa",
   storage,
   whitelist: ["admin", "token"], // Chỉ lưu trữ admin và token
@@ -28,7 +30,12 @@ const authPersistConfig = {
 // Tạo store với redux-persist
 export const store = configureStore({
   reducer: {
-    adminSlice: persistReducer<AdminState>(authPersistConfig, adminSlice),
+    authAdminSlice: persistReducer<AuthAdminState>(
+      authAdminPersistConfig,
+      authAdminSlice
+    ),
+    monthlyVisitsSlice,
+    bannersSlice,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

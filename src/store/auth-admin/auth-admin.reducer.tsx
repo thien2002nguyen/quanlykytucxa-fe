@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { loginAction } from "./admin.action";
-import { AdminState } from "./admin.type";
-import { LoginResponse } from "./admin.type"; // Import kiểu LoginResponse
+import { loginAction } from "./auth-admin.action";
+import { AuthAdminState } from "./auth-admin.type";
+import { LoginResponse } from "./auth-admin.type";
 
-const initialState: AdminState = {
+const initialState: AuthAdminState = {
   admin: {
     _id: "",
     fullName: "",
@@ -15,7 +15,6 @@ const initialState: AdminState = {
     role: null,
   },
   token: {
-    expiresIn: 0,
     refreshExpiresIn: 0,
     accessToken: "",
     refreshToken: "",
@@ -49,8 +48,6 @@ const adminSlice = createSlice({
       loginAction.fulfilled,
       (state, action: PayloadAction<LoginResponse>) => {
         // Log payload ra console
-        console.log("Payload from loginAction:", action.payload);
-
         const { data, token } = action.payload;
 
         // Cập nhật state với thông tin từ payload
@@ -65,8 +62,7 @@ const adminSlice = createSlice({
           role: data.role,
         };
         state.token = {
-          expiresIn: token.expiresIn,
-          refreshExpiresIn: token.refreshExpiresIn,
+          refreshExpiresIn: Date.now() + token.refreshExpiresIn * 1000,
           accessToken: token.accessToken,
           refreshToken: token.refreshToken,
         };
