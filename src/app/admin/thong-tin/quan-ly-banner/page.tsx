@@ -1,29 +1,33 @@
 "use client";
 
-import HeadAdminContent from "@/components/admin/HeadAdminContent/HeadAdminContent";
-import { useAppDispatch, useAppSelector } from "@/store";
+import React, { useEffect, useState } from "react";
 import {
-  getBannersAction,
-  postBannersAction,
-} from "@/store/banners/banners.action";
-import {
-  Button,
-  Flex,
   Image,
   message,
+  Button,
   Modal,
-  Pagination,
   Space,
   Switch,
   Table,
+  Flex,
   TableProps,
-  UploadFile,
 } from "antd";
-import React, { useEffect, useState } from "react";
+import { UploadFile } from "antd/es/upload/interface";
 import dayjs from "dayjs";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import UploadSingleImage from "@/components/uploads/UploadSingleImage/UploadSingleImage";
-import { TableRowSelection } from "antd/es/table/interface";
+import { useAppDispatch, useAppSelector } from "@/store";
+import {
+  getBannersAction,
+  deleteBannerAction,
+  getDetailBannerAction,
+  patchMultiActiveBannerAction,
+  postBannersAction,
+  putBannerAction,
+} from "@/store/banners/banners.action";
+import HeadAdminContent from "@/components/admin/HeadAdminContent/HeadAdminContent";
+import { FormAction } from "@/utils/contants";
+import { v4 as uuidv4 } from "uuid";
 
 interface DataType {
   id: string;
@@ -52,7 +56,7 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "status",
     key: "status",
     align: "center",
-    width: 120,
+    width: 160,
   },
   {
     title: "Ngày tạo",
@@ -73,29 +77,69 @@ const columns: TableProps<DataType>["columns"] = [
 const ManageBanners = () => {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
-  const { dataBanners } = useAppSelector((state) => state.bannersSlice);
+  const { dataBanners, dataDetailBanner } = useAppSelector(
+    (state) => state.bannersSlice
+  );
 
+  const [formAction, setFormAction] = useState<FormAction>(FormAction.CREATE);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentFile, setCurrentFile] = useState<UploadFile[]>([]);
-
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [modalDelete, setModalDelete] = useState<string | undefined>(undefined);
+  const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (formAction === FormAction.UPDATE) {
+      const { url } = dataDetailBanner.data;
+      setCurrentFile([
+        {
+          name: uuidv4(),
+          uid: uuidv4(),
+          url,
+          status: "done",
+        },
+      ]);
+    } else {
+      setCurrentFile([]);
+    }
+  }, [formAction, dataDetailBanner.data]);
 
   useEffect(() => {
     dispatch(getBannersAction());
   }, [dispatch]);
 
+  const handleChangeActive = async (bannerIds: string[], isActive: boolean) => {
+    const response: any = await dispatch(
+      patchMultiActiveBannerAction({ bannerIds, isActive })
+    );
+
+    if (response.payload?.error) {
+      messageApi.error(response.payload.error);
+    } else {
+      messageApi.success("Cập nhật trạng thái thành công.");
+      setSelectedRowKeys([]);
+    }
+  };
+
   const dataSource: DataType[] = dataBanners.data.map((item, index) => ({
     id: item._id,
-    index: index + 1,
-    key: item._id,
     stt: index + 1,
+    key: item._id,
     image: (
       <Image
         src={item.url}
         width={100}
         height={40}
         style={{ objectFit: "contain" }}
+      />
+    ),
+    status: (
+      <Switch
+        checkedChildren="Bật"
+        unCheckedChildren="Tắt"
+        checked={item.isActive}
+        onChange={(checked) => handleChangeActive([item._id], checked)}
       />
     ),
     createdAt: dayjs(item.createdAt).format("HH:mm - DD/MM/YYYY "),
@@ -105,53 +149,77 @@ const ManageBanners = () => {
           icon={<EditOutlined />}
           type="primary"
           ghost
-          onClick={() => {}}
+          onClick={() => {
+            dispatch(getDetailBannerAction(item._id));
+            setFormAction(FormAction.UPDATE);
+            setIsModalOpen(true);
+          }}
         />
         <Button
           icon={<DeleteOutlined />}
           danger
           type="primary"
-          onClick={() => {}}
+          onClick={() => setModalDelete(item._id)}
         />
       </Space>
     ),
   }));
 
-  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
-  const rowSelection: TableRowSelection<DataType> = {
-    selectedRowKeys,
-    onChange: onSelectChange,
-  };
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
   const handleSubmit = async () => {
-    if (!currentFile?.[0]?.response?.secure_url) {
+    if (!currentFile?.[0]) {
       messageApi.warning("Vui lòng chọn ít nhất một ảnh.");
       return;
     }
 
-    setLoading(true);
-    const response = await dispatch(
-      postBannersAction({
-        url: currentFile?.[0]?.response?.secure_url,
-      })
-    );
+    const messageSuccess =
+      formAction === FormAction.CREATE
+        ? "Thêm mới banner thành công."
+        : "Cập nhật banner thành công";
 
-    if (response.payload?.error) {
+    setIsLoading(true);
+    let response;
+
+    if (formAction === FormAction.CREATE) {
+      response = await dispatch(
+        postBannersAction({
+          url: currentFile?.[0]?.response?.secure_url,
+        })
+      );
+    } else {
+      response = await dispatch(
+        putBannerAction({
+          id: dataDetailBanner.data._id,
+          url: currentFile?.[0]?.response?.secure_url,
+        })
+      );
+    }
+
+    if (response?.payload?.error) {
       messageApi.error(response.payload.error);
     } else {
-      messageApi.success("Thêm mới banner thành công.");
+      messageApi.success(messageSuccess);
       setCurrentFile([]);
       setIsModalOpen(false);
       dispatch(getBannersAction());
     }
-    setLoading(false);
+
+    setIsLoading(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    setIsDeleteLoading(true);
+
+    const response = await dispatch(deleteBannerAction(id));
+
+    if (response?.payload?.error) {
+      messageApi.error(response.payload.error);
+    } else {
+      messageApi.success("Xóa banner thành công.");
+      setModalDelete(undefined);
+      dispatch(getBannersAction());
+    }
+
+    setIsDeleteLoading(false);
   };
 
   const handleCancel = () => {
@@ -162,34 +230,55 @@ const ManageBanners = () => {
   return (
     <div>
       {contextHolder}
+
       <HeadAdminContent
         title="Danh sách banner"
         extra={[
-          <Button type="primary" onClick={showModal}>
+          <Button
+            type="primary"
+            onClick={() => {
+              setFormAction(FormAction.CREATE);
+              setIsModalOpen(true);
+            }}
+          >
             Thêm banner mới
           </Button>,
           <Switch
             checkedChildren="Bật tất cả"
             unCheckedChildren="Tắt tất cả"
             defaultChecked
+            onChange={(checked) =>
+              handleChangeActive(selectedRowKeys as string[], checked)
+            }
           />,
         ]}
       />
+
       <Table
-        rowSelection={rowSelection}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: (newSelectedRowKeys) =>
+            setSelectedRowKeys(newSelectedRowKeys),
+        }}
         columns={columns}
         dataSource={dataSource}
         bordered
+        pagination={false}
+        loading={dataBanners.loading}
       />
 
       <Modal
-        title="Thêm mới banner"
+        title={
+          formAction === FormAction.CREATE
+            ? "Thêm mới banner"
+            : "Cập nhật banner"
+        }
         open={isModalOpen}
         okText="Lưu"
         cancelText="Hủy"
         onOk={handleSubmit}
         onCancel={handleCancel}
-        loading={loading}
+        confirmLoading={isLoading}
       >
         <Flex vertical gap={12}>
           <p>Hình ảnh banner</p>
@@ -198,6 +287,16 @@ const ManageBanners = () => {
             onChange={setCurrentFile}
           />
         </Flex>
+      </Modal>
+
+      <Modal
+        title="Xóa dữ liệu"
+        open={modalDelete !== undefined}
+        onOk={() => handleDelete(modalDelete!)}
+        onCancel={() => setModalDelete(undefined)}
+        confirmLoading={isDeleteLoading}
+      >
+        <p>Bạn có chắc chắn muốn xóa banner này?</p>
       </Modal>
     </div>
   );

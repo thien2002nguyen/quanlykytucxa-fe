@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import dayjs from "dayjs";
 
 // Các URL không cần làm mới token tự động
 const routerNotRefreshed = ["/admin/dang-nhap", "/dang-nhap"];
@@ -107,11 +108,8 @@ instanceAxios.interceptors.response.use(
         handleTokenError(isAdmin);
       }
 
-      // RefreshToken để kiểm tra thời gian hết hạn
-      const decodedRefreshToken = tokenInfo?.refreshExpiresIn;
-
       // Nếu refreshToken đã hết hạn, điều hướng đến đăng nhập
-      if (decodedRefreshToken < new Date().getTime()) {
+      if (dayjs(tokenInfo?.refreshExpiresIn).isBefore(dayjs())) {
         handleTokenError(isAdmin);
       }
 

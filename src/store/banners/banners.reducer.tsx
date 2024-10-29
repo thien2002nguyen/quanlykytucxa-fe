@@ -1,10 +1,25 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { getBannersAction } from "./banners.action";
-import { BannersResponse, Banners, BannersState } from "./banners.type";
+import {
+  getBannersAction,
+  getDetailBannerAction,
+  patchMultiActiveBannerAction,
+} from "./banners.action";
+import {
+  BannersResponse,
+  Banners,
+  BannersState,
+  DetailBannersResponse,
+} from "./banners.type";
 
 const initialState: BannersState = {
   dataBanners: {
     data: [] as Banners[],
+    loading: false,
+    error: undefined,
+  },
+
+  dataDetailBanner: {
+    data: {} as Banners,
     loading: false,
     error: undefined,
   },
@@ -38,6 +53,75 @@ const bannersSlice = createSlice({
     );
 
     builder.addCase(getBannersAction.rejected, (state, action) => {
+      state.dataBanners = {
+        ...state.dataBanners,
+        loading: false,
+        error: action.error.message || "Lấy dữ liệu thất bại.",
+      };
+    });
+
+    //----------get detail banners----------
+    builder.addCase(getDetailBannerAction.pending, (state) => {
+      state.dataDetailBanner = {
+        ...state.dataDetailBanner,
+        loading: true,
+        error: undefined,
+      };
+    });
+
+    builder.addCase(
+      getDetailBannerAction.fulfilled,
+      (state, action: PayloadAction<DetailBannersResponse>) => {
+        // Cập nhật state với dữ liệu từ action.payload
+        state.dataDetailBanner = {
+          ...state.dataDetailBanner,
+          data: action.payload.data,
+          loading: false,
+          error: undefined,
+        };
+      }
+    );
+
+    builder.addCase(getDetailBannerAction.rejected, (state, action) => {
+      state.dataDetailBanner = {
+        ...state.dataDetailBanner,
+        loading: false,
+        error: action.error.message || "Lấy dữ liệu thất bại.",
+      };
+    });
+
+    //----------patch multi active banners----------
+    builder.addCase(patchMultiActiveBannerAction.pending, (state) => {
+      state.dataBanners = {
+        ...state.dataBanners,
+        loading: false,
+        error: undefined,
+      };
+    });
+
+    builder.addCase(
+      patchMultiActiveBannerAction.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        // Cập nhật state với dữ liệu từ action.payload
+        state.dataBanners = {
+          ...state.dataBanners,
+          data: state.dataBanners.data?.map((item) => {
+            if (action.payload?.bannerIds?.includes(item._id)) {
+              return {
+                ...item,
+                isActive: action.payload?.isActive,
+              };
+            }
+
+            return item;
+          }),
+          loading: false,
+          error: undefined,
+        };
+      }
+    );
+
+    builder.addCase(patchMultiActiveBannerAction.rejected, (state, action) => {
       state.dataBanners = {
         ...state.dataBanners,
         loading: false,

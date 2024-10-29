@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ParamLogin } from "./auth-admin.type";
 
 const loginAction = createAsyncThunk(
-  "admin/loginAction", // Tên action
+  "auth-admin/loginAdminAction", // Tên action
   async (params: ParamLogin, thunkAPI) => {
     try {
       // Gọi API để thực hiện đăng nhập

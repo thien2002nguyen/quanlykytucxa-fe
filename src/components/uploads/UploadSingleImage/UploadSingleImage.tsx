@@ -72,16 +72,13 @@ const UploadSingleImage: React.FC<UploadSingleImageProps> = ({
 
   const handleRemove = async (file: UploadFile) => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/upload/image`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ public_id: file.response?.public_id }), // Chuyển public_id để xóa
-        }
-      );
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upload/image`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ public_id: file.response?.public_id }), // Chuyển public_id để xóa
+      });
 
       setFileList((prev) => prev.filter((item) => item.uid !== file.uid));
     } catch (error: any) {
@@ -98,7 +95,7 @@ const UploadSingleImage: React.FC<UploadSingleImageProps> = ({
 
   return (
     <>
-      {contextHolder} {/* Thêm context holder vào đây */}
+      {contextHolder}
       <Upload
         action={`${process.env.NEXT_PUBLIC_API_URL}/upload/image`}
         listType="picture-card"
@@ -106,6 +103,13 @@ const UploadSingleImage: React.FC<UploadSingleImageProps> = ({
         onPreview={handlePreview}
         onChange={handleChange}
         onRemove={handleRemove}
+        beforeUpload={(file) => {
+          const isLt2M = file.size / 1024 / 1024 < 2;
+          if (!isLt2M) {
+            messageApi.warning("Chỉ cho phép tải ảnh dưới 2MB.");
+          }
+          return isLt2M;
+        }}
         locale={{
           uploading: "Đang tải...",
         }}

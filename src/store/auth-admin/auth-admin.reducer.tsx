@@ -24,7 +24,7 @@ const initialState: AuthAdminState = {
 };
 
 const adminSlice = createSlice({
-  name: "admin",
+  name: "auth-admin",
   initialState,
   reducers: {
     logout(state) {

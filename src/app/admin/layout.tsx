@@ -1,5 +1,6 @@
 import MainAdmin from "@/components/admin/MainAdmin/MainAdmin";
 import type { Metadata } from "next";
+import "./style.scss";
 
 export const metadata: Metadata = {
   title: "Admin | Quản lý ký túc xá",

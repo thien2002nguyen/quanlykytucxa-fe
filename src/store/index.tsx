@@ -6,6 +6,7 @@ import authAdminSlice from "./auth-admin/auth-admin.reducer";
 import { AuthAdminState } from "./auth-admin/auth-admin.type";
 import monthlyVisitsSlice from "./monthly-visits/monthly-visits.reducer";
 import bannersSlice from "./banners/banners.reducer";
+import schoolSlice from "./school/school.reducer";
 
 // Tạo storage cho redux-persist
 const createNoopStorage = () => ({
@@ -36,6 +37,7 @@ export const store = configureStore({
     ),
     monthlyVisitsSlice,
     bannersSlice,
+    schoolSlice,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

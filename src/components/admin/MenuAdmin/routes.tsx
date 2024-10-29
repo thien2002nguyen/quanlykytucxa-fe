@@ -1,6 +1,7 @@
 import {
   ShareAltOutlined,
   LineChartOutlined,
+  ReadOutlined,
   UserOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -28,11 +29,12 @@ export const adminRoutes: MenuItem[] = [
         key: "quan-ly-thong-tin-cong-khai",
         label: "Quản lý thông tin công khai",
       },
-      {
-        key: "kho-luu-tru",
-        label: "Kho lưu trữ",
-      },
     ],
+  },
+  {
+    key: "quan-ly-nhan-vien",
+    icon: <ReadOutlined />,
+    label: "Quản lý nhân viên",
   },
   {
     key: "quan-ly-sinh-vien",

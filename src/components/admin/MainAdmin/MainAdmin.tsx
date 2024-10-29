@@ -33,7 +33,7 @@ const MainAdmin = ({
       router.push("/admin/dang-nhap");
       return;
     }
-  }, [token, admin]);
+  }, []);
 
   // Cập nhật label dựa trên pathname
   useEffect(() => {
@@ -108,8 +108,8 @@ const MainAdmin = ({
                     </Title>
                   </Flex>
                   <Button
-                    type="text"
-                    size="large"
+                    type="primary"
+                    ghost
                     icon={<LogoutOutlined />}
                     onClick={handleLogout}
                   >

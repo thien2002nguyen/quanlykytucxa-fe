@@ -1,0 +1,8 @@
+@import "../../styles/variables.scss";
+
+.form-footer {
+  position: sticky;
+  bottom: -12px;
+  background-color: $color-white;
+  padding: 16px 0;
+}
