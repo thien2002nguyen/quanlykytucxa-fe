@@ -1,6 +1,7 @@
 import React from "react";
 import HeaderClient from "../HeaderClient/HeaderClient";
 import FooterClient from "../FooterClient/FooterClient";
+import "./style.scss";
 
 const MainClient = ({
   children,
@@ -9,9 +10,13 @@ const MainClient = ({
 }>) => {
   return (
     <>
-      <HeaderClient />
+      <header>
+        <HeaderClient />
+      </header>
       <main>{children}</main>
-      <FooterClient />
+      <footer>
+        <FooterClient />
+      </footer>
     </>
   );
 };

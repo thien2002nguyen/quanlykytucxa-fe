@@ -4,7 +4,7 @@ export const themeAntdClient: ThemeConfig = {
   components: {
     Button: {
       colorPrimary: "#cd0101",
-      colorPrimaryHover: "#d73737 ", // Màu nhạt hơn cho hover
+      colorPrimaryHover: "#d73737 ",
       colorPrimaryActive: "#cd0101",
 
       colorLinkHover: "#d73737 ",

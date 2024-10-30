@@ -1,4 +1,6 @@
 import MainClient from "@/components/client/MainClient/MainClient";
+import { themeAntdClient } from "@/config/theme";
+import { ConfigProvider } from "antd";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,5 +13,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <MainClient>{children}</MainClient>;
+  return (
+    <ConfigProvider theme={themeAntdClient}>
+      <MainClient>{children}</MainClient>
+    </ConfigProvider>
+  );
 }
