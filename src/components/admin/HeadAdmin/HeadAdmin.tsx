@@ -37,7 +37,7 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
             size={40}
             className="avatar"
           />
-          <span className="admin-name">ADMIN</span>
+          <span className="admin-name">{admin.fullName || "Admin"}</span>
         </>
       )}
       <Button

@@ -5,4 +5,21 @@ export enum FormAction {
   DELETE = "delete",
 }
 
-export interface ParameterGet {}
+export enum SortEnum {
+  ASC = "asc",
+  DESC = "desc",
+}
+
+export interface ParameterInterface {
+  sort?: SortEnum;
+  search?: string;
+  limit?: number;
+  page?: number;
+}
+
+export interface ParameterGet {
+  sort?: SortEnum;
+  search?: string;
+  limit?: number;
+  page?: number;
+}

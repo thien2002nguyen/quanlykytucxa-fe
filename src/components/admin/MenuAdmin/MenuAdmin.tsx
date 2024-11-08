@@ -4,30 +4,38 @@ import HeadAdmin from "../HeadAdmin/HeadAdmin";
 import Link from "next/link";
 import { adminRoutes, MenuItem } from "./routes";
 import "./style.scss";
+import { useAppSelector } from "@/store";
 
-const flattenMenuItems = (items: MenuItem[], parentKey?: string): any[] => {
-  return items.flatMap((item) => {
-    const currentPath = parentKey ? `${parentKey}/${item.key}` : item.key;
+const MenuAdmin: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(false);
+  const { admin } = useAppSelector((state) => state.authAdminSlice);
 
-    if (item.items) {
+  const flattenMenuItems = (items: MenuItem[], parentKey?: string): any[] => {
+    return items.flatMap((item) => {
+      // Kiểm tra vai trò của mục và vai trò người dùng hiện tại
+      if (item.role && item.role !== admin.role) {
+        return [];
+      }
+
+      const currentPath = parentKey ? `${parentKey}/${item.key}` : item.key;
+
+      if (item.items) {
+        return {
+          key: currentPath,
+          icon: item.icon,
+          label: item.label,
+          children: flattenMenuItems(item.items, currentPath),
+        };
+      }
+
       return {
         key: currentPath,
         icon: item.icon,
         label: item.label,
-        children: flattenMenuItems(item.items, currentPath),
       };
-    }
+    });
+  };
 
-    return {
-      key: currentPath,
-      icon: item.icon,
-      label: item.label,
-    };
-  });
-};
-
-const MenuAdmin: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false);
   const flatMenuItems = flattenMenuItems(adminRoutes);
 
   const toggleCollapsed = () => {

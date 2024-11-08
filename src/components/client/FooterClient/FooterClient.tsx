@@ -63,15 +63,19 @@ const FooterClient = () => {
 
           <Col xs={24} md={8}>
             <h4>Fanpage</h4>
-            <iframe
-              src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
-                dataSchool.data?.facebookUrl
-              )}&tabs=timeline&width=380&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true`}
-              width="100%"
-              height="130"
-              allow="encrypted-media"
-              title="Fanpage Facebook của Đại học Kiến trúc Đà Nẵng"
-            />
+            {dataSchool.data?.facebookUrl ? (
+              <iframe
+                src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(
+                  dataSchool.data.facebookUrl
+                )}&tabs=timeline&width=380&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true`}
+                width="100%"
+                height="130"
+                allow="encrypted-media"
+                title="Fanpage Facebook của Đại học Kiến trúc Đà Nẵng"
+              />
+            ) : (
+              <p>Không có trang Facebook để hiển thị</p>
+            )}
 
             <h4>Theo dõi chúng tôi</h4>
             <div className="social-links">

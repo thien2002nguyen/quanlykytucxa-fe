@@ -24,7 +24,7 @@ const postBannersAction = createAsyncThunk(
   "banners/postBanners",
   async (params: ParameterPostBanner, thunkAPI) => {
     try {
-      const res = await bannersApi.postBanners(params);
+      const res = await bannersApi.postBanner(params);
       return res;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({
@@ -38,7 +38,7 @@ const getDetailBannerAction = createAsyncThunk(
   "banners/getDetailBannerAction",
   async (id: string, thunkAPI) => {
     try {
-      const res = await bannersApi.getDetailBanners(id);
+      const res = await bannersApi.getDetailBanner(id);
       return res;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({

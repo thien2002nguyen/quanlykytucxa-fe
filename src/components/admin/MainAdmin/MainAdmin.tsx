@@ -12,6 +12,7 @@ import Title from "antd/es/typography/Title";
 import MenuAdmin from "../MenuAdmin/MenuAdmin";
 import "./style.scss";
 import { toast } from "react-toastify";
+import NotFoundPage from "@/app/not-found";
 
 const MainAdmin = ({
   children,
@@ -29,11 +30,13 @@ const MainAdmin = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!token.accessToken && !admin._id) {
-      router.push("/admin/dang-nhap");
-      return;
+    if (!isLoading) {
+      if (!token.accessToken && !admin._id) {
+        router.push("/admin/dang-nhap");
+        return;
+      }
     }
-  }, []);
+  }, [isLoading, token.accessToken, admin._id]);
 
   // Cập nhật label dựa trên pathname
   useEffect(() => {
@@ -121,7 +124,7 @@ const MainAdmin = ({
                 </div>
               </div>
             </div>
-          ) : null}{" "}
+          ) : null}
           {/* Không render gì nếu chưa đăng nhập */}
         </>
       )}

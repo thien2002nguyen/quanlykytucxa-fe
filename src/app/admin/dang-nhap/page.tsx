@@ -28,7 +28,7 @@ const LoginAdmin = () => {
   ) => {
     await dispatch(loginAction(values));
     if (error) {
-      toast.error(`🦄 ${error}`);
+      toast.error("🦄 Đăng nhập thất bại.", { autoClose: 2000 });
     } else {
       toast.success("🦄 Đăng nhập thành công.", { autoClose: 2000 });
 

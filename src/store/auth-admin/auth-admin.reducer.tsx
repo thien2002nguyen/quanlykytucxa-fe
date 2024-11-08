@@ -15,7 +15,7 @@ const initialState: AuthAdminState = {
     role: null,
   },
   token: {
-    refreshExpiresIn: 0,
+    refreshExpiresIn: "",
     accessToken: "",
     refreshToken: "",
   },
@@ -62,7 +62,7 @@ const adminSlice = createSlice({
           role: data.role,
         };
         state.token = {
-          refreshExpiresIn: Date.now() + token.refreshExpiresIn * 1000,
+          refreshExpiresIn: token.refreshExpiresIn,
           accessToken: token.accessToken,
           refreshToken: token.refreshToken,
         };

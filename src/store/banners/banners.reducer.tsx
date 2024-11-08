@@ -6,20 +6,20 @@ import {
 } from "./banners.action";
 import {
   BannersResponse,
-  Banners,
+  Banner,
   BannersState,
-  DetailBannersResponse,
+  DetailBannerResponse,
 } from "./banners.type";
 
 const initialState: BannersState = {
   dataBanners: {
-    data: [] as Banners[],
+    data: [] as Banner[],
     loading: false,
     error: undefined,
   },
 
   dataDetailBanner: {
-    data: {} as Banners,
+    data: {} as Banner,
     loading: false,
     error: undefined,
   },
@@ -71,7 +71,7 @@ const bannersSlice = createSlice({
 
     builder.addCase(
       getDetailBannerAction.fulfilled,
-      (state, action: PayloadAction<DetailBannersResponse>) => {
+      (state, action: PayloadAction<DetailBannerResponse>) => {
         // Cập nhật state với dữ liệu từ action.payload
         state.dataDetailBanner = {
           ...state.dataDetailBanner,
@@ -125,7 +125,7 @@ const bannersSlice = createSlice({
       state.dataBanners = {
         ...state.dataBanners,
         loading: false,
-        error: action.error.message || "Lấy dữ liệu thất bại.",
+        error: action.error.message || "Thay đổi trạng thái thất bại.",
       };
     });
   },

@@ -2,7 +2,7 @@ import { instanceAxios } from "@/config/axios";
 import omit from "lodash/omit";
 import {
   BannersResponse,
-  DetailBannersResponse,
+  DetailBannerResponse,
   ParameterPatchBanner,
   ParameterPostBanner,
   ParameterPutBanner,
@@ -15,12 +15,12 @@ const bannersApi = {
     return instanceAxios.get(url);
   },
 
-  async postBanners(params: ParameterPostBanner): Promise<any> {
+  async postBanner(params: ParameterPostBanner): Promise<any> {
     const url = `${baseUrl}`;
     return instanceAxios.post(url, params);
   },
 
-  async getDetailBanners(id: string): Promise<DetailBannersResponse> {
+  async getDetailBanner(id: string): Promise<DetailBannerResponse> {
     const url = `${baseUrl}/${id}`;
     return instanceAxios.get(url);
   },

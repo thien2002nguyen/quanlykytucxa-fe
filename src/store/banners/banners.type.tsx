@@ -1,4 +1,4 @@
-export type Banners = {
+export type Banner = {
   _id: string;
   url: string;
   isActive: boolean;
@@ -6,11 +6,11 @@ export type Banners = {
 };
 
 export type BannersResponse = {
-  data: Banners[];
+  data: Banner[];
 };
 
-export type DetailBannersResponse = {
-  data: Banners;
+export type DetailBannerResponse = {
+  data: Banner;
 };
 
 export interface ParameterPostBanner {
@@ -28,13 +28,13 @@ export type ParameterPatchBanner = {
 
 export interface BannersState {
   dataBanners: {
-    data: Banners[];
+    data: Banner[];
     loading: boolean;
     error?: string;
   };
 
   dataDetailBanner: {
-    data: Banners;
+    data: Banner;
     loading: boolean;
     error?: string;
   };

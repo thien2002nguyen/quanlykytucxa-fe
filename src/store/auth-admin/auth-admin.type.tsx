@@ -21,8 +21,7 @@ export type LoginResponse = {
   token: {
     accessToken: string;
     refreshToken: string;
-    expiresIn: number;
-    refreshExpiresIn: number;
+    refreshExpiresIn: string;
   };
   error?: string;
 };
@@ -47,7 +46,7 @@ export interface AuthAdminState {
   token: {
     accessToken: string;
     refreshToken: string;
-    refreshExpiresIn: number;
+    refreshExpiresIn: string;
   };
   loading: boolean;
   error?: string;

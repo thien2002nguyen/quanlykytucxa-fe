@@ -46,9 +46,7 @@ const HeaderClient = () => {
         <div className="container">
           <Flex justify="space-between" align="center">
             <div className="school-name">
-              <div className="text">
-                Ban quản lý ký túc xá - {dataSchool.data?.schoolName}
-              </div>
+              <div className="text">{dataSchool.data?.slogan}</div>
             </div>
             <Flex gap={10} align="center">
               <Link href="/ho-tro">Hỗ trợ</Link>

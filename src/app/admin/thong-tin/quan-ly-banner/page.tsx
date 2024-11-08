@@ -285,6 +285,7 @@ const ManageBanners = () => {
           <UploadSingleImage
             currentFileList={currentFile}
             onChange={setCurrentFile}
+            formAction={formAction}
           />
         </Flex>
       </Modal>
