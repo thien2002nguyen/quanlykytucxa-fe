@@ -1,25 +1,26 @@
 "use client";
 
 import { Card, Flex } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Title from "antd/es/typography/Title";
 import "./style.scss";
 import CardLineChart from "@/components/admin/CardLineChart/CardLineChart";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { getVisitsByYearAction } from "@/store/monthly-visits/monthly-visits.action";
+import { getTotalStudentsAction } from "@/store/students/students.action";
 
 const Dashboard = () => {
-  const studentCount = 2500;
-
   const dispatch = useAppDispatch();
   const { dataMonthlyVisit } = useAppSelector(
     (state) => state.monthlyVisitsSlice
   );
+  const { dataTotalStudents } = useAppSelector((state) => state.studentsSlice);
 
   const year = new Date().getFullYear();
 
   useEffect(() => {
     dispatch(getVisitsByYearAction(year));
+    dispatch(getTotalStudentsAction());
   }, [dispatch]);
 
   const labels = [
@@ -62,7 +63,7 @@ const Dashboard = () => {
           bordered={false}
           className="card-dashboard card-total-students"
         >
-          <h2>{studentCount}</h2>
+          <h2>{dataTotalStudents.data}</h2>
         </Card>
       </Flex>
       <CardLineChart labels={labels} data={data} label={label} />

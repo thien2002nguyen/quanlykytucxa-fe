@@ -17,15 +17,15 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
   collapsed,
   toggleCollapsed,
 }) => {
-  const { admin } = useAppSelector((state) => state.authAdminSlice);
+  const { user } = useAppSelector((state) => state.authAdminSlice);
 
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if (admin.avatar) {
-      setAvatarSrc(admin.avatar);
+    if (user.avatar) {
+      setAvatarSrc(user.avatar);
     }
-  }, [admin.avatar]);
+  }, [user.avatar]);
 
   return (
     <div className={`head-admin ${collapsed ? "head-admin--collapsed" : ""}`}>
@@ -37,7 +37,12 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
             size={40}
             className="avatar"
           />
-          <span className="admin-name">{admin.fullName || "Admin"}</span>
+          <span className="admin-name">
+            Xin chào{" "}
+            {user.userName?.length > 10
+              ? user.userName?.substring(0, 10) + "..."
+              : user.userName || "Admin"}
+          </span>
         </>
       )}
       <Button

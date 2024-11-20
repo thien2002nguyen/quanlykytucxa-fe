@@ -1,17 +1,20 @@
-import { RoleAdmin } from "@/store/auth-admin/auth-admin.type";
+import { RoleAuth } from "@/store/auth/auth.type";
 import {
   ShareAltOutlined,
   LineChartOutlined,
   ReadOutlined,
   UserOutlined,
   SettingOutlined,
+  HomeOutlined,
+  BookOutlined,
+  InfoCircleOutlined,
 } from "@ant-design/icons";
 
 export interface MenuItem {
   key: string;
   icon?: React.ReactNode;
   label: string;
-  role?: RoleAdmin;
+  role?: RoleAuth;
   items?: MenuItem[];
 }
 
@@ -42,16 +45,45 @@ export const adminRoutes: MenuItem[] = [
     ],
   },
   {
-    key: "quan-ly-nhan-vien",
+    key: "quan-ly-tai-khoan",
     icon: <ReadOutlined />,
-    label: "Quản lý nhân viên",
-    role: RoleAdmin.ADMIN,
+    label: "Quản lý tài khoản",
+    role: RoleAuth.ADMIN,
   },
   {
     key: "quan-ly-sinh-vien",
     icon: <UserOutlined />,
     label: "Quản lý sinh viên",
-    role: RoleAdmin.ADMIN,
+  },
+  {
+    key: "quan-ly-thong-tin-phong",
+    icon: <HomeOutlined />,
+    label: "Quản lý thông tin phòng",
+    items: [
+      { key: "quan-ly-phong", label: "Quản lý phòng" },
+      {
+        key: "quan-ly-loai-phong",
+        label: "Quản lý loại phòng",
+      },
+      {
+        key: "quan-ly-day-phong",
+        label: "Quản lý dãy phòng",
+      },
+      {
+        key: "quan-ly-dich-vu-phong",
+        label: "Quản lý dịch vụ phòng",
+      },
+    ],
+  },
+  {
+    key: "quan-ly-tin-tuc",
+    icon: <BookOutlined />,
+    label: "Quản lý tin tức",
+  },
+  {
+    key: "quan-ly-thong-bao",
+    icon: <InfoCircleOutlined />,
+    label: "Quản lý thông báo",
   },
   {
     key: "cai-dat",

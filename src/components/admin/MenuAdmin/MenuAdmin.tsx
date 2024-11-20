@@ -8,12 +8,12 @@ import { useAppSelector } from "@/store";
 
 const MenuAdmin: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { admin } = useAppSelector((state) => state.authAdminSlice);
+  const { user } = useAppSelector((state) => state.authAdminSlice);
 
   const flattenMenuItems = (items: MenuItem[], parentKey?: string): any[] => {
     return items.flatMap((item) => {
       // Kiểm tra vai trò của mục và vai trò người dùng hiện tại
-      if (item.role && item.role !== admin.role) {
+      if (item.role && item.role !== user.role) {
         return [];
       }
 

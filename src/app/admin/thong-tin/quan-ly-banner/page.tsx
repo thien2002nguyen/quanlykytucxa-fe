@@ -33,6 +33,7 @@ interface DataType {
   id: string;
   stt: number;
   key: string;
+  status: React.ReactNode;
   image: React.ReactNode;
   createdAt: string;
   action: React.ReactNode;
@@ -182,14 +183,14 @@ const ManageBanners = () => {
     if (formAction === FormAction.CREATE) {
       response = await dispatch(
         postBannersAction({
-          url: currentFile?.[0]?.response?.secure_url,
+          url: currentFile?.[0]?.url as string,
         })
       );
     } else {
       response = await dispatch(
         putBannerAction({
           id: dataDetailBanner.data._id,
-          url: currentFile?.[0]?.response?.secure_url,
+          url: currentFile?.[0]?.url as string,
         })
       );
     }
@@ -255,6 +256,7 @@ const ManageBanners = () => {
       />
 
       <Table
+        rowKey="id"
         rowSelection={{
           selectedRowKeys,
           onChange: (newSelectedRowKeys) =>
@@ -297,7 +299,7 @@ const ManageBanners = () => {
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
       >
-        <p>Bạn có chắc chắn muốn xóa banner này?</p>
+        <p>Bạn có chắc chắn muốn xóa banner này không?</p>
       </Modal>
     </div>
   );

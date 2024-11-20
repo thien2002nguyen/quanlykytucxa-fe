@@ -1,4 +1,6 @@
 import BannerHome from "@/components/home/BannerHome/BannerHome";
+import IntroductionHome from "@/components/home/IntroductionHome/IntroductionHome";
+import Introduction from "@/components/home/IntroductionHome/IntroductionHome";
 import React from "react";
 
 const Home = () => {
@@ -6,7 +8,11 @@ const Home = () => {
     <div>
       {/* Banner */}
       <BannerHome />
-      <div className="container">Nguyễn Cảnh Thiện Main</div>
+
+      <div className="container">
+        {/* Giới thiệu */}
+        <IntroductionHome />
+      </div>
     </div>
   );
 };

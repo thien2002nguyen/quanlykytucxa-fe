@@ -4,6 +4,7 @@ import HeadAdminContent from "@/components/admin/HeadAdminContent/HeadAdminConte
 import { useRouter } from "next/navigation";
 import React from "react";
 import FormStudent from "../form";
+import { FormAction } from "@/utils/contants";
 
 const CreateStudent = () => {
   const router = useRouter();
@@ -14,7 +15,10 @@ const CreateStudent = () => {
         onBack={() => router.back()}
       />
 
-      <FormStudent />
+      <FormStudent
+        formAction={FormAction.CREATE}
+        onBack={() => router.back()}
+      />
     </div>
   );
 };

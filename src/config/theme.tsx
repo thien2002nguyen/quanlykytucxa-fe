@@ -29,6 +29,22 @@ export const themeAntdClient: ThemeConfig = {
     Spin: {
       colorPrimary: "#cd0101",
     },
+    Pagination: {
+      colorPrimary: "#cd0101",
+      colorPrimaryHover: "#d73737",
+      colorPrimaryActive: "#cd0101",
+      colorBgContainer: "#fafafa",
+    },
+    Select: {
+      colorPrimary: "#cd0101",
+      colorPrimaryHover: "#d73737",
+      colorPrimaryActive: "#cd0101",
+    },
+    Switch: {
+      colorPrimary: "#cd0101", // Màu nền khi chưa chọn
+      colorPrimaryHover: "#d73737", // Màu nền khi hover
+      colorPrimaryActive: "#cd0101", // Màu nền khi chọn
+    },
   },
   hashed: false,
 };
@@ -64,7 +80,18 @@ export const themeAntdAdmin: ThemeConfig = {
     },
     Pagination: {
       colorPrimary: "#cd0101",
-      colorPrimaryHover: "#d73737 ",
+      colorPrimaryHover: "#d73737",
+      colorPrimaryActive: "#cd0101",
+      colorBgContainer: "#fafafa",
+    },
+    Select: {
+      colorPrimary: "#cd0101",
+      colorPrimaryHover: "#d73737",
+      colorPrimaryActive: "#cd0101",
+    },
+    Switch: {
+      colorPrimary: "#cd0101",
+      colorPrimaryHover: "#d73737",
       colorPrimaryActive: "#cd0101",
     },
   },

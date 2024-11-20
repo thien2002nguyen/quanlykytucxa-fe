@@ -1,13 +1,13 @@
 "use client";
 
 import { useDispatch } from "react-redux";
-import { loginAction } from "@/store/auth-admin/auth-admin.action";
 import { Button, Flex, Form, FormProps, Image, Input } from "antd";
 import React, { useEffect, useRef } from "react";
-import { ParamLogin } from "@/store/auth-admin/auth-admin.type";
 import { AppDispatch, useAppSelector } from "@/store";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { ParameterLogin } from "@/store/auth/auth.type";
+import { loginAction } from "@/store/auth/auth.action";
 
 const LoginAdmin = () => {
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
@@ -23,10 +23,13 @@ const LoginAdmin = () => {
     };
   }, []);
 
-  const onFinish: FormProps<ParamLogin>["onFinish"] = async (
-    values: ParamLogin
+  const onFinish: FormProps<ParameterLogin>["onFinish"] = async (
+    values: ParameterLogin
   ) => {
-    await dispatch(loginAction(values));
+    const response = await dispatch(loginAction(values));
+
+    console.log("response: ", response);
+
     if (error) {
       toast.error("🦄 Đăng nhập thất bại.", { autoClose: 2000 });
     } else {

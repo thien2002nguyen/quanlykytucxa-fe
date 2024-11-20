@@ -118,8 +118,8 @@ const HeaderClient = () => {
                     </ul>
                   </li>
                   <li className="menu-item-nav">
-                    <Link href="/thong-tin" className="item-nav">
-                      Thông tin
+                    <Link href="/thong-bao" className="item-nav">
+                      Thông báo
                     </Link>
                   </li>
                   <li className="menu-item-nav">
@@ -141,7 +141,7 @@ const HeaderClient = () => {
               </div>
 
               <Button type="primary" icon={<SolutionOutlined />}>
-                Đăng ký
+                Đăng ký ngay
               </Button>
             </Flex>
           </Flex>

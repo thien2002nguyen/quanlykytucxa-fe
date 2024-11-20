@@ -6,3 +6,24 @@
   background-color: $color-white;
   padding: 16px 0;
 }
+
+.ant-upload-wrapper {
+  width: 100%;
+
+  .ant-upload {
+    width: 100%;
+  }
+}
+
+.form-item-comtainer {
+  margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.3);
+
+  &-title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+}

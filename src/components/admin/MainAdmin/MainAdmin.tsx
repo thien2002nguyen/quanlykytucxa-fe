@@ -6,13 +6,13 @@ import { Button, ConfigProvider, Flex, Image } from "antd";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { adminRoutes } from "../MenuAdmin/routes";
-import { logout } from "@/store/auth-admin/auth-admin.reducer";
+import { logout } from "@/store/auth/auth.reducer";
 import { LogoutOutlined } from "@ant-design/icons";
 import Title from "antd/es/typography/Title";
 import MenuAdmin from "../MenuAdmin/MenuAdmin";
 import "./style.scss";
 import { toast } from "react-toastify";
-import NotFoundPage from "@/app/not-found";
+import { RoleAuth } from "@/store/auth/auth.type";
 
 const MainAdmin = ({
   children,
@@ -24,19 +24,19 @@ const MainAdmin = ({
   const pathname = usePathname();
   const isLoginPage = pathname.includes("admin/dang-nhap");
 
-  const { admin, token } = useAppSelector((state) => state.authAdminSlice);
+  const { user, token } = useAppSelector((state) => state.authAdminSlice);
 
   const [pageLabel, setPageLabel] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isLoading) {
-      if (!token.accessToken && !admin._id) {
+      if (!token.accessToken && !user._id && user.role !== RoleAuth.STUDENT) {
         router.push("/admin/dang-nhap");
         return;
       }
     }
-  }, [isLoading, token.accessToken, admin._id]);
+  }, [isLoading, token.accessToken, user._id]);
 
   // Cập nhật label dựa trên pathname
   useEffect(() => {
@@ -89,7 +89,7 @@ const MainAdmin = ({
         children
       ) : (
         <>
-          {token.accessToken && admin._id ? ( // Chỉ render nội dung nếu đã đăng nhập
+          {token.accessToken && user._id && user.role !== RoleAuth.STUDENT ? ( // Chỉ render nội dung nếu đã đăng nhập
             <div className="main-admin-wrapper">
               {/* Menu Admin Wrapper */}
               <div className="menu-wrapper">

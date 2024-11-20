@@ -47,11 +47,16 @@ const UploadSingleImage: React.FC<UploadSingleImageProps> = ({
 
     setFileList(newFileList);
 
-    if (newFileList && newFileList?.[0]?.status === "done") {
-      // Sau khi upload thành công, sử dụng secure_url từ response
-      const uploadedFile = newFileList[0];
+    // Sau khi upload thành công, sử dụng secure_url từ response
+    const uploadedFile = newFileList[0];
+
+    if (
+      newFileList &&
+      newFileList?.[0]?.status === "done" &&
+      uploadedFile.response?.secure_url
+    ) {
       if (uploadedFile.response?.secure_url) {
-        uploadedFile.url = uploadedFile.response.secure_url; // Set URL từ secure_url
+        uploadedFile.url = uploadedFile.response?.secure_url; // Set URL từ secure_url
       }
       onChange(newFileList);
     }
@@ -89,6 +94,7 @@ const UploadSingleImage: React.FC<UploadSingleImageProps> = ({
   return (
     <>
       {contextHolder}
+
       <Upload
         action={`${process.env.NEXT_PUBLIC_API_URL}/upload/image`}
         listType="picture-card"

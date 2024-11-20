@@ -2,14 +2,19 @@ import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import authAdminSlice from "./auth-admin/auth-admin.reducer";
-import { AuthAdminState } from "./auth-admin/auth-admin.type";
+import authSlice from "./auth/auth.reducer";
+import { AuthState } from "./auth/auth.type";
+import usersSlice from "./users/users.reducer";
 import monthlyVisitsSlice from "./monthly-visits/monthly-visits.reducer";
 import bannersSlice from "./banners/banners.reducer";
 import schoolSlice from "./school/school.reducer";
 import introductionSlice from "./introduction/introduction.reducer";
 import unitPriceSlice from "./unit-price/unit-price.reducer";
-import adminsSlice from "./admin/admin.reducer";
+import studentsSlice from "./students/students.reducer";
+import roomTypesSlice from "./room-types/room-types.reducer";
+import roomBlocksSlice from "./room-blocks/room-blocks.reducer";
+import servicesSlice from "./services/services.reducer";
+import roomsSlice from "./rooms/rooms.reducer";
 
 // Tạo storage cho redux-persist
 const createNoopStorage = () => ({
@@ -25,25 +30,27 @@ const storage =
     : createNoopStorage();
 
 // Cấu hình cho redux-persist
-const authAdminPersistConfig = {
-  key: "auth-quanlykytucxa",
+const authPersistConfig = {
+  key: "auth-kytucxadau",
   storage,
-  whitelist: ["admin", "token"], // Chỉ lưu trữ admin và token
+  whitelist: ["user", "token"], // Chỉ lưu trữ user và token
 };
 
 // Tạo store với redux-persist
 export const store = configureStore({
   reducer: {
-    authAdminSlice: persistReducer<AuthAdminState>(
-      authAdminPersistConfig,
-      authAdminSlice
-    ),
+    authAdminSlice: persistReducer<AuthState>(authPersistConfig, authSlice),
+    usersSlice,
     monthlyVisitsSlice,
     bannersSlice,
     schoolSlice,
     introductionSlice,
     unitPriceSlice,
-    adminsSlice,
+    studentsSlice,
+    roomTypesSlice,
+    roomBlocksSlice,
+    servicesSlice,
+    roomsSlice,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

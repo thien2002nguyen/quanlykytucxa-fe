@@ -2,23 +2,23 @@
 
 import React from "react";
 import { useAppSelector } from "@/store";
-import { RoleAdmin } from "@/store/auth-admin/auth-admin.type";
 import { Button, Result } from "antd";
 import Link from "next/link";
+import { RoleAuth } from "@/store/auth/auth.type";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: RoleAdmin;
+  requiredRole?: RoleAuth;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requiredRole,
 }) => {
-  const { admin } = useAppSelector((state) => state.authAdminSlice);
+  const { user } = useAppSelector((state) => state.authAdminSlice);
 
   // Nếu người dùng không có quyền truy cập thì hiển thị 403
-  if (requiredRole && admin.role !== requiredRole) {
+  if (requiredRole && user.role !== requiredRole) {
     return (
       <Result
         status="403"
