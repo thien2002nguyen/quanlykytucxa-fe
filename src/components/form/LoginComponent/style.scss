@@ -1,0 +1,12 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.btn-forgot-password {
+  cursor: pointer;
+  font-style: italic;
+  font-size: 1.3rem;
+
+  &:hover {
+    color: $color-hover-main;
+  }
+}

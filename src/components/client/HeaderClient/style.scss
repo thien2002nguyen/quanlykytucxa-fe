@@ -6,17 +6,30 @@
     background-color: $color-main;
     padding: 16px 0;
 
+    @media (max-width: $laptopM) {
+      padding: 12px 0;
+    }
+
     .school-name {
-      width: 600px;
+      width: 560px;
       overflow: hidden;
+      @media (max-width: $tabletL) {
+        width: 100%;
+      }
 
       .text {
+        height: 27px;
         text-transform: uppercase;
         font-size: 1.8rem;
         color: $color-white;
         font-weight: 600;
         white-space: nowrap;
         animation: slide 15s linear infinite;
+
+        @media (max-width: $laptopM) {
+          font-size: 1.4rem;
+          height: 21px;
+        }
 
         @keyframes slide {
           0% {
@@ -29,11 +42,24 @@
       }
     }
 
+    .line-center {
+      @media (max-width: $tabletL) {
+        display: none;
+      }
+    }
+
     p,
     a {
       font-size: 1.6rem;
       cursor: pointer;
       color: $color-white;
+      @media (max-width: $tabletL) {
+        display: none;
+      }
+
+      @media (max-width: $laptopM) {
+        font-size: 1.4rem;
+      }
 
       &:hover {
         color: $color-white;
@@ -57,11 +83,34 @@
     padding: 8px 0;
 
     .logo {
+      @media (max-width: $tabletL) {
+        gap: 8px !important;
+      }
+
+      @media (max-width: $mobileL) {
+        gap: 3px !important;
+      }
+
+      .logo-image {
+        @media (max-width: $tabletL) {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
       &-text {
         color: $color-main;
         font-size: 1.8rem;
         font-weight: 600;
         text-transform: uppercase;
+
+        @media (max-width: $laptopM) {
+          font-size: 1.6rem;
+        }
+
+        @media (max-width: $tabletL) {
+          font-size: 1.2rem;
+        }
       }
 
       .school-name {
@@ -69,6 +118,14 @@
         font-size: 1.4rem;
         font-weight: 500;
         text-transform: capitalize;
+
+        @media (max-width: $laptopM) {
+          font-size: 1.3rem;
+        }
+
+        @media (max-width: $tabletL) {
+          font-size: 1rem;
+        }
       }
     }
 
@@ -78,6 +135,10 @@
         background-color: transparent;
         padding: 0;
         margin: 0;
+
+        @media (max-width: $laptopM) {
+          display: none;
+        }
 
         .menu-item-nav {
           position: relative;
@@ -100,6 +161,7 @@
             font-size: 1.5rem;
             font-weight: 500;
             text-transform: uppercase;
+
             &:hover {
               color: $color-hover-main;
             }
@@ -136,6 +198,117 @@
           }
         }
       }
+    }
+
+    .btn-menu-responsive {
+      display: none;
+
+      @media (max-width: $laptopM) {
+        display: block;
+      }
+    }
+
+    .menu-responsive {
+      position: fixed;
+      top: 0;
+      left: -276px; /* Đặt menu ra ngoài màn hình khi không hiển thị */
+      width: 275px;
+      height: 100vh;
+      background-color: #fff;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease-in-out; /* Thêm hiệu ứng trượt */
+      z-index: 1000;
+
+      &.show {
+        transform: translateX(275px); /* Di chuyển menu vào trong khi show */
+      }
+
+      .menu {
+        padding: 20px;
+        list-style-type: none;
+        margin: 0;
+
+        .menu-item-nav {
+          margin-bottom: 16px;
+        }
+
+        .item-nav {
+          font-size: 1.8rem;
+          color: $color-main;
+          text-decoration: none;
+          display: block;
+
+          &:hover {
+            color: $color-hover-main;
+          }
+        }
+
+        .dropdown-menu {
+          list-style-type: none;
+          padding: 0;
+          margin-top: 8px;
+          margin-left: 16px;
+          max-height: 0; /* Ẩn dropdown khi chưa mở */
+          opacity: 0; /* Làm mờ */
+          visibility: hidden; /* Ẩn menu */
+          overflow: hidden; /* Ẩn overflow */
+          transition: opacity 0.4s ease, max-height 0.4s ease,
+            visibility 0s 0.4s; /* Thêm thời gian cho visibility */
+
+          &.show {
+            max-height: 500px; /* Hoặc giá trị tùy thuộc vào chiều cao dropdown */
+            opacity: 1; /* Hiển thị */
+            visibility: visible; /* Hiển thị */
+            transition: opacity 0.4s ease, max-height 0.4s ease; /* Không delay khi show */
+          }
+
+          li {
+            padding: 8px 0;
+
+            a {
+              font-size: 1.4rem;
+            }
+          }
+        }
+      }
+    }
+
+    .blur-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px); /* Hiệu ứng mờ */
+      z-index: 999; /* Đảm bảo ở trên nền */
+      opacity: 0; /* Mặc định ẩn */
+      visibility: hidden; /* Không hiển thị khi chưa show */
+      transition: opacity 0.4s ease, visibility 0s 0.4s; /* Thêm thời gian cho visibility */
+    }
+
+    .blur-background.show {
+      opacity: 1; /* Hiển thị khi menu mở */
+      visibility: visible; /* Hiển thị khi show */
+      transition: opacity 0.4s ease, visibility 0s; /* Không delay khi show */
+    }
+  }
+
+  .user-name {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: $color-black;
+    text-transform: capitalize;
+
+    @media (max-width: $tablet) {
+      display: none;
+    }
+  }
+
+  .btn-login {
+    @media (max-width: $tablet) {
+      display: none;
     }
   }
 }

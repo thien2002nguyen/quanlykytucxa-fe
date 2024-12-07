@@ -15,11 +15,11 @@
   }
 }
 
-.form-item-comtainer {
+.form-item-container {
   margin-bottom: 12px;
   padding: 16px;
   border-radius: 8px;
-  box-shadow: 0 0 3px rgba($color: #000000, $alpha: 0.3);
+  border-bottom: 1px solid rgba(5, 5, 5, 0.06);
 
   &-title {
     font-size: 1.4rem;

@@ -15,6 +15,11 @@ import roomTypesSlice from "./room-types/room-types.reducer";
 import roomBlocksSlice from "./room-blocks/room-blocks.reducer";
 import servicesSlice from "./services/services.reducer";
 import roomsSlice from "./rooms/rooms.reducer";
+import newsSlice from "./news/news.reducer";
+import infomationSlice from "./infomation/infomation.reducer";
+import contractTermsSlice from "./contract-terms/contract-terms.reducer";
+import contractTypesSlice from "./contract-types/contract-types.reducer";
+import contractsSlice from "./contracts/contracts.reducer";
 
 // Tạo storage cho redux-persist
 const createNoopStorage = () => ({
@@ -39,7 +44,7 @@ const authPersistConfig = {
 // Tạo store với redux-persist
 export const store = configureStore({
   reducer: {
-    authAdminSlice: persistReducer<AuthState>(authPersistConfig, authSlice),
+    authSlice: persistReducer<AuthState>(authPersistConfig, authSlice),
     usersSlice,
     monthlyVisitsSlice,
     bannersSlice,
@@ -51,6 +56,11 @@ export const store = configureStore({
     roomBlocksSlice,
     servicesSlice,
     roomsSlice,
+    newsSlice,
+    infomationSlice,
+    contractTermsSlice,
+    contractTypesSlice,
+    contractsSlice,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

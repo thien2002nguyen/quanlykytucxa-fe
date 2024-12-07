@@ -1,12 +1,15 @@
 import roomsApi from "@/store/rooms/rooms.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ParameterPostRoom, ParameterPutRoom } from "./rooms.type";
-import { ParameterGet } from "@/utils/contants";
+import {
+  ParameterGetRoom,
+  ParameterPostRoom,
+  ParameterPutRoom,
+} from "./rooms.type";
 
 // Lấy danh sách phòng
 const getRoomsAction = createAsyncThunk(
   "rooms/getRooms",
-  async (params: ParameterGet, thunkAPI) => {
+  async (params: ParameterGetRoom, thunkAPI) => {
     try {
       const res = await roomsApi.getRooms(params);
       return res;
@@ -36,9 +39,9 @@ const postRoomAction = createAsyncThunk(
 // Lấy chi tiết phòng theo ID
 const getDetailRoomAction = createAsyncThunk(
   "rooms/getDetailRoom",
-  async (id: string, thunkAPI) => {
+  async (idOrSlug: string, thunkAPI) => {
     try {
-      const res = await roomsApi.getDetailRoom(id);
+      const res = await roomsApi.getDetailRoom(idOrSlug);
       return res;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({

@@ -8,7 +8,7 @@ import { useAppSelector } from "@/store";
 
 const MenuAdmin: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const { user } = useAppSelector((state) => state.authAdminSlice);
+  const { user } = useAppSelector((state) => state.authSlice);
 
   const flattenMenuItems = (items: MenuItem[], parentKey?: string): any[] => {
     return items.flatMap((item) => {

@@ -8,9 +8,9 @@ import {
 
 const getBannersAction = createAsyncThunk(
   "banners/getBanners",
-  async (_, thunkAPI) => {
+  async (params: { isClient?: boolean }, thunkAPI) => {
     try {
-      const res = await bannersApi.getBanners();
+      const res = await bannersApi.getBanners(params);
       return res;
     } catch (error: any) {
       return thunkAPI.rejectWithValue({

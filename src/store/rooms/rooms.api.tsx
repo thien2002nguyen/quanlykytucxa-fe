@@ -5,13 +5,13 @@ import {
   DetailRoomResponse,
   ParameterPostRoom,
   ParameterPutRoom,
+  ParameterGetRoom,
 } from "./rooms.type";
-import { ParameterGet } from "@/utils/contants";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 
 const baseUrl = "/rooms";
 const roomsApi = {
-  async getRooms(params: ParameterGet): Promise<RoomsResponse> {
+  async getRooms(params: ParameterGetRoom): Promise<RoomsResponse> {
     const newParams = cleanAndSerializeQueryParams(params);
     const url = `${baseUrl}?${newParams}`;
     return instanceAxios.get(url);
@@ -22,8 +22,8 @@ const roomsApi = {
     return instanceAxios.post(url, params);
   },
 
-  async getDetailRoom(id: string): Promise<DetailRoomResponse> {
-    const url = `${baseUrl}/${id}`;
+  async getDetailRoom(idOrSlug: string): Promise<DetailRoomResponse> {
+    const url = `${baseUrl}/${idOrSlug}`;
     return instanceAxios.get(url);
   },
 

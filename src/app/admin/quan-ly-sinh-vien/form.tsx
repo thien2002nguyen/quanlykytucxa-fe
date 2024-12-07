@@ -67,7 +67,10 @@ const FormStudent = ({ formAction, onBack }: FormProps) => {
         takeClass,
         department,
         address,
-        enrollmentYear: dayjs(enrollmentYear, "YYYY"),
+        enrollmentYear: dayjs(
+          enrollmentYear || dayjs().year().toString(),
+          "YYYY"
+        ),
       });
     } else {
       onReset();

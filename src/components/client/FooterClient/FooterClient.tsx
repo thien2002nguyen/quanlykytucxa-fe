@@ -17,15 +17,20 @@ const FooterClient = () => {
   return (
     <div className="wrapper-footer">
       <div className="container">
-        <Row gutter={[16, 16]}>
-          <Col xs={24} md={10}>
+        <Row
+          gutter={[
+            { xs: 8, sm: 8, md: 8, lg: 12, xl: 16 },
+            { xs: 8, sm: 8, md: 8, lg: 12, xl: 16 },
+          ]}
+        >
+          <Col xs={24} sm={14} md={14} lg={10} xl={10}>
             <h4>{dataSchool.data?.schoolName}</h4>
             <p>Địa chỉ: {dataSchool.data?.address}</p>
             <p>Điện thoại: {dataSchool.data?.phoneNumber}</p>
             <p>Email: {dataSchool.data?.email}</p>
             <p>Giờ làm việc: {dataSchool.data?.timeWork}</p>
           </Col>
-          <Col xs={24} md={6}>
+          <Col xs={12} sm={10} md={10} lg={6} xl={6}>
             <h4>Về chúng tôi</h4>
             <p>
               <Link
@@ -48,7 +53,7 @@ const FooterClient = () => {
               </Link>
             </p>
             <p>
-              <Link href="/thong-bao">Thông báo</Link>
+              <Link href="/thong-tin">Thông tin</Link>
             </p>
             <p>
               <Link href="/tin-tuc">Tin tức</Link>
@@ -61,7 +66,7 @@ const FooterClient = () => {
             </p>
           </Col>
 
-          <Col xs={24} md={8}>
+          <Col xs={12} sm={24} md={24} lg={8} xl={8}>
             <h4>Theo dõi chúng tôi</h4>
             <div className="social-links">
               <Link

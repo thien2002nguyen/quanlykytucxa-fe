@@ -13,7 +13,7 @@ const LoginAdmin = () => {
   const timeoutIdRef = useRef<NodeJS.Timeout | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
-  const { loading, error } = useAppSelector((state) => state.authAdminSlice);
+  const { loading } = useAppSelector((state) => state.authSlice);
 
   useEffect(() => {
     return () => {
@@ -26,12 +26,10 @@ const LoginAdmin = () => {
   const onFinish: FormProps<ParameterLogin>["onFinish"] = async (
     values: ParameterLogin
   ) => {
-    const response = await dispatch(loginAction(values));
+    const response: any = await dispatch(loginAction(values));
 
-    console.log("response: ", response);
-
-    if (error) {
-      toast.error("🦄 Đăng nhập thất bại.", { autoClose: 2000 });
+    if (response.payload?.error) {
+      toast.error(`🦄 ${response.payload?.error}`);
     } else {
       toast.success("🦄 Đăng nhập thành công.", { autoClose: 2000 });
 
@@ -65,7 +63,7 @@ const LoginAdmin = () => {
             preview={false}
           />
 
-          <h2>Admin - Quản lý ký túc xá</h2>
+          <h2>ADMIN - QUẢN LÝ KÝ TÚC XÁ</h2>
         </Flex>
 
         <Form.Item

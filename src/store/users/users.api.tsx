@@ -8,16 +8,14 @@ import {
   ParameterPutUser,
   ParameterRegister,
   ParameterGetUser,
+  ParameterVerifyOtp,
+  ParameterChangePassword,
+  ParameterSendOtp,
 } from "./users.type";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 
 const baseUrl = "/users";
 const usersApi = {
-  async register(params: ParameterRegister): Promise<any> {
-    const url = `${baseUrl}/register`;
-    return instanceAxios.post(url, params);
-  },
-
   async postUser(params: ParameterPostUser): Promise<any> {
     const url = `${baseUrl}/moderator`;
     return instanceAxios.post(url, params);
@@ -47,6 +45,27 @@ const usersApi = {
   async getAuthMeUser(): Promise<AuthMeUserResponse> {
     const url = `${baseUrl}/auth-me`;
     return instanceAxios.get(url);
+  },
+
+  // api user account
+  async register(params: ParameterRegister): Promise<any> {
+    const url = `${baseUrl}/register`;
+    return instanceAxios.post(url, params);
+  },
+
+  async verifyOtp(params: ParameterVerifyOtp): Promise<any> {
+    const url = `${baseUrl}/verify-otp`;
+    return instanceAxios.post(url, params);
+  },
+
+  async changePassword(params: ParameterChangePassword): Promise<any> {
+    const url = `${baseUrl}/change-password`;
+    return instanceAxios.post(url, params);
+  },
+
+  async sendOtp(params: ParameterSendOtp): Promise<any> {
+    const url = `${baseUrl}/send-otp`;
+    return instanceAxios.post(url, params);
   },
 };
 

@@ -1,11 +1,11 @@
 import { Result, Button, ConfigProvider } from "antd";
 import Link from "next/link";
 import "./not-found.scss";
-import { themeAntdAdmin } from "@/config/theme";
+import { themeAntdClient } from "@/config/theme";
 
 export default function NotFoundPage() {
   return (
-    <ConfigProvider theme={themeAntdAdmin}>
+    <ConfigProvider theme={themeAntdClient}>
       <div className="not-found-container">
         <Result
           status="404"

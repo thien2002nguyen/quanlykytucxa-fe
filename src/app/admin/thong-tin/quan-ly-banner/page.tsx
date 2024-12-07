@@ -107,7 +107,7 @@ const ManageBanners = () => {
   }, [formAction, dataDetailBanner.data]);
 
   useEffect(() => {
-    dispatch(getBannersAction());
+    dispatch(getBannersAction({}));
   }, [dispatch]);
 
   const handleChangeActive = async (bannerIds: string[], isActive: boolean) => {
@@ -201,7 +201,7 @@ const ManageBanners = () => {
       messageApi.success(messageSuccess);
       setCurrentFile([]);
       setIsModalOpen(false);
-      dispatch(getBannersAction());
+      dispatch(getBannersAction({}));
     }
 
     setIsLoading(false);
@@ -217,7 +217,7 @@ const ManageBanners = () => {
     } else {
       messageApi.success("Xóa banner thành công.");
       setModalDelete(undefined);
-      dispatch(getBannersAction());
+      dispatch(getBannersAction({}));
     }
 
     setIsDeleteLoading(false);
@@ -281,6 +281,7 @@ const ManageBanners = () => {
         onOk={handleSubmit}
         onCancel={handleCancel}
         confirmLoading={isLoading}
+        centered
       >
         <Flex vertical gap={12}>
           <p>Hình ảnh banner</p>
@@ -298,6 +299,7 @@ const ManageBanners = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
         <p>Bạn có chắc chắn muốn xóa banner này không?</p>
       </Modal>

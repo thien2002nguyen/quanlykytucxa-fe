@@ -1,0 +1,70 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.wrapper-group-button {
+  background-color: #f5f5f5;
+  padding: 48px 0;
+
+  @media (max-width: $laptopM) {
+    padding: 24px 0;
+  }
+
+  .list-title {
+    text-align: center;
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    color: $color-main;
+    margin-bottom: 24px;
+    font-weight: 600;
+
+    @media (max-width: $laptopM) {
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: $tablet) {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+  }
+
+  .list-button {
+    .btn-item {
+      box-shadow: 0 0 10px rgba($color: $color-black, $alpha: 0.4);
+      font-size: 1.8rem;
+      height: 48px;
+      background-image: radial-gradient(circle, #cd0101 70%, #ff6b6b 100%);
+      border-radius: 12px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Thêm hiệu ứng cho transform và box-shadow */
+
+      @media (max-width: $laptop) {
+        height: 40px;
+        font-size: 1.6rem;
+      }
+
+      @media (max-width: $tabletL) {
+        height: 40px;
+        font-size: 1.4rem;
+      }
+
+      @media (max-width: $tabletL) {
+        height: 40px;
+        font-size: 1.4rem;
+      }
+    }
+
+    .btn-item:hover {
+      transform: translateY(-8px); /* Di chuyển cao lên 8px khi hover */
+      box-shadow: 0 4px 15px rgba($color: $color-black, $alpha: 0.5); /* Tăng bóng đổ khi hover */
+      font-weight: 600;
+
+      @media (max-width: $laptopM) {
+        transform: translateY(-6px); /* Di chuyển cao lên 8px khi hover */
+      }
+
+      @media (max-width: $tablet) {
+        transform: translateY(-4px); /* Di chuyển cao lên 8px khi hover */
+      }
+    }
+  }
+}

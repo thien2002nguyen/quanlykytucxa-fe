@@ -1,6 +1,7 @@
-import { Button, Col, Flex, Row } from "antd";
+import { Col, Flex, Row } from "antd";
 import Link from "next/link";
 import React from "react";
+import "./style.scss";
 
 // Định nghĩa kiểu dữ liệu Introduction
 export type Introduction = {
@@ -26,7 +27,7 @@ const IntroductionHome = async () => {
   const dataIntroduction = await getIntroduction();
 
   return (
-    <div>
+    <div className="wrapper-introduction-home">
       <Row
         gutter={[
           { sm: 16, md: 24, lg: 32 },
@@ -37,8 +38,8 @@ const IntroductionHome = async () => {
           <iframe
             src={dataIntroduction.youtubeUrl}
             width="100%"
-            height="330"
             allow="encrypted-media"
+            className="ifram-video-introduction"
             title="Video giới thiệu của Đại học Kiến trúc Đà Nẵng"
           />
         </Col>
@@ -47,6 +48,7 @@ const IntroductionHome = async () => {
             <h2>{dataIntroduction.title}</h2>
             <p>{dataIntroduction.description}</p>
             <Link
+              className="btn-see-more"
               href={{
                 pathname: "/gioi-thieu",
                 query: { type: "ky-tuc-xa-dau" },

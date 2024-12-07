@@ -4,6 +4,7 @@ import {
   getDetailUserAction,
   getAuthMeUserAction,
   putUserAction,
+  verifyOtpAction,
 } from "./users.action";
 import {
   UserResponse,
@@ -11,6 +12,7 @@ import {
   UsersState,
   DetailUserResponse,
   AuthMeUserResponse,
+  VerifyOtp,
 } from "./users.type";
 import { MetaPagination } from "@/utils/contants";
 
@@ -30,6 +32,12 @@ const initialState: UsersState = {
 
   dataAuthMeUser: {
     data: {} as User,
+    loading: false,
+    error: undefined,
+  },
+
+  dataVerifyOtp: {
+    data: {} as VerifyOtp,
     loading: false,
     error: undefined,
   },
@@ -71,7 +79,7 @@ const usersSlice = createSlice({
       };
     });
 
-    //----------get detail users----------
+    //----------get detail user----------
     builder.addCase(getDetailUserAction.pending, (state) => {
       state.dataDetailUser = {
         ...state.dataDetailUser,
@@ -162,9 +170,31 @@ const usersSlice = createSlice({
       }
     );
 
-    builder.addCase(putUserAction.rejected, (state, action) => {
-      state.dataUsers = {
-        ...state.dataUsers,
+    //----------verify otp user----------
+    builder.addCase(verifyOtpAction.pending, (state) => {
+      state.dataVerifyOtp = {
+        ...state.dataVerifyOtp,
+        loading: true,
+        error: undefined,
+      };
+    });
+
+    builder.addCase(
+      verifyOtpAction.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        // Cập nhật state với dữ liệu từ action.payload
+        state.dataVerifyOtp = {
+          ...state.dataVerifyOtp,
+          data: action.payload.data,
+          loading: false,
+          error: undefined,
+        };
+      }
+    );
+
+    builder.addCase(verifyOtpAction.rejected, (state, action) => {
+      state.dataVerifyOtp = {
+        ...state.dataVerifyOtp,
         loading: false,
         error: action.error.message || "Lấy dữ liệu thất bại.",
       };

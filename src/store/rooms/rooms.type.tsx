@@ -1,6 +1,7 @@
-import { MetaPagination } from "@/utils/contants";
+import { MetaPagination, ParameterGet } from "@/utils/contants";
 
 export interface DeviceItem {
+  _id: string;
   deviceName: string;
   quantity: number;
   status: boolean;
@@ -26,11 +27,19 @@ export type Room = {
   roomBlockId: RoomBlock;
   roomTypeId: RoomType;
   device: DeviceItem[];
-  thumbnail?: string;
-  images?: string[];
+  thumbnail: string;
+  images: string[];
   isActive: boolean;
   createdAt: string;
+  roomSlug: string;
+  registeredStudents: number;
 };
+
+export enum FilterRoomEnum {
+  ALL = "all",
+  AVAILABLE = "available",
+  FULL = "full",
+}
 
 export type RoomsResponse = {
   data: Room[];
@@ -40,6 +49,10 @@ export type RoomsResponse = {
 export type DetailRoomResponse = {
   data: Room;
 };
+
+export interface ParameterGetRoom extends ParameterGet {
+  filter?: FilterRoomEnum;
+}
 
 export interface ParameterPostRoom {
   roomName?: string;

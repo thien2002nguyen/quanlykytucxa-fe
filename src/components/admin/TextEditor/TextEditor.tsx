@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });

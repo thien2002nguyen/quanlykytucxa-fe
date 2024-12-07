@@ -24,13 +24,6 @@ export interface DetailUserResponse {
 
 export interface AuthMeUserResponse extends DetailUserResponse {}
 
-export interface ParameterRegister {
-  userName: string;
-  email: string;
-  phoneNumber: string;
-  studentCode: string;
-}
-
 export interface ParameterPostUser {
   userName?: string;
   email?: string;
@@ -46,6 +39,35 @@ export interface ParameterPutUser extends ParameterPostUser {
 
 export interface ParameterGetUser extends ParameterGet {
   role?: RoleAuth;
+}
+
+// type user account
+export interface ParameterRegister {
+  userName: string;
+  email: string;
+  phoneNumber: string;
+  studentCode: string;
+}
+
+export interface ParameterSendOtp {
+  email: string;
+  studentCode: string;
+}
+
+export interface ParameterVerifyOtp {
+  email: string;
+  studentCode?: string;
+  otp: string;
+}
+
+export interface ParameterChangePassword {
+  otpAccessToken: string;
+  password: string;
+}
+
+export interface VerifyOtp {
+  otpVerified: boolean;
+  otpAccessToken: string;
 }
 
 export interface UsersState {
@@ -64,6 +86,12 @@ export interface UsersState {
 
   dataAuthMeUser: {
     data: User;
+    loading: boolean;
+    error?: string;
+  };
+
+  dataVerifyOtp: {
+    data: VerifyOtp;
     loading: boolean;
     error?: string;
   };

@@ -23,7 +23,7 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { PAGE_SIZE_OPTIONS, ParameterGet, SortEnum } from "@/utils/contants";
+import { PAGE_SIZE_OPTIONS, SortEnum } from "@/utils/contants";
 import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
 import dayjs from "dayjs";
@@ -33,6 +33,7 @@ import {
   getRoomsAction,
   putRoomAction,
 } from "@/store/rooms/rooms.action";
+import { FilterRoomEnum, ParameterGetRoom } from "@/store/rooms/rooms.type";
 
 const customLocale: PaginationProps["locale"] = {
   items_per_page: "/ Trang",
@@ -44,6 +45,7 @@ interface DataType {
   key: string;
   roomName: string;
   maximumCapacity: number;
+  registeredStudents: number;
   floor: number;
   roomBlock: string;
   roomType: string;
@@ -66,9 +68,16 @@ const columns: TableProps<DataType>["columns"] = [
     key: "roomName",
   },
   {
-    title: "Sức chứa tối đa (Người)",
+    title: "Sức chứa",
     dataIndex: "maximumCapacity",
     key: "maximumCapacity",
+    align: "center",
+  },
+  {
+    title: "Đang ở",
+    dataIndex: "registeredStudents",
+    key: "registeredStudents",
+    align: "center",
   },
   {
     title: "Dãy phòng",
@@ -90,7 +99,7 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "isActive",
     key: "isActive",
     align: "center",
-    width: 160,
+    width: 120,
   },
   {
     title: "Ngày tạo",
@@ -117,11 +126,12 @@ const ManageRooms = () => {
 
   const { dataRooms } = useAppSelector((state) => state.roomsSlice);
 
-  const [parameters, setParameters] = useState<ParameterGet>({
+  const [parameters, setParameters] = useState<ParameterGetRoom>({
     sort: (searchParams.get("sort") as SortEnum) || SortEnum.DESC,
     search: searchParams.get("search") || undefined,
     limit: Number(searchParams.get("limit")) || undefined,
     page: Number(searchParams.get("page")) || undefined,
+    filter: (searchParams.get("filter") as FilterRoomEnum) || undefined,
   });
   const [searchKey, setSearchKey] = useState<string>("");
 
@@ -134,6 +144,7 @@ const ManageRooms = () => {
       search: searchParams.get("search") || undefined,
       limit: Number(searchParams.get("limit")) || undefined,
       page: Number(searchParams.get("page")) || undefined,
+      filter: (searchParams.get("filter") as FilterRoomEnum) || undefined,
     };
 
     setSearchKey(searchParams.get("search") || "");
@@ -168,6 +179,7 @@ const ManageRooms = () => {
     stt: ((parameters?.page || 1) - 1) * (parameters?.limit || 10) + index + 1,
     roomName: item.roomName,
     maximumCapacity: item.maximumCapacity,
+    registeredStudents: item.registeredStudents,
     roomBlock: item.roomBlockId?.name,
     floor: item.floor,
     roomType: item.roomTypeId?.type,
@@ -288,6 +300,7 @@ const ManageRooms = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
         <p>Bạn có chắc chắn muốn xóa phòng này không?</p>
       </Modal>

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 
 // Các URL không cần làm mới token tự động
-const routerNotRefreshed = ["/admin/dang-nhap"];
+const routerNotRefreshed = ["admin/dang-nhap", "truy-cap"];
 
 // Thiết lập baseURL từ biến môi trường
 export const baseURL = process.env.NEXT_PUBLIC_API_URL;
@@ -31,7 +31,7 @@ function handleTokenError() {
   // Điều hướng đến trang đăng nhập của admin
   window.location.href = currentURL.pathname.includes("admin")
     ? `${currentURL.origin}/admin/dang-nhap`
-    : `/dang-nhap`;
+    : `/truy-cap`;
 }
 
 // Interceptor xử lý trước khi gửi yêu cầu
@@ -68,7 +68,6 @@ instanceAxios.interceptors.response.use(
   },
   async (error: AxiosError) => {
     const originalRequest = error.config as AxiosRequestConfig;
-    const currentURL = new URL(window.location.href);
 
     // Chỉ làm mới token cho admin
     const storageKey = "persist:auth-kytucxadau";

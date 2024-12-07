@@ -221,6 +221,7 @@ const RoomBlock = () => {
         onOk={handleSubmit}
         onCancel={handleCancel}
         confirmLoading={isLoading}
+        centered
       >
         <Form
           name="form-room-block"
@@ -250,8 +251,9 @@ const RoomBlock = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
-        <p>Bạn có chắc chắn muốn xóa roomBlock này không?</p>
+        <p>Bạn có chắc chắn muốn xóa dãy phòng này không?</p>
       </Modal>
     </div>
   );

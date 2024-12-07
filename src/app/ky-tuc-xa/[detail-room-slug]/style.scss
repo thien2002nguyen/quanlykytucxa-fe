@@ -1,0 +1,342 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.wrapper-detail-room-page {
+  .room-name-responsive {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    color: $color-main;
+    text-transform: capitalize;
+    text-align: center;
+    display: none;
+    -webkit-line-clamp: 1; /* Giới hạn số dòng */
+    line-clamp: 1;
+    -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+    overflow: hidden; /* Ẩn phần nội dung vượt quá */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+    @media (max-width: $laptopM) {
+      display: -webkit-box; /* Dùng cho Webkit-based browsers */
+      display: block;
+    }
+
+    @media (max-width: $tabletL) {
+      font-size: 2.5rem;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: $tablet) {
+      font-size: 2rem;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: $mobileL) {
+      font-size: 1.8rem;
+      margin-bottom: 12px;
+    }
+  }
+
+  &-list-image {
+    .node-list-image {
+      padding-top: 10px;
+
+      .node-item-image {
+        opacity: 0.6;
+
+        &.active {
+          opacity: 1;
+        }
+      }
+    }
+
+    .item-image,
+    .node-item-image {
+      .ant-image {
+        width: 100%;
+        height: max-content;
+      }
+
+      .ant-image-img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .item-image {
+      .ant-image-img {
+        height: 375px;
+
+        @media (max-width: $tabletL) {
+          height: 300px;
+        }
+
+        @media (max-width: $tablet) {
+          height: 225px;
+        }
+
+        @media (max-width: $mobileL) {
+          height: 150px;
+        }
+      }
+    }
+
+    .node-item-image {
+      .ant-image-img {
+        height: 80px;
+        cursor: pointer;
+
+        @media (max-width: $tabletL) {
+          height: 70px;
+        }
+
+        @media (max-width: $tablet) {
+          height: 60px;
+        }
+
+        @media (max-width: $mobileL) {
+          height: 50px;
+        }
+      }
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      width: 40px;
+      height: 40px;
+
+      @media (max-width: $tablet) {
+        width: 30px;
+        height: 30px;
+      }
+
+      @media (max-width: $mobileL) {
+        width: 25px;
+        height: 25px;
+      }
+    }
+
+    /* Nút bấm tiếp theo */
+    .swiper-button-next {
+      background-image: url("/icons/arrow-next.svg");
+    }
+
+    /* Nút bấm trước */
+    .swiper-button-prev {
+      background-image: url("/icons/arrow-prev.svg");
+    }
+
+    /* Ẩn icon mặc định của Swiper */
+    .swiper-button-next::before,
+    .swiper-button-next::after,
+    .swiper-button-prev::after,
+    .swiper-button-prev::before {
+      display: none;
+    }
+  }
+
+  &-infomation {
+    .room-name {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 32px;
+      color: $color-main;
+      text-transform: capitalize;
+      display: -webkit-box; /* Dùng cho Webkit-based browsers */
+      -webkit-line-clamp: 1; /* Giới hạn số dòng */
+      line-clamp: 1;
+      -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+      overflow: hidden; /* Ẩn phần nội dung vượt quá */
+      text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+      @media (max-width: $laptopM) {
+        display: none;
+      }
+    }
+
+    .room-type,
+    .room-block,
+    .room-maximum,
+    .room-price {
+      font-size: 1.8rem;
+      color: $color-black;
+      margin-bottom: 16px;
+      font-weight: 400;
+      color: $color-black;
+      display: -webkit-box; /* Dùng cho Webkit-based browsers */
+      -webkit-line-clamp: 1; /* Giới hạn số dòng */
+      line-clamp: 1;
+      -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+      overflow: hidden; /* Ẩn phần nội dung vượt quá */
+      text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+      @media (max-width: $tabletL) {
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+      }
+
+      @media (max-width: $tablet) {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+      }
+
+      strong {
+        color: $color-main;
+      }
+    }
+
+    .title-room-device {
+      display: inline-block;
+      font-size: 1.8rem;
+      color: $color-main;
+      margin-bottom: 8px;
+
+      @media (max-width: $tabletL) {
+        font-size: 1.6rem;
+      }
+
+      @media (max-width: $tablet) {
+        font-size: 1.4rem;
+      }
+    }
+
+    .room-device {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      padding: 12px;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+
+      @media (max-width: $tabletL) {
+        margin-bottom: 24px;
+      }
+
+      @media (max-width: $tablet) {
+        margin-bottom: 18px;
+      }
+
+      @media (max-width: $mobileL) {
+        margin-bottom: 12px;
+      }
+
+      .item-device {
+        flex: 1 1 calc((100% - 12px) / 2);
+        max-width: calc((100% - 12px) / 2);
+        border-radius: 4px;
+        padding: 4px;
+        box-sizing: border-box;
+        border: 2px solid $color-main;
+
+        @media (max-width: $tablet) {
+          flex: 1 1 100%;
+          max-width: 100%;
+        }
+
+        .name-device {
+          font-size: 1.6rem;
+          font-weight: 700;
+          text-align: center;
+          color: $color-main;
+          margin-bottom: 4px;
+          display: -webkit-box; /* Dùng cho Webkit-based browsers */
+          -webkit-line-clamp: 1; /* Giới hạn số dòng */
+          line-clamp: 1;
+          -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+          overflow: hidden; /* Ẩn phần nội dung vượt quá */
+          text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+          @media (max-width: $tabletL) {
+            font-size: 1.4rem;
+          }
+        }
+
+        .status-device,
+        .quantity-device {
+          font-size: 1.4rem;
+          font-weight: 400;
+          color: $color-black;
+          display: -webkit-box; /* Dùng cho Webkit-based browsers */
+          -webkit-line-clamp: 1; /* Giới hạn số dòng */
+          line-clamp: 1;
+          -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+          overflow: hidden; /* Ẩn phần nội dung vượt quá */
+          text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+          strong {
+            color: $color-main;
+          }
+
+          @media (max-width: $tabletL) {
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+    .btn-register-room {
+      text-transform: capitalize !important;
+      font-weight: 600;
+
+      @media (max-width: $tabletL) {
+        font-weight: 500;
+      }
+
+      @media (max-width: $mobileL) {
+        font-weight: 400;
+      }
+    }
+  }
+
+  &-description {
+    margin-top: 16px;
+
+    @media (max-width: $tabletL) {
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: $tablet) {
+      margin-bottom: 8px;
+    }
+
+    &-title {
+      font-size: 1.8rem;
+      text-align: center;
+      font-weight: 700;
+      color: $color-main;
+      margin-bottom: 6px;
+
+      @media (max-width: $tabletL) {
+        font-size: 1.6rem;
+      }
+
+      @media (max-width: $tablet) {
+        font-size: 1.4rem;
+      }
+    }
+
+    &-main {
+      text-align: justify;
+      margin-bottom: 6px;
+      display: -webkit-box; /* Dùng cho Webkit-based browsers */
+      -webkit-line-clamp: 4; /* Giới hạn số dòng */
+      line-clamp: 4;
+      -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+      overflow: hidden; /* Ẩn phần nội dung vượt quá */
+      text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+      &.show {
+        -webkit-line-clamp: unset; /* Giới hạn số dòng */
+        line-clamp: unset;
+      }
+    }
+
+    .btn-see-more {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

@@ -14,6 +14,7 @@ export interface ParameterGet {
   search?: string;
   limit?: number;
   page?: number;
+  isClient?: boolean;
 }
 
 export interface MetaPagination {
@@ -38,3 +39,15 @@ export const dayOfWeekOptions = [
   { value: "saturday", label: "Thứ 7" },
   { value: "sunday", label: "Chủ nhật" },
 ];
+
+export const IMAGE_NOT_FOUND = "/images/404_not_found.jpg";
+export const IMAGE_DEFAULT_NOTIFICATION =
+  "/images/image_default_notification.png";
+
+export enum ActionAuthUser {
+  SIGN_IN = "signIn",
+  SIGN_UP = "signUp",
+  RESET_PASSWORD = "resetPassword",
+  OTP_AUTHENTICATION = "otpAuthentication",
+  CHANGE_PASSWORD = "changePassword",
+}

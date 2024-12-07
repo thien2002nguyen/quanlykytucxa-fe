@@ -1,0 +1,31 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.wrapper-infomation-and-news {
+  padding: 32px 0;
+
+  .title {
+    margin-bottom: 16px;
+    border-bottom: 2px solid $color-main;
+    padding-bottom: 8px;
+
+    .title-text {
+      color: $color-main;
+      font-size: 2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .btn-see-more {
+      padding: 0;
+      color: $color-main;
+
+      &:hover,
+      &:focus,
+      &:active {
+        background-color: $color-white !important;
+        color: $color-hover-main !important;
+      }
+    }
+  }
+}

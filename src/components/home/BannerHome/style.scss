@@ -4,6 +4,18 @@
 .wrapper-banner-homepage {
   height: 500px;
 
+  @media (max-width: $laptopM) {
+    height: 400px;
+  }
+
+  @media (max-width: $tabletL) {
+    height: 300px;
+  }
+
+  @media (max-width: $mobileL) {
+    height: 225px;
+  }
+
   &-swiper {
     height: 100%;
 
@@ -22,24 +34,33 @@
     background: $color-gray;
   }
 
-  /* Nút bấm tiếp theo */
-  .swiper-button-next {
-    background-image: url("/icons/arrow-next.svg");
+  .swiper-button-next,
+  .swiper-button-prev {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     width: 40px;
     height: 40px;
+
+    @media (max-width: $tablet) {
+      width: 30px;
+      height: 30px;
+    }
+
+    @media (max-width: $mobileL) {
+      width: 25px;
+      height: 25px;
+    }
+  }
+
+  /* Nút bấm tiếp theo */
+  .swiper-button-next {
+    background-image: url("/icons/arrow-next.svg");
   }
 
   /* Nút bấm trước */
   .swiper-button-prev {
     background-image: url("/icons/arrow-prev.svg");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 40px;
-    height: 40px;
   }
 
   /* Ẩn icon mặc định của Swiper */

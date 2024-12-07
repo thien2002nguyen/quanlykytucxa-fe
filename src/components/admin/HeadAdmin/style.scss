@@ -12,19 +12,24 @@
     }
   }
 
-  .avatar {
-    margin-left: 12px;
-  }
+  .admin-info {
+    flex: 8;
 
-  .admin-name {
-    margin-left: 10px;
-    font-size: 1.8rem;
-    font-weight: 500;
-    white-space: nowrap;
-    text-transform: capitalize;
+    .avatar {
+      margin-left: 12px;
+    }
+
+    .admin-name {
+      margin-left: 10px;
+      font-size: 1.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+      text-transform: capitalize;
+    }
   }
 
   .toggle-button {
+    flex: 1;
     margin-left: auto;
   }
 }

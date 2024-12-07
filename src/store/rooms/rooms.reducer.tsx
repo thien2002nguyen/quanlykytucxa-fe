@@ -125,7 +125,7 @@ const roomsSlice = createSlice({
       state.dataRooms = {
         ...state.dataRooms,
         loading: false,
-        error: action.error.message || "Lấy dữ liệu thất bại.",
+        error: action.error.message || "Cập nhật dữ liệu thất bại.",
       };
     });
   },

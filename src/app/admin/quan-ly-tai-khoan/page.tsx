@@ -184,6 +184,7 @@ const ManageUser = () => {
         checkedChildren="Bình thường"
         unCheckedChildren="Đã khóa"
         checked={!item.isBlocked}
+        disabled={item.role === RoleAuth.ADMIN}
         onChange={async (checked) => {
           await dispatch(
             putUserAction({
@@ -328,6 +329,7 @@ const ManageUser = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
         <p>Bạn có chắc chắn muốn xóa tài khoản này không?</p>
       </Modal>

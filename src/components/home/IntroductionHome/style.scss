@@ -1,0 +1,85 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.wrapper-introduction-home {
+  padding: 32px 0;
+
+  @media (max-width: $laptopM) {
+    padding: 24px 0;
+  }
+
+  .ifram-video-introduction {
+    height: 320px;
+    border-radius: 20px;
+
+    @media (max-width: $tablet) {
+      height: 240px;
+    }
+
+    @media (max-width: $mobileL) {
+      height: 200px;
+    }
+  }
+
+  h2 {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    color: $color-main;
+
+    @media (max-width: $laptopM) {
+      font-size: 2rem;
+    }
+
+    @media (max-width: $tablet) {
+      font-size: 1.8rem;
+    }
+  }
+
+  p {
+    font-size: 1.7rem;
+    text-align: justify;
+    display: -webkit-box; /* Dùng cho Webkit-based browsers */
+    -webkit-line-clamp: 7; /* Giới hạn số dòng */
+    line-clamp: 7;
+    -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+    overflow: hidden; /* Ẩn phần nội dung vượt quá */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+    @media (max-width: $laptopM) {
+      font-size: 1.5rem;
+    }
+
+    @media (max-width: $tablet) {
+      font-size: 1.4rem;
+    }
+  }
+
+  .btn-see-more {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s;
+    padding: 0 15px;
+    line-height: 32px;
+    font-size: 1.4rem;
+    height: 32px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    background-color: $color-main;
+    border-color: $color-main;
+    color: #fff;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $color-hover-main;
+    }
+  }
+}

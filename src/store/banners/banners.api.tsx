@@ -7,11 +7,16 @@ import {
   ParameterPostBanner,
   ParameterPutBanner,
 } from "./banners.type";
+import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 
 const baseUrl = "/banners";
 const bannersApi = {
-  async getBanners(): Promise<BannersResponse> {
-    const url = `${baseUrl}`;
+  async getBanners(params: { isClient?: boolean }): Promise<BannersResponse> {
+    let newParams;
+    if (params.isClient) {
+      newParams = cleanAndSerializeQueryParams(params);
+    }
+    const url = `${baseUrl}?${newParams}`;
     return instanceAxios.get(url);
   },
 

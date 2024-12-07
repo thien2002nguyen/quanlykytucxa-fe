@@ -318,6 +318,7 @@ const ManageStudent = () => {
         onOk={handleImportFile}
         onCancel={() => setModalImportFile(false)}
         confirmLoading={isDeleteLoading}
+        centered
       >
         <Flex vertical gap={8}>
           <Upload maxCount={1} onChange={handleUploadChange}>
@@ -342,6 +343,7 @@ const ManageStudent = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
         <p>Bạn có chắc chắn muốn xóa sinh viên này không?</p>
       </Modal>

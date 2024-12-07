@@ -236,6 +236,7 @@ const RoomType = () => {
         onOk={handleSubmit}
         onCancel={handleCancel}
         confirmLoading={isLoading}
+        centered
       >
         <Form
           name="form-room-type"
@@ -302,8 +303,9 @@ const RoomType = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
-        <p>Bạn có chắc chắn muốn xóa roomType này không?</p>
+        <p>Bạn có chắc chắn muốn xóa loại phòng này không?</p>
       </Modal>
     </div>
   );

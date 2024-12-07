@@ -9,7 +9,6 @@ export type Service = {
   _id: string;
   name: string;
   price: number;
-  unit: string;
   isActive: boolean;
   schedule: ScheduleItem[];
   createdAt: string;
@@ -26,7 +25,6 @@ export type DetailServiceResponse = {
 export interface ParameterPostService {
   name: string;
   price: number;
-  unit: string;
   schedule: ScheduleItem[];
 }
 

@@ -1,0 +1,93 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.link-card-infomation-or-news {
+  color: $color-black;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $color-black;
+
+    .wrapper-infomation-or-news-card-content-title {
+      color: $color-main;
+      transition: color 0.3s ease;
+    }
+  }
+}
+
+.wrapper-infomation-or-news-card {
+  &-image {
+    flex: 1;
+    width: 100%;
+    height: 70px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+
+    @media (max-width: $tablet) {
+      height: 50px;
+    }
+
+    img {
+      transition: transform 0.3s ease; // Thêm animation
+    }
+
+    &:hover img {
+      transform: scale(1.3);
+    }
+  }
+
+  &-content {
+    flex: 3;
+
+    &-title,
+    &-time,
+    &-description {
+      text-transform: capitalize;
+      display: -webkit-box; /* Dùng cho Webkit-based browsers */
+      -webkit-line-clamp: 1; /* Giới hạn số dòng */
+      line-clamp: 1;
+      -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+      overflow: hidden; /* Ẩn phần nội dung vượt quá */
+      text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+    }
+
+    &-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      line-height: 2.4rem;
+
+      @media (max-width: $tablet) {
+        font-size: 1.6rem;
+        line-height: 2rem;
+      }
+
+      @media (max-width: $tablet) {
+        font-size: 1.4rem;
+        line-height: 1.8rem;
+      }
+    }
+
+    &-time {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 1.2rem;
+      line-height: 1.6rem;
+
+      @media (max-width: $tablet) {
+        font-size: 1.1rem;
+        line-height: 1.4rem;
+      }
+    }
+
+    &-description {
+      font-size: 1.4rem;
+
+      @media (max-width: $tablet) {
+        font-size: 1.3rem;
+      }
+    }
+  }
+}

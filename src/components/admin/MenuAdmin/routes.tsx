@@ -2,12 +2,13 @@ import { RoleAuth } from "@/store/auth/auth.type";
 import {
   ShareAltOutlined,
   LineChartOutlined,
-  ReadOutlined,
   UserOutlined,
   SettingOutlined,
   HomeOutlined,
   BookOutlined,
   InfoCircleOutlined,
+  GroupOutlined,
+  FormOutlined,
 } from "@ant-design/icons";
 
 export interface MenuItem {
@@ -46,13 +47,13 @@ export const adminRoutes: MenuItem[] = [
   },
   {
     key: "quan-ly-tai-khoan",
-    icon: <ReadOutlined />,
+    icon: <UserOutlined />,
     label: "Quản lý tài khoản",
     role: RoleAuth.ADMIN,
   },
   {
     key: "quan-ly-sinh-vien",
-    icon: <UserOutlined />,
+    icon: <GroupOutlined />,
     label: "Quản lý sinh viên",
   },
   {
@@ -81,9 +82,28 @@ export const adminRoutes: MenuItem[] = [
     label: "Quản lý tin tức",
   },
   {
-    key: "quan-ly-thong-bao",
+    key: "quan-ly-thong-tin",
     icon: <InfoCircleOutlined />,
-    label: "Quản lý thông báo",
+    label: "Quản lý thông tin",
+  },
+  {
+    key: "quan-ly-thong-tin-hop-dong",
+    icon: <FormOutlined />,
+    label: "Quản lý thông tin hợp đồng",
+    items: [
+      {
+        key: "quan-ly-hop-dong",
+        label: "Quản lý hợp đồng",
+      },
+      {
+        key: "quan-ly-dieu-khoan-hop-dong",
+        label: "Quản lý điều khoản hợp đồng",
+      },
+      {
+        key: "quan-ly-loai-hop-dong",
+        label: "Quản lý loại hợp đồng",
+      },
+    ],
   },
   {
     key: "cai-dat",

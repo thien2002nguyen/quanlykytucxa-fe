@@ -15,7 +15,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   requiredRole,
 }) => {
-  const { user } = useAppSelector((state) => state.authAdminSlice);
+  const { user } = useAppSelector((state) => state.authSlice);
 
   // Nếu người dùng không có quyền truy cập thì hiển thị 403
   if (requiredRole && user.role !== requiredRole) {

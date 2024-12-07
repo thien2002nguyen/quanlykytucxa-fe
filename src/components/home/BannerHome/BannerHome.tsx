@@ -16,6 +16,7 @@ import { getBannersAction } from "@/store/banners/banners.action";
 import LoadingBannerHome from "./LoadingBannerHome";
 
 import "./style.scss";
+import { IMAGE_NOT_FOUND } from "@/utils/contants";
 
 const BannerHome = () => {
   const { dataBanners } = useAppSelector((state) => state.bannersSlice);
@@ -23,7 +24,7 @@ const BannerHome = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getBannersAction());
+    dispatch(getBannersAction({ isClient: true }));
   }, [dispatch]);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ const BannerHome = () => {
           <SwiperSlide key={banner._id}>
             <div className="banner-item">
               <Image
-                src={banner.url}
+                src={banner.url || IMAGE_NOT_FOUND}
                 alt="Banner"
                 fill
                 style={{ objectFit: "cover" }}

@@ -1,0 +1,41 @@
+@import "@/styles/breakpoints.scss";
+@import "@/styles/variables.scss";
+
+.wrapper-room-card {
+  &-title {
+    text-align: center;
+  }
+
+  &-content {
+    p {
+      display: -webkit-box; /* Dùng cho Webkit-based browsers */
+      -webkit-line-clamp: 1; /* Giới hạn số dòng */
+      line-clamp: 1;
+      -webkit-box-orient: vertical; /* Đặt kiểu hiển thị cho các dòng */
+      overflow: hidden; /* Ẩn phần nội dung vượt quá */
+      text-overflow: ellipsis; /* Hiển thị dấu ba chấm */
+
+      @media (max-width: $mobileL) {
+        font-size: 1.3rem;
+      }
+    }
+
+    .ant-image {
+      width: 100%;
+      height: 140px;
+      border-radius: 6px;
+      overflow: hidden;
+
+      .ant-image-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease-in-out;
+
+        &:hover {
+          transform: scale(1.3);
+        }
+      }
+    }
+  }
+}

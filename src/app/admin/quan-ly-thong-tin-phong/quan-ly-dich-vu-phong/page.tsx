@@ -32,7 +32,6 @@ import ScheduleItemComponent from "@/components/form/ScheduleItemComponent/Sched
 interface ServiceInterface {
   name: string;
   price: string;
-  unit: string;
   schedule: ScheduleItem[];
 }
 
@@ -42,7 +41,6 @@ interface DataType {
   key: string;
   name: string;
   price: string;
-  unit: string;
   createdAt: string;
   action: React.ReactNode;
 }
@@ -65,11 +63,6 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "price",
     key: "price",
     align: "center",
-  },
-  {
-    title: "Đơn vị",
-    dataIndex: "unit",
-    key: "unit",
   },
   {
     title: "Ngày tạo",
@@ -106,10 +99,9 @@ const Service = () => {
 
   useEffect(() => {
     if (formAction === FormAction.UPDATE) {
-      const { name, unit, price, schedule } = dataDetailService.data;
+      const { name, price, schedule } = dataDetailService.data;
       formRef.setFieldsValue({
         name,
-        unit,
         price: formatVND(price || 0),
         schedule: schedule?.map((item) => ({
           dayOfWeek: item.dayOfWeek,
@@ -129,7 +121,6 @@ const Service = () => {
     key: item._id,
     name: item.name,
     price: formatVND(item.price),
-    unit: item.unit,
     createdAt: dayjs(item.createdAt).format("HH:mm - DD/MM/YYYY "),
     action: (
       <Space>
@@ -167,7 +158,6 @@ const Service = () => {
         postServiceAction({
           name: formRef.getFieldValue("name"),
           price: parseVND(formRef.getFieldValue("price") || "0"),
-          unit: formRef.getFieldValue("unit"),
           schedule: formRef
             .getFieldValue("schedule")
             .map((item: ScheduleItem) => ({
@@ -182,7 +172,6 @@ const Service = () => {
           id: dataDetailService.data._id,
           name: formRef.getFieldValue("name"),
           price: parseVND(formRef.getFieldValue("price") || "0"),
-          unit: formRef.getFieldValue("unit"),
           schedule: formRef
             .getFieldValue("schedule")
             .map((item: ScheduleItem) => ({
@@ -266,6 +255,7 @@ const Service = () => {
         onOk={handleSubmit}
         onCancel={handleCancel}
         confirmLoading={isLoading}
+        centered
       >
         <Form
           name="form-service"
@@ -275,7 +265,7 @@ const Service = () => {
           layout="vertical"
         >
           <Row gutter={16}>
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item
                 name="name"
                 label="Loại dịch vụ"
@@ -290,7 +280,7 @@ const Service = () => {
               </Form.Item>
             </Col>
 
-            <Col span={8}>
+            <Col span={12}>
               <Form.Item
                 name="price"
                 label="Giá dịch vụ (VND)"
@@ -322,21 +312,6 @@ const Service = () => {
                 />
               </Form.Item>
             </Col>
-
-            <Col span={8}>
-              <Form.Item
-                name="unit"
-                label="Đơn vị"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng nhập đơn vị!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
           </Row>
 
           {/* Phần lịch trình */}
@@ -350,6 +325,7 @@ const Service = () => {
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}
         confirmLoading={isDeleteLoading}
+        centered
       >
         <p>Bạn có chắc chắn muốn xóa dịch vụ này không?</p>
       </Modal>

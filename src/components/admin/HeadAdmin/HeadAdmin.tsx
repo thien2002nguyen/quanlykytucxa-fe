@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button } from "antd";
+import { Avatar, Button, Flex } from "antd";
 import {
   UserOutlined,
   MenuFoldOutlined,
@@ -17,7 +17,7 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
   collapsed,
   toggleCollapsed,
 }) => {
-  const { user } = useAppSelector((state) => state.authAdminSlice);
+  const { user } = useAppSelector((state) => state.authSlice);
 
   const [avatarSrc, setAvatarSrc] = useState<string | undefined>(undefined);
 
@@ -30,7 +30,13 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
   return (
     <div className={`head-admin ${collapsed ? "head-admin--collapsed" : ""}`}>
       {!collapsed && (
-        <>
+        <Flex
+          vertical
+          justify="center"
+          align="center"
+          gap={6}
+          className="admin-info"
+        >
           <Avatar
             src={avatarSrc}
             icon={!avatarSrc && <UserOutlined />}
@@ -43,7 +49,7 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
               ? user.userName?.substring(0, 10) + "..."
               : user.userName || "Admin"}
           </span>
-        </>
+        </Flex>
       )}
       <Button
         type="text"
