@@ -1,3 +1,5 @@
+import { GenderEnum } from "@/store/students/students.type";
+
 export enum FormAction {
   CREATE = "create",
   UPDATE = "update",
@@ -26,8 +28,8 @@ export interface MetaPagination {
 export const PAGE_SIZE_OPTIONS = [5, 10, 50];
 
 export const genderOptions = [
-  { value: "NAM", label: "Nam" },
-  { value: "NU", label: "Nữ" },
+  { value: GenderEnum.nam, label: "Nam" },
+  { value: GenderEnum.nu, label: "Nữ" },
 ];
 
 export const dayOfWeekOptions = [

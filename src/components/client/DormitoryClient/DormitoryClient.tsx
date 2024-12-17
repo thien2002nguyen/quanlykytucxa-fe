@@ -11,6 +11,7 @@ import { logout } from "@/store/auth/auth.reducer";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { themeAntdClient } from "@/config/theme";
+import { getInfomationStudentAction } from "@/store/students/students.action";
 
 const DormitoryClient = ({
   children,
@@ -34,6 +35,10 @@ const DormitoryClient = ({
     }
   }, [dispatch, user._id, isClient]);
 
+  useEffect(() => {
+    dispatch(getInfomationStudentAction());
+  }, [dispatch]);
+
   const handleLogout = () => {
     // Hiển thị thông báo
     toast.success("🦄 Đăng xuất thành công.", { autoClose: 2000 });
@@ -41,7 +46,7 @@ const DormitoryClient = ({
     // Delay 2 giây rồi logout
     setTimeout(() => {
       dispatch(logout());
-      router.push("/");
+      router.push("/truy-cap");
     }, 2000);
   };
 

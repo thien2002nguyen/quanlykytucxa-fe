@@ -1,4 +1,10 @@
 import { MetaPagination, ParameterGet } from "@/utils/contants";
+import { Room } from "../rooms/rooms.type";
+import { Service } from "../services/services.type";
+import { ContractTerm } from "../contract-terms/contract-terms.type";
+import { ContractType } from "../contract-types/contract-types.type";
+import { User } from "../users/users.type";
+import { Student } from "../students/students.type";
 
 export enum TimeUnitEnum {
   YEAR = "year", // Năm
@@ -11,47 +17,53 @@ export enum StatusEnum {
   CONFIRMED = "confirmed", // Đã xác nhận
   PENDING_CANCELLATION = "pending_cancellation", // Đang chờ hủy
   CANCELLED = "cancelled", // Đã hủy
+  EXPIRED = "expired", // Đã quá hạn
 }
 
-export type Room = {
-  roomId: string; // ID của phòng
-  roomName: string; // Tên phòng
+export type RoomType = {
+  roomId: Room; // Thông tin phòng
   price: number; // Giá thuê phòng
 };
 
-export type Service = {
-  serviceId: string; // ID của dịch vụ
+export type ServiceType = {
+  serviceId: Service; // ID của dịch vụ
   name: string; // Tên dịch vụ
   price: number; // Giá dịch vụ
-  status: StatusEnum; // Trạng thái của dịch vụ
-  confirmedAt?: string; // Thời gian xác nhận (không bắt buộc)
+  createdAt?: string; // Thời gian bắt đầu
 };
 
-export type Term = {
-  termId: string; // ID của điều khoản
+export type ContractTermType = {
+  termId: ContractTerm; // ID của điều khoản
   content: string; // Nội dung điều khoản
 };
 
-export type ContractType = {
-  contractTypeId: string; // ID loại hợp đồng
+export interface ContractTypeInterface {
+  contractTypeId: ContractType; // ID loại hợp đồng
   title: string; // Loại hợp đồng
   duration: number; // Thời gian hợp đồng
   unit: TimeUnitEnum; // Đơn vị thời gian
-};
+}
 
 export type Contract = {
   _id: string; // ID hợp đồng
+  fullName: string;
   studentCode: string; // Mã sinh viên
-  room: Room; // Thông tin phòng thuê
-  service: Service[]; // Danh sách dịch vụ liên quan
-  terms: Term[]; // Điều khoản hợp đồng
-  contractType: ContractType; // Thông tin loại hợp đồng
-  startDate?: string; // Ngày bắt đầu (không bắt buộc)
-  endDate?: string; // Ngày kết thúc (không bắt buộc)
-  adminId?: string; // ID quản trị viên tạo hợp đồng
+  email: string;
+  phoneNumber: string;
+  studentInfomation: Student;
+  room: RoomType; // Thông tin phòng thuê
+  service: ServiceType[]; // Danh sách dịch vụ liên quan
+  term: ContractTermType[]; // Điều khoản hợp đồng
+  contractType: ContractTypeInterface; // Thông tin loại hợp đồng
+  startDate?: string; // Ngày bắt đầu hợp đồng
+  endDate?: string; // Ngày kết thúc hợp đồng
+  adminId?: User; // ID quản trị viên tạo hợp đồng
   status: StatusEnum; // Trạng thái hợp đồng
   createdAt: string; // Thời gian tạo hợp đồng
   updatedAt: string; // Thời gian cập nhật hợp đồng
+  approvedDate?: string; // Ngày duyệt hợp đồng
+  checkInDate?: string; // Ngày nhận phòng
+  checkOutDate?: string; // Ngày trả phòng
 };
 
 export interface ParameterGetContract extends ParameterGet {
@@ -68,16 +80,40 @@ export type DetailContractResponse = {
 };
 
 export interface ParameterPostContract {
+  fullName: string; // Tên sinh viên
   studentCode: string; // Mã sinh viên
-  room: Omit<Room, "roomName">; // Thông tin phòng
-  service: Omit<Service, "status" | "confirmedAt">[]; // Danh sách dịch vụ không bao gồm trạng thái và thời gian xác nhận
-  terms: Term[]; // Danh sách điều khoản
-  contractType: Omit<ContractType, "title">; // Loại hợp đồng
-  status: StatusEnum; // Trạng thái
+  email: string; // Email
+  phoneNumber: string; // Số điện thoại
+  room: {
+    roomId: string; // ID của phòng
+    price: number; // Giá thuê phòng
+  }; // Thông tin phòng
+  service?: {
+    serviceId: string; // ID của dịch vụ
+    name: string; // Tên dịch vụ
+    price: number; // Giá dịch vụ
+  }[]; // Danh sách dịch vụ
+  term: {
+    termId: string; // ID của điều khoản
+    content: string; // Nội dung điều khoản
+  }[]; // Danh sách điều khoản
+  contractType: {
+    contractTypeId: string; // ID loại hợp đồng
+    duration: number; // Thời gian hợp đồng
+    unit: TimeUnitEnum; // Đơn vị thời gian
+  }; // Loại hợp đồng
 }
 
-export interface ParameterPutContract extends Partial<ParameterPostContract> {
-  id: string; // ID của hợp đồng cần cập nhật
+export interface ParameterRegisterRoomService {
+  contractId: string;
+  serviceId: string; // ID của dịch vụ
+  name: string; // Tên dịch vụ
+  price: number; // Giá dịch vụ
+}
+
+export interface ParameterCancelRoomService {
+  contractId: string;
+  serviceId: string; // ID của dịch vụ
 }
 
 export interface ContractsState {

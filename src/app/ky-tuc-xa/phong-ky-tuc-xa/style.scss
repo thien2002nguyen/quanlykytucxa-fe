@@ -1,0 +1,30 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.wrapper-room-page {
+  &-tools {
+    @media (max-width: $mobileL) {
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      row-gap: 8px;
+    }
+
+    .input-search-room {
+      width: 160px;
+
+      @media (max-width: $mobileL) {
+        width: 100%;
+      }
+    }
+
+    .select-filter-room {
+      width: 160px;
+
+      @media (max-width: $mobileL) {
+        width: 100%;
+      }
+    }
+  }
+}

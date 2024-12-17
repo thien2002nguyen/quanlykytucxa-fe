@@ -1,4 +1,12 @@
 import { MetaPagination } from "@/utils/contants";
+import { Contract } from "../contracts/contracts.type";
+import { Room } from "../rooms/rooms.type";
+import { User } from "../users/users.type";
+
+export enum GenderEnum {
+  nam = "NAM",
+  nu = "NU",
+}
 
 export type Student = {
   _id: string;
@@ -6,14 +14,16 @@ export type Student = {
   nationalIdCard: string;
   fullName: string;
   dateOfBirth: string;
-  gender: string;
+  gender: GenderEnum;
   takeClass: string;
   department: string;
   address: string;
   enrollmentYear: string;
   createdAt: string;
   updatedAt: string;
-  roomId?: string;
+  userId?: User;
+  roomId?: Room;
+  contractId?: Contract;
 };
 
 export type StudentResponse = {
@@ -36,12 +46,11 @@ export interface ParameterPostStudent {
   nationalIdCard?: string;
   fullName?: string;
   dateOfBirth?: string;
-  gender?: string;
+  gender?: GenderEnum;
   takeClass?: string;
   department?: string;
   address?: string;
   enrollmentYear?: string;
-  roomId?: string;
 }
 
 export interface ParameterPutStudent extends ParameterPostStudent {

@@ -242,6 +242,8 @@ const ContractTerm = () => {
 
       <Modal
         title="Xóa dữ liệu"
+        okText="Xóa"
+        cancelText="Hủy"
         open={modalDelete !== undefined}
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}

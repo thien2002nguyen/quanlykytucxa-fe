@@ -1,7 +1,9 @@
 "use client";
 
 import {
+  Breadcrumb,
   Col,
+  Empty,
   Flex,
   Input,
   Pagination,
@@ -10,7 +12,12 @@ import {
   Select,
 } from "antd";
 import React, { useCallback, useEffect, useState } from "react";
-import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  FilterOutlined,
+  HomeOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import RoomCard from "@/components/card/RoomCard/RoomCard";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -22,6 +29,8 @@ import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryPara
 import { v4 as uuidv4 } from "uuid";
 import LoadingRoomCard from "@/components/card/RoomCard/LoadingRoomCard";
 import { FilterRoomEnum, ParameterGetRoom } from "@/store/rooms/rooms.type";
+import { getRoomTypesAction } from "@/store/room-types/room-types.action";
+import "./style.scss";
 
 const customLocale: PaginationProps["locale"] = {
   items_per_page: "/ Trang",
@@ -34,23 +43,24 @@ const RoomPage = () => {
   const router = useRouter();
 
   const { dataRooms } = useAppSelector((state) => state.roomsSlice);
+  const { dataRoomTypes } = useAppSelector((state) => state.roomTypesSlice);
 
   const [parameters, setParameters] = useState<ParameterGetRoom>({
     sort: (searchParams.get("sort") as SortEnum) || SortEnum.DESC,
     search: searchParams.get("search") || undefined,
     limit: Number(searchParams.get("limit")) || undefined,
     page: Number(searchParams.get("page")) || undefined,
-    filter: (searchParams.get("filter") as FilterRoomEnum) || undefined,
+    roomTypeId: searchParams.get("roomTypeId") || undefined,
     isClient: true,
   });
   const [searchKey, setSearchKey] = useState<string>("");
 
   const [isClient, setIsClient] = useState<boolean>(true);
 
-  const filterRoomOptions = [
-    { label: "Đã đầy", value: FilterRoomEnum.FULL },
-    { label: "Có sẵn", value: FilterRoomEnum.AVAILABLE },
-  ];
+  const filterRoomOptions = dataRoomTypes?.data?.map((item) => ({
+    value: item._id,
+    label: item.type,
+  }));
 
   useEffect(() => {
     setIsClient(false);
@@ -62,7 +72,7 @@ const RoomPage = () => {
       search: searchParams.get("search") || undefined,
       limit: Number(searchParams.get("limit")) || undefined,
       page: Number(searchParams.get("page")) || undefined,
-      filter: (searchParams.get("filter") as FilterRoomEnum) || undefined,
+      roomTypeId: searchParams.get("roomTypeId") || undefined,
       isClient: true,
     };
 
@@ -78,6 +88,10 @@ const RoomPage = () => {
     const queryString = cleanAndSerializeQueryParams(parameters);
     router.replace(`${pathname}?${queryString}`);
   }, [parameters, dispatch, router, pathname]);
+
+  useEffect(() => {
+    dispatch(getRoomTypesAction());
+  }, [dispatch]);
 
   const debouncedSearchKey = useCallback(
     debounce((value: string) => {
@@ -112,15 +126,36 @@ const RoomPage = () => {
     setParameters((prev) => ({
       ...prev,
       page: 1,
-      filter: value,
+      roomTypeId: value,
     }));
   };
 
   return (
-    <div className="wrapper-main-content">
-      <div className="wrapper-main-content-head">
-        <Row gutter={{ xs: 4, sm: 4, md: 8, lg: 16, xl: 16 }}>
-          <Col xs={14} sm={12} md={8} lg={6} xl={6}>
+    <div className="wrapper-main-content wrapper-room-page">
+      <Flex
+        justify="space-between"
+        align="flex-start"
+        className="wrapper-main-content-head"
+      >
+        <Breadcrumb
+          items={[
+            {
+              href: "/",
+              title: <HomeOutlined />,
+            },
+            {
+              title: (
+                <>
+                  <AppstoreOutlined />
+                  <span>Phòng ký túc xá</span>
+                </>
+              ),
+            },
+          ]}
+        />
+
+        <Flex gap={8} className="wrapper-room-page-tools">
+          <div className="input-search-room">
             <Input
               key="search-room-name"
               placeholder="Tìm kiếm phòng..."
@@ -128,70 +163,81 @@ const RoomPage = () => {
               prefix={<SearchOutlined />}
               defaultValue={searchKey}
             />
-          </Col>
+          </div>
 
-          <Col xs={10} sm={8} md={6} lg={4} xl={4}>
+          <div className="select-filter-room">
             <Select
+              getPopupContainer={(triggerNode) => triggerNode.parentNode}
               style={{ width: "100%" }}
-              placeholder="Bộ lọc"
+              placeholder="Loại phòng"
               allowClear
               options={filterRoomOptions}
               suffixIcon={<FilterOutlined />}
               onChange={onChangeFilter}
               value={parameters.filter}
+              maxTagCount="responsive"
             />
-          </Col>
-        </Row>
-      </div>
+          </div>
+        </Flex>
+      </Flex>
 
       <div className="wrapper-main-content-body">
-        <div className="wrapper-main-content-body-list">
-          <Row gutter={[16, 16]}>
-            {isClient &&
-              Array.from({ length: 4 }).map((_, index) => (
-                <Col
-                  key={uuidv4() + index}
-                  xs={24}
-                  sm={12}
-                  md={12}
-                  lg={8}
-                  xl={6}
-                >
-                  <LoadingRoomCard />
-                </Col>
-              ))}
+        {dataRooms.data?.length > 0 ? (
+          <>
+            <div className="wrapper-room-page-list">
+              <Row gutter={[16, 16]}>
+                {isClient &&
+                  Array.from({ length: 4 }).map((_, index) => (
+                    <Col
+                      key={uuidv4() + index}
+                      xs={24}
+                      sm={12}
+                      md={12}
+                      lg={8}
+                      xl={6}
+                    >
+                      <LoadingRoomCard />
+                    </Col>
+                  ))}
 
-            {!isClient &&
-              dataRooms.data?.map((item) => (
-                <Col key={item._id} xs={24} sm={12} md={12} lg={8} xl={6}>
-                  <RoomCard
-                    key={`room-card-${item._id}`}
-                    roomName={item.roomName}
-                    thumbnail={item.thumbnail}
-                    roomType={item.roomTypeId?.type}
-                    roomBlock={item.roomBlockId?.name}
-                    floor={item.floor}
-                    maximumCapacity={item.maximumCapacity}
-                    roomPrice={item.roomTypeId.price}
-                    roomSlug={item.roomSlug}
-                    registeredStudents={item.registeredStudents}
-                  />
-                </Col>
-              ))}
-          </Row>
-        </div>
+                {!isClient &&
+                  dataRooms.data?.map((item) => (
+                    <Col key={item._id} xs={24} sm={12} md={12} lg={8} xl={6}>
+                      <RoomCard
+                        key={`room-card-${item._id}`}
+                        roomName={item.roomName}
+                        thumbnail={item.thumbnail}
+                        roomType={item.roomTypeId?.type}
+                        roomBlock={item.roomBlockId?.name}
+                        floor={item.floor}
+                        maximumCapacity={item.maximumCapacity}
+                        roomPrice={item.roomTypeId.price}
+                        roomSlug={item.roomSlug}
+                        registeredStudents={item.registeredStudents}
+                      />
+                    </Col>
+                  ))}
+              </Row>
+            </div>
 
-        <Flex justify="flex-end" key="dataRooms">
-          <Pagination
-            current={parameters.page || 1}
-            showSizeChanger
-            pageSize={parameters.limit || 12}
-            pageSizeOptions={[8, 12, 64]}
-            onChange={onChangePagination}
-            total={dataRooms.meta?.total}
-            locale={customLocale}
+            <Flex justify="flex-end" key="dataRooms">
+              <Pagination
+                current={parameters.page || 1}
+                showSizeChanger
+                pageSize={parameters.limit || 12}
+                pageSizeOptions={[8, 12, 64]}
+                onChange={onChangePagination}
+                total={dataRooms.meta?.total}
+                locale={customLocale}
+              />
+            </Flex>
+          </>
+        ) : (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={<p>Không có phòng nào</p>}
           />
-        </Flex>
+        )}
       </div>
     </div>
   );

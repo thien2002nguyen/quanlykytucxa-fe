@@ -1,7 +1,7 @@
 import { MetaPagination, ParameterGet } from "@/utils/contants";
 
 export interface DeviceItem {
-  _id: string;
+  _id?: string;
   deviceName: string;
   quantity: number;
   status: boolean;
@@ -52,6 +52,7 @@ export type DetailRoomResponse = {
 
 export interface ParameterGetRoom extends ParameterGet {
   filter?: FilterRoomEnum;
+  roomTypeId?: string;
 }
 
 export interface ParameterPostRoom {

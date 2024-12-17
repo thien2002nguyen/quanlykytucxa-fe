@@ -18,6 +18,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import { GenderEnum } from "@/store/students/students.type";
 
 interface FormProps {
   formAction: FormAction;
@@ -29,7 +30,7 @@ interface StudentInterface {
   nationalIdCard: string;
   fullName: string;
   dateOfBirth: dayjs.Dayjs | string;
-  gender: string;
+  gender: GenderEnum;
   takeClass: string;
   department: string;
   address: string;
@@ -220,7 +221,11 @@ const FormStudent = ({ formAction, onBack }: FormProps) => {
                 },
               ]}
             >
-              <Select placeholder="Chọn giới tính" options={genderOptions} />
+              <Select
+                getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                placeholder="Chọn giới tính"
+                options={genderOptions}
+              />
             </Form.Item>
           </Col>
 

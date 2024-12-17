@@ -313,7 +313,11 @@ const ContractType = () => {
                   },
                 ]}
               >
-                <Select options={timeUnitOptions} placeholder="Chọn đơn vị" />
+                <Select
+                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                  options={timeUnitOptions}
+                  placeholder="Chọn đơn vị"
+                />
               </Form.Item>
             </Col>
           </Row>

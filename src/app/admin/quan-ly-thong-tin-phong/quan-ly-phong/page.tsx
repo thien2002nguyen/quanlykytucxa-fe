@@ -9,6 +9,7 @@ import {
   Modal,
   Pagination,
   PaginationProps,
+  Select,
   Space,
   Switch,
   Table,
@@ -34,6 +35,7 @@ import {
   putRoomAction,
 } from "@/store/rooms/rooms.action";
 import { FilterRoomEnum, ParameterGetRoom } from "@/store/rooms/rooms.type";
+import { getRoomTypesAction } from "@/store/room-types/room-types.action";
 
 const customLocale: PaginationProps["locale"] = {
   items_per_page: "/ Trang",
@@ -125,18 +127,24 @@ const ManageRooms = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const { dataRooms } = useAppSelector((state) => state.roomsSlice);
+  const { dataRoomTypes } = useAppSelector((state) => state.roomTypesSlice);
 
   const [parameters, setParameters] = useState<ParameterGetRoom>({
     sort: (searchParams.get("sort") as SortEnum) || SortEnum.DESC,
     search: searchParams.get("search") || undefined,
     limit: Number(searchParams.get("limit")) || undefined,
     page: Number(searchParams.get("page")) || undefined,
-    filter: (searchParams.get("filter") as FilterRoomEnum) || undefined,
+    roomTypeId: searchParams.get("roomTypeId") || undefined,
   });
   const [searchKey, setSearchKey] = useState<string>("");
 
   const [modalDelete, setModalDelete] = useState<string | undefined>(undefined);
   const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+
+  const filterRoomOptions = dataRoomTypes?.data?.map((item) => ({
+    value: item._id,
+    label: item.type,
+  }));
 
   useEffect(() => {
     const newParam = {
@@ -144,7 +152,7 @@ const ManageRooms = () => {
       search: searchParams.get("search") || undefined,
       limit: Number(searchParams.get("limit")) || undefined,
       page: Number(searchParams.get("page")) || undefined,
-      filter: (searchParams.get("filter") as FilterRoomEnum) || undefined,
+      roomTypeId: searchParams.get("roomTypeId") || undefined,
     };
 
     setSearchKey(searchParams.get("search") || "");
@@ -160,6 +168,10 @@ const ManageRooms = () => {
     router.replace(`${pathname}?${queryString}`);
   }, [parameters, dispatch, router, pathname]);
 
+  useEffect(() => {
+    dispatch(getRoomTypesAction());
+  }, [dispatch]);
+
   const debouncedSearchKey = useCallback(
     debounce((value: string) => {
       setSearchKey(value);
@@ -172,6 +184,14 @@ const ManageRooms = () => {
     }, 1000),
     []
   );
+
+  const onChangeFilter = (value: string | undefined) => {
+    setParameters((prev) => ({
+      ...prev,
+      page: 1,
+      roomTypeId: value,
+    }));
+  };
 
   const dataSource: DataType[] = dataRooms.data.map((item, index) => ({
     id: item._id,
@@ -253,6 +273,16 @@ const ManageRooms = () => {
       <HeadAdminContent
         title="Danh sách phòng"
         extra={[
+          <Select
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
+            style={{ width: 180 }}
+            placeholder="Loại phòng"
+            allowClear
+            options={filterRoomOptions}
+            onChange={onChangeFilter}
+            value={parameters.roomTypeId}
+            maxTagCount="responsive"
+          />,
           <Input
             key="search-room-name"
             placeholder="Tìm kiếm tên phòng..."

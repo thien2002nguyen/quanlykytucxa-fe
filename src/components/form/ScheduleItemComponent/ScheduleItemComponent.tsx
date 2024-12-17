@@ -21,7 +21,11 @@ const ScheduleItemComponent = () => {
                     },
                   ]}
                 >
-                  <Select placeholder="Chọn ngày" options={dayOfWeekOptions} />
+                  <Select
+                    placeholder="Chọn ngày"
+                    options={dayOfWeekOptions}
+                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                  />
                 </Form.Item>
               </Col>
 

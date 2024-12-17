@@ -5,7 +5,8 @@ import {
   DetailContractResponse,
   ParameterGetContract,
   ParameterPostContract,
-  ParameterPutContract,
+  ParameterRegisterRoomService,
+  ParameterCancelRoomService,
 } from "./contracts.type";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 
@@ -27,13 +28,40 @@ const contractsApi = {
     return instanceAxios.get(url);
   },
 
-  async putContract(params: ParameterPutContract): Promise<any> {
-    const url = `${baseUrl}/${params.id}`;
-    return instanceAxios.put(url, omit(params, "id"));
-  },
-
   async deleteContract(id: string): Promise<any> {
     const url = `${baseUrl}/${id}`;
+    return instanceAxios.delete(url);
+  },
+
+  async confirmContract(id: string): Promise<any> {
+    const url = `${baseUrl}/${id}/confirm`;
+    return instanceAxios.put(url);
+  },
+
+  async cancelContract(id: string): Promise<any> {
+    const url = `${baseUrl}/${id}/cancel`;
+    return instanceAxios.put(url);
+  },
+
+  async checkInRoom(id: string): Promise<any> {
+    const url = `${baseUrl}/${id}/check-in-date`;
+    return instanceAxios.put(url);
+  },
+
+  async checkOutRoom(id: string): Promise<any> {
+    const url = `${baseUrl}/${id}/check-out-date`;
+    return instanceAxios.put(url);
+  },
+
+  async registerRoomService(
+    params: ParameterRegisterRoomService
+  ): Promise<any> {
+    const url = `${baseUrl}/${params.contractId}/register-room-service`;
+    return instanceAxios.post(url, omit(params, "contractId"));
+  },
+
+  async canCelRoomService(params: ParameterCancelRoomService): Promise<any> {
+    const url = `${baseUrl}/${params.contractId}/remove-service/${params.serviceId}`;
     return instanceAxios.delete(url);
   },
 };

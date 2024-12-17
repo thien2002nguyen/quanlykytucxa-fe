@@ -258,6 +258,7 @@ const ManageUser = () => {
         title="Danh sách tài khoản"
         extra={[
           <Select
+            getPopupContainer={(triggerNode) => triggerNode.parentNode}
             placeholder="Lọc tài khoản"
             style={{ minWidth: 150 }}
             value={parameters.role}
@@ -325,6 +326,8 @@ const ManageUser = () => {
 
       <Modal
         title="Xóa dữ liệu"
+        okText="Xóa"
+        cancelText="Hủy"
         open={modalDelete !== undefined}
         onOk={() => handleDelete(modalDelete!)}
         onCancel={() => setModalDelete(undefined)}

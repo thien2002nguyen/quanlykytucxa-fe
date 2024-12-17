@@ -270,6 +270,7 @@ const FormRoom = ({ formAction, onBack }: FormProps) => {
               ]}
             >
               <Select
+                getPopupContainer={(triggerNode) => triggerNode.parentNode}
                 placeholder="Chọn dãy phòng"
                 options={dataRoomBlocksOptions}
               />
@@ -288,6 +289,7 @@ const FormRoom = ({ formAction, onBack }: FormProps) => {
               ]}
             >
               <Select
+                getPopupContainer={(triggerNode) => triggerNode.parentNode}
                 placeholder="Chọn loại phòng"
                 options={dataRoomTypesOptions}
               />

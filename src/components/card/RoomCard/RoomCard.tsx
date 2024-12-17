@@ -5,6 +5,8 @@ import { IMAGE_NOT_FOUND } from "@/utils/contants";
 import "./style.scss";
 import { formatVND } from "@/utils/formatMoney";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/store";
 
 interface Props {
   roomName: string;
@@ -16,6 +18,7 @@ interface Props {
   roomPrice: number;
   roomSlug: string;
   registeredStudents: number;
+  isShowAction?: boolean;
 }
 
 export const RoomCard = ({
@@ -28,26 +31,42 @@ export const RoomCard = ({
   roomPrice = 0,
   roomSlug,
   registeredStudents = 0,
+  isShowAction = true,
 }: Props) => {
-  const actions: React.ReactNode[] = [
-    <Link
-      href={{
-        pathname: `/ky-tuc-xa/phong-ky-tuc-xa/dang-ky-phong`,
-        query: {
-          slug: roomSlug,
-        },
-      }}
-    >
-      Đăng ký <PlusCircleOutlined key="register-room" title="Đăng ký phòng" />
-    </Link>,
-    <Link
-      href={{
-        pathname: roomSlug,
-      }}
-    >
-      Chi tiết <InfoCircleOutlined key="see-more" title="Xem phòng" />
-    </Link>,
-  ];
+  const pathname = usePathname();
+  const { dataAuthMeStudent } = useAppSelector((state) => state.studentsSlice);
+
+  const actions: React.ReactNode[] =
+    dataAuthMeStudent.data?.roomId ||
+    dataAuthMeStudent.data?.contractId ||
+    !isShowAction
+      ? [
+          <Link
+            href={{
+              pathname: roomSlug,
+            }}
+          >
+            Chi tiết <InfoCircleOutlined key="see-more" title="Xem phòng" />
+          </Link>,
+        ]
+      : [
+          <Link
+            href={{
+              pathname: "/ky-tuc-xa/phong-ky-tuc-xa/dang-ky-phong",
+              query: { roomSlug, rollBack: pathname },
+            }}
+          >
+            Đăng ký{" "}
+            <PlusCircleOutlined key="register-room" title="Đăng ký phòng" />
+          </Link>,
+          <Link
+            href={{
+              pathname: roomSlug,
+            }}
+          >
+            Chi tiết <InfoCircleOutlined key="see-more" title="Xem phòng" />
+          </Link>,
+        ];
 
   return (
     <div className="wrapper-room-card">

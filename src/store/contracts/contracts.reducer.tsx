@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getContractsAction,
   getDetailContractAction,
+  registerRoomServiceAction,
 } from "./contracts.action";
 import {
   ContractsResponse,
@@ -31,6 +32,7 @@ const contractSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    //----------get contracts--------------
     builder.addCase(getContractsAction.pending, (state) => {
       state.dataContracts = {
         ...state.dataContracts,
@@ -60,6 +62,7 @@ const contractSlice = createSlice({
       };
     });
 
+    // -----------get detail contract--------------
     builder.addCase(getDetailContractAction.pending, (state) => {
       state.dataDetailContract = {
         ...state.dataDetailContract,

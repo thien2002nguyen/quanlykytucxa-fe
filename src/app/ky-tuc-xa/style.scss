@@ -4,6 +4,13 @@
 .wrapper-main-content {
   &-head {
     margin-bottom: 16px;
+
+    @media (max-width: $tabletL) {
+      flex-direction: column;
+      align-items: flex-start !important;
+      justify-content: flex-start !important;
+      row-gap: 8px;
+    }
   }
 
   &-body {
@@ -14,4 +21,11 @@
     flex-direction: column;
     gap: 16px;
   }
+}
+
+.form-footer {
+  position: sticky;
+  bottom: -15px;
+  background-color: $color-white;
+  padding: 16px 0;
 }

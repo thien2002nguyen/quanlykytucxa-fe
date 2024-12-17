@@ -2,6 +2,14 @@
 @import "@/styles/breakpoints.scss";
 
 .wrapper-detail-room-page {
+  &-head {
+    margin-bottom: 16px;
+
+    @media (max-width: $mobileL) {
+      margin-bottom: 12px;
+    }
+  }
+
   .room-name-responsive {
     font-size: 3rem;
     font-weight: 700;
@@ -18,7 +26,6 @@
 
     @media (max-width: $laptopM) {
       display: -webkit-box; /* Dùng cho Webkit-based browsers */
-      display: block;
     }
 
     @media (max-width: $tabletL) {
@@ -32,7 +39,7 @@
     }
 
     @media (max-width: $mobileL) {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       margin-bottom: 12px;
     }
   }
@@ -337,6 +344,26 @@
     .btn-see-more {
       display: flex;
       justify-content: center;
+    }
+  }
+
+  &-same-type {
+    &-title {
+      font-size: 1.8rem;
+      margin: 16px 0;
+      font-weight: 600;
+
+      @media (max-width: $tabletL) {
+        font-size: 1.6rem;
+      }
+
+      @media (max-width: $tablet) {
+        font-size: 1.4rem;
+      }
+
+      @media (max-width: $mobileL) {
+        margin-bottom: 12px;
+      }
     }
   }
 }
