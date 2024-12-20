@@ -1,9 +1,8 @@
 import {
-  HistoryOutlined,
   ContactsOutlined,
   CalendarOutlined,
-  SettingOutlined,
   AppstoreOutlined,
+  FileSyncOutlined,
 } from "@ant-design/icons";
 
 export interface MenuItem {
@@ -30,20 +29,8 @@ export const dormitoryRoutes: MenuItem[] = [
     label: "Hợp đồng",
   },
   {
-    key: "lich-su-thanh-toan",
-    icon: <HistoryOutlined />,
-    label: "Lịch sử thanh toán",
-  },
-  {
-    key: "cai-dat",
-    icon: <SettingOutlined />,
-    label: "Cài đặt",
-    items: [
-      {
-        key: "thong-tin-tai-khoan",
-        label: "Thông tin tài khoản",
-      },
-      { key: "doi-mat-khau", label: "Đổi mật khẩu" },
-    ],
+    key: "thanh-toan-hoa-don",
+    icon: <FileSyncOutlined />,
+    label: "Thanh toán hóa đơn",
   },
 ];

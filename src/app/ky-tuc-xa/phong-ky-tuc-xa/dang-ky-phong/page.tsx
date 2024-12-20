@@ -2,6 +2,7 @@
 
 import { ParameterPostContract } from "@/store/contracts/contracts.type";
 import {
+  Breadcrumb,
   Button,
   Checkbox,
   Col,
@@ -26,10 +27,10 @@ import { getContractTermsAction } from "@/store/contract-terms/contract-terms.ac
 import { TimeUnitEnum } from "@/store/contract-types/contract-types.type";
 import { getServicesAction } from "@/store/services/services.action";
 import { postContractAction } from "@/store/contracts/contracts.action";
-import { dayOfWeekOptions, IMAGE_NOT_FOUND } from "@/utils/contants";
+import { IMAGE_NOT_FOUND } from "@/utils/contants";
 import { toast } from "react-toastify";
-import { ScheduleItem } from "@/store/services/services.type";
 import { formatSchedule } from "@/utils/formatSchedule";
+import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
 
 const RegisterRoomPage = () => {
   const [formRef] = Form.useForm<ParameterPostContract>();
@@ -142,71 +143,138 @@ const RegisterRoomPage = () => {
 
   return (
     <>
-      <div className="wrapper-register-room-page">
+      <div className="wrapper-main-content wrapper-register-room-page">
         <Flex
           justify="space-between"
-          align="center"
-          className="wrapper-register-room-page-head"
+          align="flex-start"
+          className="wrapper-main-content-head"
         >
-          <h3 className="title-head">Đăng ký phòng</h3>
+          <Breadcrumb
+            items={[
+              {
+                href: "/",
+                title: <HomeOutlined />,
+              },
+              {
+                href: "/ky-tuc-xa/phong-ky-tuc-xa",
+                title: (
+                  <>
+                    <AppstoreOutlined />
+                    <span>Phòng ký túc xá</span>
+                  </>
+                ),
+              },
+              {
+                title: "Đăng ký phòng",
+              },
+            ]}
+          />
 
           <Button type="primary" href={searchParams.get("rollBack") as string}>
             Quay lại
           </Button>
         </Flex>
 
-        <Form
-          name="form-register-room"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onReset={onReset}
-          autoComplete="off"
-          layout="vertical"
-          form={formRef}
-        >
-          <div className="infomation-student">
-            <h4 className="title-form">Thông tin cá nhân</h4>
-            <p>
-              <strong>Họ và tên: </strong>
-              {dataAuthMeStudent.data?.fullName}
-            </p>
-            <p>
-              <strong>Căn cước công dân: </strong>
-              {dataAuthMeStudent.data?.nationalIdCard}
-            </p>
-            <p>
-              <strong>Giới tính: </strong>
-              {dataAuthMeStudent.data?.gender === GenderEnum.nam ? "Nam" : "Nữ"}
-            </p>
-            <p>
-              <strong>Email: </strong>
-              {user.email}
-            </p>
-            <p>
-              <strong>Số điện thoại: </strong>
-              {user.phoneNumber}
-            </p>
-            <p>
-              <strong>Phòng (Khoa): </strong>
-              {dataAuthMeStudent.data?.department}
-            </p>
-            <p>
-              <strong>Lớp: </strong>
-              {dataAuthMeStudent.data?.takeClass}
-            </p>
-            <p>
-              <strong>Năm nhập học: </strong>
-              {dataAuthMeStudent.data?.enrollmentYear}
-            </p>
-            <small>
-              (Nếu có bất kỳ thông tin sai sót nào, vui lòng liên hệ với ban
-              quản lý ký túc xá để được hỗ trợ và cập nhật thông tin chính xác).
-            </small>
-          </div>
+        <div className="wrapper-main-content-body">
+          <Form
+            name="form-register-room"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onReset={onReset}
+            autoComplete="off"
+            layout="vertical"
+            form={formRef}
+          >
+            <div className="infomation-student">
+              <h4 className="title-form">Thông tin cá nhân</h4>
+              <p>
+                <strong>Họ và tên: </strong>
+                {dataAuthMeStudent.data?.fullName}
+              </p>
+              <p>
+                <strong>Căn cước công dân: </strong>
+                {dataAuthMeStudent.data?.nationalIdCard}
+              </p>
+              <p>
+                <strong>Giới tính: </strong>
+                {dataAuthMeStudent.data?.gender === GenderEnum.nam
+                  ? "Nam"
+                  : "Nữ"}
+              </p>
+              <p>
+                <strong>Email: </strong>
+                {user.email}
+              </p>
+              <p>
+                <strong>Số điện thoại: </strong>
+                {user.phoneNumber}
+              </p>
+              <p>
+                <strong>Phòng (Khoa): </strong>
+                {dataAuthMeStudent.data?.department}
+              </p>
+              <p>
+                <strong>Lớp: </strong>
+                {dataAuthMeStudent.data?.takeClass}
+              </p>
+              <p>
+                <strong>Năm nhập học: </strong>
+                {dataAuthMeStudent.data?.enrollmentYear}
+              </p>
+              <small>
+                (Nếu có bất kỳ thông tin sai sót nào, vui lòng liên hệ với ban
+                quản lý ký túc xá để được hỗ trợ và cập nhật thông tin chính
+                xác).
+              </small>
+            </div>
 
-          <h4 className="title-form">Nội dung hợp đồng</h4>
+            <h4 className="title-form">Nội dung hợp đồng</h4>
 
-          <Form.Item label="Thông tin phòng">
+            <Form.Item label="Thông tin phòng">
+              <Row
+                gutter={[
+                  { xs: 0, sm: 16, md: 16, lg: 16, xl: 16 },
+                  { xs: 12, sm: 0, md: 0, lg: 0, xl: 0 },
+                ]}
+              >
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                  <Image
+                    src={dataDetailRoom.data?.thumbnail || IMAGE_NOT_FOUND}
+                    preview={false}
+                  />
+                </Col>
+                <Col xs={24} sm={12} md={12} lg={12} xl={12}>
+                  <div className="infomation-room">
+                    <p className="infomation-room-title">
+                      {dataDetailRoom.data?.roomName} - Tầng{" "}
+                      {dataDetailRoom.data?.floor}
+                    </p>
+                    <p>
+                      <strong>Loại phòng: </strong>
+                      {dataDetailRoom.data?.roomTypeId?.type}
+                    </p>
+                    <p>
+                      <strong>Dãy phòng: </strong>
+                      {dataDetailRoom.data?.roomBlockId?.name}
+                    </p>
+                    <p>
+                      <strong>Sức chứa: </strong>
+                      {dataDetailRoom.data?.registeredStudents}/
+                      {dataDetailRoom.data?.maximumCapacity}
+                      người
+                    </p>
+                    <p>
+                      <strong>Giá phòng: </strong>
+                      {formatVND(
+                        dataDetailRoom.data?.roomTypeId?.price || 0
+                      )}{" "}
+                      VNĐ
+                    </p>
+                  </div>
+                </Col>
+              </Row>
+            </Form.Item>
+
             <Row
               gutter={[
                 { xs: 0, sm: 16, md: 16, lg: 16, xl: 16 },
@@ -214,123 +282,83 @@ const RegisterRoomPage = () => {
               ]}
             >
               <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <Image
-                  src={dataDetailRoom.data?.thumbnail || IMAGE_NOT_FOUND}
-                  preview={false}
-                />
+                <Form.Item
+                  name="contractTypeId"
+                  label="Loại hợp đồng"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Vui lòng chọn loại hợp đồng!",
+                    },
+                  ]}
+                >
+                  <Select
+                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                    allowClear
+                    options={optionsContractType}
+                    placeholder="Chọn loại hợp đồng"
+                    maxTagCount="responsive"
+                  />
+                </Form.Item>
               </Col>
               <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <div className="infomation-room">
-                  <p className="infomation-room-title">
-                    {dataDetailRoom.data?.roomName} - Tầng{" "}
-                    {dataDetailRoom.data?.floor}
-                  </p>
-                  <p>
-                    <strong>Loại phòng: </strong>
-                    {dataDetailRoom.data?.roomTypeId?.type}
-                  </p>
-                  <p>
-                    <strong>Dãy phòng: </strong>
-                    {dataDetailRoom.data?.roomBlockId?.name}
-                  </p>
-                  <p>
-                    <strong>Sức chứa: </strong>
-                    {dataDetailRoom.data?.registeredStudents}/
-                    {dataDetailRoom.data?.maximumCapacity}
-                    người
-                  </p>
-                  <p>
-                    <strong>Giá phòng: </strong>
-                    {formatVND(dataDetailRoom.data?.roomTypeId?.price || 0)} VNĐ
-                  </p>
-                </div>
+                <Form.Item name="serviceId" label="Dịch vụ">
+                  <Select
+                    getPopupContainer={(triggerNode) => triggerNode.parentNode}
+                    mode="multiple"
+                    allowClear
+                    options={optionsService}
+                    placeholder="Chọn dịch vụ"
+                    maxTagCount="responsive"
+                  />
+                </Form.Item>
               </Col>
             </Row>
-          </Form.Item>
 
-          <Row
-            gutter={[
-              { xs: 0, sm: 16, md: 16, lg: 16, xl: 16 },
-              { xs: 12, sm: 0, md: 0, lg: 0, xl: 0 },
-            ]}
-          >
-            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-              <Form.Item
-                name="contractTypeId"
-                label="Loại hợp đồng"
-                rules={[
-                  {
-                    required: true,
-                    message: "Vui lòng chọn loại hợp đồng!",
-                  },
-                ]}
-              >
-                <Select
-                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                  allowClear
-                  options={optionsContractType}
-                  placeholder="Chọn loại hợp đồng"
-                  maxTagCount="responsive"
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-              <Form.Item name="serviceId" label="Dịch vụ">
-                <Select
-                  getPopupContainer={(triggerNode) => triggerNode.parentNode}
-                  mode="multiple"
-                  allowClear
-                  options={optionsService}
-                  placeholder="Chọn dịch vụ"
-                  maxTagCount="responsive"
-                />
-              </Form.Item>
-            </Col>
-          </Row>
+            <h4 className="title-form">Điều khoản hợp đồng</h4>
 
-          <h4 className="title-form">Điều khoản hợp đồng</h4>
+            <div className="infomation-contract-term">
+              <List
+                locale={{
+                  emptyText: (
+                    <Empty
+                      description="Không có điều khoản hợp đồng nào"
+                      image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    />
+                  ),
+                }}
+                size="small"
+                dataSource={dataContractTerms.data}
+                bordered
+                renderItem={(item, index) => (
+                  <List.Item key={item._id}>
+                    {index + 1}. {item.content}
+                  </List.Item>
+                )}
+              />
+            </div>
 
-          <div className="infomation-contract-term">
-            <List
-              locale={{
-                emptyText: (
-                  <Empty
-                    description="Không có điều khoản hợp đồng nào"
-                    image={Empty.PRESENTED_IMAGE_SIMPLE}
-                  />
-                ),
-              }}
-              size="small"
-              dataSource={dataContractTerms.data}
-              bordered
-              renderItem={(item, index) => (
-                <List.Item key={item._id}>
-                  {index + 1}. {item.content}
-                </List.Item>
-              )}
-            />
-          </div>
+            <Form.Item>
+              <Checkbox checked={accepted} onChange={handleCheckboxChange}>
+                Đồng ý điều khoản hợp đồng
+              </Checkbox>
+            </Form.Item>
 
-          <Form.Item>
-            <Checkbox checked={accepted} onChange={handleCheckboxChange}>
-              Đồng ý điều khoản hợp đồng
-            </Checkbox>
-          </Form.Item>
-
-          <div className="form-footer">
-            <Flex gap={8} justify="flex-end">
-              <Button htmlType="reset">Hủy</Button>
-              <Button
-                disabled={!accepted}
-                type="primary"
-                htmlType="submit"
-                loading={isLoading}
-              >
-                Đăng ký phòng
-              </Button>
-            </Flex>
-          </div>
-        </Form>
+            <div className="form-footer">
+              <Flex gap={8} justify="flex-end">
+                <Button htmlType="reset">Hủy</Button>
+                <Button
+                  disabled={!accepted}
+                  type="primary"
+                  htmlType="submit"
+                  loading={isLoading}
+                >
+                  Đăng ký phòng
+                </Button>
+              </Flex>
+            </div>
+          </Form>
+        </div>
       </div>
     </>
   );

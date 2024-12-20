@@ -3,7 +3,7 @@ import { LoginResponse, ParameterLogin } from "./auth.type";
 
 const baseUrl = "/users";
 const auth = {
-  login({ userName, password }: ParameterLogin): Promise<LoginResponse> {
+  async login({ userName, password }: ParameterLogin): Promise<LoginResponse> {
     const url = `${baseUrl}/login`;
     return instanceAxios.post(url, {
       userName,

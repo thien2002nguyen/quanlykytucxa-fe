@@ -29,17 +29,12 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/store";
-import {
-  dayOfWeekOptions,
-  PAGE_SIZE_OPTIONS,
-  SortEnum,
-} from "@/utils/contants";
+import { PAGE_SIZE_OPTIONS, SortEnum } from "@/utils/contants";
 import isEqual from "lodash/isEqual";
 import debounce from "lodash/debounce";
 import dayjs from "dayjs";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 import {
-  ParameterCancelRoomService,
   ParameterGetContract,
   StatusEnum,
 } from "@/store/contracts/contracts.type";
@@ -58,7 +53,7 @@ import "./style.scss";
 import { GenderEnum } from "@/store/students/students.type";
 import { formatVND } from "@/utils/formatMoney";
 import { formatSchedule } from "@/utils/formatSchedule";
-import { filterStatusOptions, getStatusLabel } from "@/utils/getStatusLabel";
+import { filterStatusOptions } from "@/utils/getStatusLabel";
 
 const customLocale: PaginationProps["locale"] = {
   items_per_page: "/ Trang",
@@ -360,9 +355,8 @@ const ManageContracts = () => {
       item.approvedDate &&
       dayjs(item.approvedDate).format("HH:mm - DD/MM/YYYY "),
     adminId: item.adminId?.userName,
-    startDate:
-      item.startDate && dayjs(item.startDate).format("HH:mm - DD/MM/YYYY "),
-    endDate: item.endDate && dayjs(item.endDate).format("HH:mm - DD/MM/YYYY "),
+    startDate: item.startDate && dayjs(item.startDate).format("DD/MM/YYYY "),
+    endDate: item.endDate && dayjs(item.endDate).format("DD/MM/YYYY "),
     checkInDate: item.checkInDate
       ? dayjs(item.checkInDate).format("HH:mm - DD/MM/YYYY ")
       : (item.status === StatusEnum.CONFIRMED ||
@@ -656,7 +650,7 @@ const ManageContracts = () => {
                     getPopupContainer={(triggerNode) => triggerNode}
                     arrow={false}
                     placement="topRight"
-                    open={!!cancelService}
+                    open={cancelService === item.serviceId?._id}
                     onOpenChange={() => setCancelService(undefined)}
                   >
                     <Button
@@ -664,7 +658,11 @@ const ManageContracts = () => {
                       icon={<DisconnectOutlined />}
                       disabled={!item.serviceId?._id}
                       onClick={() => {
-                        setCancelService(item.serviceId?._id);
+                        if (cancelService) {
+                          setCancelService(undefined);
+                        } else {
+                          setCancelService(item.serviceId?._id);
+                        }
                       }}
                     />
                   </Popover>

@@ -2,17 +2,6 @@
 @import "@/styles/breakpoints.scss";
 
 .wrapper-register-room-page {
-  &-head {
-    .title-head {
-      font-size: 1.8rem;
-      font-weight: 600;
-
-      @media (max-width: $tabletL) {
-        font-size: 1.6rem;
-      }
-    }
-  }
-
   .title-form {
     font-size: 1.6rem;
     font-weight: 600;

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Col } from "antd";
 import "./style.scss";
 import { useAppSelector } from "@/store";
@@ -13,6 +13,8 @@ import {
 
 const FooterClient = () => {
   const { dataSchool } = useAppSelector((state) => state.schoolSlice);
+  const { dataInfomations } = useAppSelector((state) => state.infomationSlice);
+  const { dataNews } = useAppSelector((state) => state.newsSlice);
 
   return (
     <div className="wrapper-footer">
@@ -36,7 +38,6 @@ const FooterClient = () => {
               <Link
                 href={{
                   pathname: "/gioi-thieu",
-                  query: { type: "ky-tuc-xa-dau" },
                 }}
               >
                 Ký túc xá DAU
@@ -45,18 +46,21 @@ const FooterClient = () => {
             <p>
               <Link
                 href={{
-                  pathname: "/gioi-thieu",
-                  query: { type: "don-gia-ky-tuc-xa" },
+                  pathname: "/don-gia",
                 }}
               >
                 Đơn giá ký túc xá
               </Link>
             </p>
             <p>
-              <Link href="/thong-tin">Thông tin</Link>
+              <Link href={`/thong-tin/${dataInfomations?.data?.[0]?.slug}`}>
+                Thông tin
+              </Link>
             </p>
             <p>
-              <Link href="/tin-tuc">Tin tức</Link>
+              <Link href={`/tin-tuc/${dataNews?.data?.[0]?.slug}`}>
+                Tin tức
+              </Link>
             </p>
             <p>
               <Link href="/noi-quy">Nội quy - quy định</Link>

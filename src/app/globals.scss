@@ -184,3 +184,66 @@ body {
     color: $color-hover-main;
   }
 }
+
+.sun-editor-editable-override {
+  font-family: unset !important;
+  ul,
+  ol {
+    list-style: initial;
+    margin: initial;
+    padding: revert;
+  }
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  span,
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    max-width: 100% !important;
+  }
+
+  span,
+  p {
+    @media (max-width: $mobileL) {
+      font-size: 1.4rem !important;
+      white-space: break-spaces;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @media (max-width: $mobileL) {
+      font-size: 1.6rem !important;
+      white-space: break-spaces;
+    }
+  }
+
+  figure {
+    display: block !important;
+    max-width: 100% !important;
+    img {
+      max-width: 100% !important;
+    }
+  }
+
+  table {
+    overflow: auto !important;
+    display: block !important;
+    @media (max-width: $mobileL) {
+      overflow: auto !important;
+      display: block !important;
+    }
+  }
+}

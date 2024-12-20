@@ -82,6 +82,36 @@ const confirmContractAction = createAsyncThunk(
   }
 );
 
+// Request cancel contract a contract by ID
+const requestCancelContractAction = createAsyncThunk(
+  "contracts/requestCancelContract",
+  async (id: string, thunkAPI) => {
+    try {
+      const res = await contractsApi.requestCancelContract(id);
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        error: error?.response?.data?.message || "Cập nhật hợp đồng thất bại.",
+      });
+    }
+  }
+);
+
+// Remove request cancel contract a contract by ID
+const removeRequestCancelContractAction = createAsyncThunk(
+  "contracts/removeRequestCancelContract",
+  async (id: string, thunkAPI) => {
+    try {
+      const res = await contractsApi.removeRequestCancelContract(id);
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        error: error?.response?.data?.message || "Cập nhật hợp đồng thất bại.",
+      });
+    }
+  }
+);
+
 // Cancel contract a contract by ID
 const cancelContractAction = createAsyncThunk(
   "contracts/cancelContract",
@@ -163,6 +193,8 @@ export {
   getDetailContractAction,
   deleteContractAction,
   confirmContractAction,
+  requestCancelContractAction,
+  removeRequestCancelContractAction,
   cancelContractAction,
   checkInRoomAction,
   checkOutRoomAction,

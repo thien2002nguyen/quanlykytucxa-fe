@@ -38,6 +38,16 @@ const contractsApi = {
     return instanceAxios.put(url);
   },
 
+  async requestCancelContract(id: string): Promise<any> {
+    const url = `${baseUrl}/${id}/request-cancel`;
+    return instanceAxios.put(url);
+  },
+
+  async removeRequestCancelContract(id: string): Promise<any> {
+    const url = `${baseUrl}/${id}/remove-request-cancel`;
+    return instanceAxios.put(url);
+  },
+
   async cancelContract(id: string): Promise<any> {
     const url = `${baseUrl}/${id}/cancel`;
     return instanceAxios.put(url);

@@ -76,6 +76,7 @@
   }
 
   .form-footer {
+    position: -webkit-sticky; /* Thêm prefixed version cho các trình duyệt cũ */
     position: sticky;
     bottom: -15px;
     background-color: $color-white;
@@ -83,6 +84,25 @@
 
     @media (max-width: $tablet) {
       padding: 8px 0;
+    }
+  }
+
+  .user-name {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: $color-black;
+    text-transform: capitalize;
+
+    @media (max-width: $tablet) {
+      display: none;
+    }
+  }
+
+  .custom-list-item-header {
+    &.hidden {
+      @media (max-width: $laptopL) {
+        display: none;
+      }
     }
   }
 }

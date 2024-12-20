@@ -43,12 +43,7 @@ const HeadAdmin: React.FC<HeadAdminProps> = ({
             size={40}
             className="avatar"
           />
-          <span className="admin-name">
-            Xin chào{" "}
-            {user.userName?.length > 10
-              ? user.userName?.substring(0, 10) + "..."
-              : user.userName || "Admin"}
-          </span>
+          <span className="admin-name">Quản lý ký túc xá</span>
         </Flex>
       )}
       <Button

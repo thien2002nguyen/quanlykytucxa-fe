@@ -1,0 +1,42 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.wrapper-infomation-page {
+  padding-top: 32px;
+
+  @media (max-width: $tabletL) {
+    padding-top: 24px;
+  }
+
+  @media (max-width: $mobileL) {
+    padding-top: 16px;
+  }
+
+  &-breadcrumb {
+    margin-bottom: 16px;
+
+    @media (max-width: $tabletL) {
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: $mobileL) {
+      margin-bottom: 8px;
+    }
+  }
+
+  &-detail {
+    .title-detail {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 2rem;
+
+      @media (max-width: $tabletL) {
+        font-size: 1.8rem;
+      }
+
+      @media (max-width: $mobileL) {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}

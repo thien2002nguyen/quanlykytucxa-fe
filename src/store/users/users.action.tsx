@@ -2,6 +2,7 @@ import usersApi from "@/store/users/users.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   ParameterChangePassword,
+  ParameterChangePasswordByUser,
   ParameterGetUser,
   ParameterPostUser,
   ParameterPutUser,
@@ -154,6 +155,23 @@ const sendOtpAction = createAsyncThunk(
   }
 );
 
+const changePasswordByUserAction = createAsyncThunk(
+  "usersApi/changePasswordByUser",
+  async (params: ParameterChangePasswordByUser, thunkAPI) => {
+    try {
+      const res = await usersApi.changePasswordByUser(params);
+      return {
+        res,
+        newPassword: params.newPassword,
+      };
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        error: error?.response?.data?.message || "Thay đổi mật khẩu thất bại.",
+      });
+    }
+  }
+);
+
 export {
   postUserAction,
   getUsersAction,
@@ -167,4 +185,5 @@ export {
   verifyOtpAction,
   changePasswordAction,
   sendOtpAction,
+  changePasswordByUserAction,
 };

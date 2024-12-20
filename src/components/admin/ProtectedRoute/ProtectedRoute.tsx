@@ -3,7 +3,6 @@
 import React from "react";
 import { useAppSelector } from "@/store";
 import { Button, Result } from "antd";
-import Link from "next/link";
 import { RoleAuth } from "@/store/auth/auth.type";
 
 interface ProtectedRouteProps {
@@ -25,11 +24,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
         title="403"
         subTitle="Xin lỗi, bạn không có quyền truy cập trang này."
         extra={
-          <Link href="/admin" passHref>
-            <Button type="primary" size="large">
-              Quay về trang chủ
-            </Button>
-          </Link>
+          <Button type="primary" size="large" href="/admin">
+            Quay về trang chủ
+          </Button>
         }
       />
     );

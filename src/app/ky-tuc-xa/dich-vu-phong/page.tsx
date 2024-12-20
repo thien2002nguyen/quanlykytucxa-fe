@@ -1,6 +1,15 @@
 "use client";
 
-import { Breadcrumb, Button, Empty, Flex, List, message, Modal } from "antd";
+import {
+  Breadcrumb,
+  Button,
+  Empty,
+  Flex,
+  List,
+  message,
+  Modal,
+  Tag,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import {
   ApiOutlined,
@@ -278,7 +287,13 @@ const RoomServicePage = () => {
         confirmLoading={isLoading}
         centered
       >
-        <p>Bạn có chắc chắn muốn đăng ký dịch vụ này không?</p>
+        <Flex vertical gap={2}>
+          <p>Bạn có chắc chắn muốn đăng ký dịch vụ này không?</p>
+          <Tag color="red">
+            Lưu ý: Chi phí của dịch vụ sẽ được cộng vào hóa đơn thanh toán của
+            bạn.
+          </Tag>
+        </Flex>
       </Modal>
 
       {/* Modal hủy đăng ký dịch vụ */}

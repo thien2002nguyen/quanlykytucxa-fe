@@ -157,7 +157,7 @@ const DetailRoomPage = () => {
                   dataDetailRoom.data?.description || ""
                 ),
               }}
-              className={`wrapper-detail-room-page-description-main ${
+              className={`wrapper-detail-room-page-description-main sun-editor-editable-override ${
                 isSeeMore ? "show" : ""
               }`}
             />

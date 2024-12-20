@@ -34,7 +34,7 @@ import {
   getRoomsAction,
   putRoomAction,
 } from "@/store/rooms/rooms.action";
-import { FilterRoomEnum, ParameterGetRoom } from "@/store/rooms/rooms.type";
+import { ParameterGetRoom } from "@/store/rooms/rooms.type";
 import { getRoomTypesAction } from "@/store/room-types/room-types.action";
 
 const customLocale: PaginationProps["locale"] = {

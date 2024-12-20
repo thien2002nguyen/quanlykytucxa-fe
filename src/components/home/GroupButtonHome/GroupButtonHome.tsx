@@ -50,7 +50,7 @@ const GroupButtonHome = () => {
         >
           <Col xs={12} sm={8} md={8} lg={8} xl={8}>
             <Button
-              onClick={() => handleNavigation("lich-su-thanh-toan")}
+              onClick={() => handleNavigation("thanh-toan-hoa-don")}
               size="large"
               type="primary"
               className="btn-item"

@@ -1,3 +1,6 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
 .main-admin-wrapper {
   display: flex;
   height: 100vh;
@@ -47,9 +50,21 @@
       }
 
       .layout-content {
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(5, 5, 5, 0.06);
+        border-radius: 6px;
         padding: 16px;
       }
+    }
+  }
+
+  .user-name {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: $color-black;
+    text-transform: capitalize;
+
+    @media (max-width: $tablet) {
+      display: none;
     }
   }
 }

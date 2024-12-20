@@ -70,6 +70,11 @@ export interface VerifyOtp {
   otpAccessToken: string;
 }
 
+export interface ParameterChangePasswordByUser {
+  oldPassword: string;
+  newPassword: string;
+}
+
 export interface UsersState {
   dataUsers: {
     data: User[];

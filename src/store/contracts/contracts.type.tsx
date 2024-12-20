@@ -111,11 +111,6 @@ export interface ParameterRegisterRoomService {
   price: number; // Giá dịch vụ
 }
 
-export interface ParameterCancelRoomService {
-  contractId: string;
-  serviceId: string; // ID của dịch vụ
-}
-
 export interface ContractsState {
   dataContracts: {
     data: Contract[]; // Dữ liệu danh sách hợp đồng

@@ -1,3 +1,4 @@
+import BubbleButton from "@/components/client/BubbleButton/BubbleButton";
 import MainClient from "@/components/client/MainClient/MainClient";
 import { themeAntdClient } from "@/config/theme";
 import { ConfigProvider } from "antd";
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <ConfigProvider theme={themeAntdClient}>
       <MainClient>{children}</MainClient>
+      <BubbleButton />
     </ConfigProvider>
   );
 }

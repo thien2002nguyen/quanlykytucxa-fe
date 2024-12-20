@@ -11,6 +11,7 @@ import {
   ParameterVerifyOtp,
   ParameterChangePassword,
   ParameterSendOtp,
+  ParameterChangePasswordByUser,
 } from "./users.type";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 
@@ -65,6 +66,13 @@ const usersApi = {
 
   async sendOtp(params: ParameterSendOtp): Promise<any> {
     const url = `${baseUrl}/send-otp`;
+    return instanceAxios.post(url, params);
+  },
+
+  async changePasswordByUser(
+    params: ParameterChangePasswordByUser
+  ): Promise<any> {
+    const url = `${baseUrl}/change-password/user`;
     return instanceAxios.post(url, params);
   },
 };

@@ -15,7 +15,6 @@ export type Introduction = {
   updatedAt: string;
 };
 
-// Hàm tách riêng để lấy dữ liệu
 async function getIntroduction() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/introductions`);
   const dataIntroduction: { data: Introduction } = await res.json();
@@ -24,6 +23,7 @@ async function getIntroduction() {
 
 const IntroductionHome = async () => {
   // Gọi hàm getIntroduction để lấy dữ liệu
+
   const dataIntroduction = await getIntroduction();
 
   return (

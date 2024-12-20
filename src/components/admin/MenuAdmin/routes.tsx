@@ -3,12 +3,12 @@ import {
   ShareAltOutlined,
   LineChartOutlined,
   UserOutlined,
-  SettingOutlined,
   HomeOutlined,
   BookOutlined,
   InfoCircleOutlined,
   GroupOutlined,
   FormOutlined,
+  FileSyncOutlined,
 } from "@ant-design/icons";
 
 export interface MenuItem {
@@ -106,15 +106,8 @@ export const adminRoutes: MenuItem[] = [
     ],
   },
   {
-    key: "cai-dat",
-    icon: <SettingOutlined />,
-    label: "Cài đặt",
-    items: [
-      {
-        key: "thong-tin-tai-khoan",
-        label: "Thông tin tài khoản",
-      },
-      { key: "doi-mat-khau", label: "Đổi mật khẩu" },
-    ],
+    key: "quan-ly-hoa-don",
+    icon: <FileSyncOutlined />,
+    label: "Quản lý hóa đơn",
   },
 ];

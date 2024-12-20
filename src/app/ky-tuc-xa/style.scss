@@ -24,6 +24,7 @@
 }
 
 .form-footer {
+  position: -webkit-sticky; /* Thêm prefixed version cho các trình duyệt cũ */
   position: sticky;
   bottom: -15px;
   background-color: $color-white;
