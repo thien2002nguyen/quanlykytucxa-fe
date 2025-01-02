@@ -4,9 +4,9 @@ const nextConfig = {
   images: {
     domains: ["res.cloudinary.com"],
   },
-  experimental: {
-    modern: true,
-  },
+  // experimental: {
+  //   modern: true,
+  // },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
