@@ -193,7 +193,7 @@ const DormitoryClient = ({
                           onClick={item.onClick}
                           style={{ cursor: "pointer", userSelect: "none" }}
                           className={`custom-list-item-header ${
-                            !!item.isNoResponsive ? "hidden" : ""
+                            item.isNoResponsive ? "hidden" : ""
                           }`}
                         >
                           {item.title}

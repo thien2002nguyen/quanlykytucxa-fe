@@ -1,7 +1,7 @@
 "use client";
 
 import { Breadcrumb } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { HomeOutlined } from "@ant-design/icons";
 import DOMPurify from "dompurify";
 import { useAppSelector } from "@/store";
@@ -9,6 +9,12 @@ import "./style.scss";
 
 const RulesPage = () => {
   const { dataSchool } = useAppSelector((state) => state.schoolSlice);
+
+  const [isClient, setIsClient] = useState(true);
+
+  useEffect(() => {
+    setIsClient(false);
+  }, []);
 
   return (
     <div className="wrapper-rules-page">
@@ -28,14 +34,16 @@ const RulesPage = () => {
 
           <div className="wrapper-rules-page-detail">
             <h4 className="title-detail">Nội quy - Quy định Ký túc xá</h4>
-            <div
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  dataSchool.data?.rulesAndRegulations || ""
-                ),
-              }}
-              className="sun-editor-editable-override"
-            />
+            {!isClient && (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(
+                    dataSchool.data?.rulesAndRegulations || ""
+                  ),
+                }}
+                className="sun-editor-editable-override"
+              />
+            )}
           </div>
         </div>
       </div>

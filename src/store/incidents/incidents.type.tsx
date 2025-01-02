@@ -1,4 +1,4 @@
-import { MetaPagination, ParameterGet } from "@/utils/contants";
+import { MetaPagination } from "@/utils/contants";
 
 export enum IncidentStatus {
   PENDING = "pending", // Chưa xử lý

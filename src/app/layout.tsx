@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { geistSans, geistMono } from "./fonts";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ReduxProvider } from "@/store/provider";

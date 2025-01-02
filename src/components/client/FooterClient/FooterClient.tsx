@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Row, Col } from "antd";
 import "./style.scss";
 import { useAppSelector } from "@/store";

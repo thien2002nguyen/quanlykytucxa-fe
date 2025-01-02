@@ -14,7 +14,6 @@ import {
   Popover,
   Result,
   Row,
-  Spin,
   UploadFile,
 } from "antd";
 import React, { useEffect, useState } from "react";
@@ -27,7 +26,6 @@ import {
   WarningOutlined,
 } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "@/store";
-import { GenderEnum } from "@/store/students/students.type";
 import { formatVND } from "@/utils/formatMoney";
 import { IMAGE_NOT_FOUND } from "@/utils/contants";
 import { formatSchedule } from "@/utils/formatSchedule";

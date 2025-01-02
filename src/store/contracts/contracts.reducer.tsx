@@ -2,7 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   getContractsAction,
   getDetailContractAction,
-  registerRoomServiceAction,
 } from "./contracts.action";
 import {
   ContractsResponse,

@@ -28,7 +28,6 @@ import {
 } from "@/store/contract-types/contract-types.action";
 import HeadAdminContent from "@/components/admin/HeadAdminContent/HeadAdminContent";
 import { FormAction } from "@/utils/contants";
-import TextArea from "antd/es/input/TextArea";
 import { TimeUnitEnum } from "@/store/contract-types/contract-types.type";
 
 interface ContractTypeInterface {

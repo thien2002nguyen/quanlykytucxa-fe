@@ -19,7 +19,6 @@ import "./style.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { getInfomationStudentAction } from "@/store/students/students.action";
-import { GenderEnum } from "@/store/students/students.type";
 import { getDetailRoomAction } from "@/store/rooms/rooms.action";
 import { formatVND } from "@/utils/formatMoney";
 import { getContractTypesAction } from "@/store/contract-types/contract-types.action";

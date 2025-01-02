@@ -16,6 +16,7 @@ const fetchAPi = async (slug: string): Promise<any> => {
     const res = await fetch(url);
     return await res.json();
   } catch (error) {
+    console.log(error);
     return null;
   }
 };

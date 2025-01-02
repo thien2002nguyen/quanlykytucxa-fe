@@ -25,9 +25,9 @@ import incidentsSlice from "./incidents/incidents.reducer";
 
 // Tạo storage cho redux-persist
 const createNoopStorage = () => ({
-  getItem: (_key: string) => Promise.resolve(null),
+  getItem: () => Promise.resolve(null),
   setItem: (_key: string, value: any) => Promise.resolve(value),
-  removeItem: (_key: string) => Promise.resolve(),
+  removeItem: () => Promise.resolve(),
 });
 
 // Kiểm tra môi trường để tạo storage

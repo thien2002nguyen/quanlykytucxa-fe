@@ -35,6 +35,7 @@ export interface DetailStudentResponse {
   data: Student;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AuthMeStudentResponse extends DetailStudentResponse {}
 
 export interface TotalStudentResponse {

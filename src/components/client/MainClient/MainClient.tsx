@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import HeaderClient from "../HeaderClient/HeaderClient";
 import FooterClient from "../FooterClient/FooterClient";
 import "./style.scss";
@@ -22,6 +22,7 @@ const MainClient = ({
         dispatch(getAuthMeUserAction());
       }
     } catch (error) {
+      console.log(error);
       dispatch(logout());
     }
   }, []);

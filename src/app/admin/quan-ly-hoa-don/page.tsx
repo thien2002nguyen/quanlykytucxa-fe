@@ -672,7 +672,7 @@ const ManagePayments = () => {
                   onInput={(e: React.FormEvent<HTMLInputElement>) => {
                     const inputElement = e.currentTarget;
 
-                    let value = inputElement.value.replace(/\D/g, ""); // Loại bỏ tất cả ký tự không phải số
+                    const value = inputElement.value.replace(/\D/g, ""); // Loại bỏ tất cả ký tự không phải số
                     inputElement.value = formatVND(Number(value)); // Format lại giá trị
                   }}
                 />

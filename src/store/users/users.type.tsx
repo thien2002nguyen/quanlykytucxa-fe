@@ -22,6 +22,7 @@ export interface DetailUserResponse {
   data: User;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface AuthMeUserResponse extends DetailUserResponse {}
 
 export interface ParameterPostUser {
