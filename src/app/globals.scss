@@ -211,13 +211,7 @@ body {
   }
 
   span,
-  p {
-    @media (max-width: $mobileL) {
-      font-size: 1.4rem !important;
-      white-space: break-spaces;
-    }
-  }
-
+  p,
   h1,
   h2,
   h3,
@@ -225,7 +219,7 @@ body {
   h5,
   h6 {
     @media (max-width: $mobileL) {
-      font-size: 1.6rem !important;
+      font-size: 1.4rem !important;
       white-space: break-spaces;
     }
   }

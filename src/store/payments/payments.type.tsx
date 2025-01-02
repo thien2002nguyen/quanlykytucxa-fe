@@ -1,19 +1,22 @@
 import { MetaPagination, ParameterGet } from "@/utils/contants";
+import { User } from "../users/users.type";
 
 export enum PaymentStatusEnum {
   UNPAID = "unpaid", // Chưa trả
   PAID = "paid", // Đã trả
+  PARTIALLY_PAID = "partially_paid", // Còn nợ
 }
 
 export enum PaymentMethodEnum {
   CASH = "cash", // Thanh toán bằng tiền mặt
   BANK_TRANSFER = "bank_transfer", // Thanh toán qua chuyển khoản ngân hàng
   VNPAY = "vnpay", // Thanh toán qua VNPAY
+  MOMO = "momo", // Thanh toán qua MOMO
 }
 
-export type ContractType = {
+export type PaymentContractType = {
   _id: string;
-  contractTypeID: string;
+  contractTypeId: string;
   contractTitle: string;
   duration: number;
   unit: string;
@@ -21,7 +24,7 @@ export type ContractType = {
 
 export type PaymentRoom = {
   _id: string;
-  roomID: string;
+  roomId: string;
   roomName: string;
   floor: number;
   roomType: string;
@@ -31,17 +34,24 @@ export type PaymentRoom = {
 
 export type PaymentService = {
   _id: string;
-  serviceID: string;
+  serviceId: string;
   name: string;
   price: number;
   createdAt: string;
 };
 
-export type PaymentTerm = {
+export type PaymentHistory = {
   _id: string;
-  termID: string;
-  content: string;
+  paymentMethod: PaymentMethodEnum;
+  amount: number;
+  paymentDate: string;
 };
+
+export interface TotalBillInterface {
+  totalAmount: number;
+  remainingAmount: number;
+  paidAmount: number;
+}
 
 export type Payment = {
   _id: string;
@@ -50,11 +60,15 @@ export type Payment = {
   phoneNumber: string;
   email: string;
   room: PaymentRoom;
-  service: PaymentService[];
-  term: PaymentTerm[];
-  contractType: ContractType;
+  services: PaymentService[];
+  contractType: PaymentContractType;
   totalAmount: number;
-  status: string;
+  remainingAmount: number;
+  paidAmount: number;
+  status: PaymentStatusEnum;
+  adminId?: User;
+  note?: string;
+  paymentHistory?: PaymentHistory[];
   createdAt: string;
   updatedAt: string;
 };
@@ -74,9 +88,26 @@ export type PaymentsResponse = {
   meta: MetaPagination;
 };
 
+export type PaymentsByUserResponse = {
+  data: Payment[];
+  meta: MetaPagination;
+  totalBill: TotalBillInterface;
+};
+
 export type DetailPaymentResponse = {
   data: Payment;
 };
+
+export interface ParameterPayBillById {
+  paymentId: string;
+  paymentMethod: PaymentMethodEnum;
+  amount: number;
+}
+
+export interface ParameterCreatePaymentUrl {
+  amount: number;
+  orderInfo: string;
+}
 
 export interface PaymentsState {
   dataPayments: {
@@ -89,6 +120,7 @@ export interface PaymentsState {
   dataPaymentsByUser: {
     data: Payment[];
     meta: MetaPagination;
+    totalBill: TotalBillInterface;
     loading: boolean;
     error?: string;
   };

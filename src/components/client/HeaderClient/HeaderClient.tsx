@@ -138,6 +138,14 @@ const HeaderClient = () => {
     },
     {
       key: uuidv4(),
+      title: "Phòng của bạn",
+      onClick: () => {
+        setIsClickAuth(false);
+        router.push("/ky-tuc-xa/hop-dong");
+      },
+    },
+    {
+      key: uuidv4(),
       title: "Thông tin tài khoản",
       onClick: () => {
         setIsClickAuth(false);
@@ -244,7 +252,11 @@ const HeaderClient = () => {
                 >
                   <ul className="menu">
                     <li className="menu-item-nav">
-                      <Link href="/" className="item-nav">
+                      <Link
+                        href="/"
+                        className="item-nav"
+                        onClick={() => setIsShowMenuResponsive(false)}
+                      >
                         Trang Chủ
                       </Link>
                     </li>
@@ -253,6 +265,7 @@ const HeaderClient = () => {
                         href="#"
                         className="item-nav"
                         onClick={toggleDropdown}
+                        scroll={false}
                       >
                         <Flex justify="space-between">
                           <span>Giới Thiệu</span>
@@ -274,6 +287,7 @@ const HeaderClient = () => {
                               pathname: "/gioi-thieu",
                             }}
                             className="item-nav"
+                            onClick={() => setIsShowMenuResponsive(false)}
                           >
                             Ký túc xá DAU
                           </Link>
@@ -284,6 +298,7 @@ const HeaderClient = () => {
                               pathname: "/don-gia",
                             }}
                             className="item-nav"
+                            onClick={() => setIsShowMenuResponsive(false)}
                           >
                             Đơn giá ký túc xá
                           </Link>
@@ -294,6 +309,7 @@ const HeaderClient = () => {
                       <Link
                         href={`/thong-tin/${dataInfomations?.data?.[0]?.slug}`}
                         className="item-nav"
+                        onClick={() => setIsShowMenuResponsive(false)}
                       >
                         Thông tin
                       </Link>
@@ -302,17 +318,26 @@ const HeaderClient = () => {
                       <Link
                         href={`/tin-tuc/${dataNews?.data?.[0]?.slug}`}
                         className="item-nav"
+                        onClick={() => setIsShowMenuResponsive(false)}
                       >
                         Tin tức
                       </Link>
                     </li>
                     <li className="menu-item-nav">
-                      <Link href="/noi-quy" className="item-nav">
+                      <Link
+                        href="/noi-quy"
+                        className="item-nav"
+                        onClick={() => setIsShowMenuResponsive(false)}
+                      >
                         Nội quy - Quy định
                       </Link>
                     </li>
                     <li className="menu-item-nav">
-                      <Link href="/huong-dan" className="item-nav">
+                      <Link
+                        href="/huong-dan"
+                        className="item-nav"
+                        onClick={() => setIsShowMenuResponsive(false)}
+                      >
                         Hướng dẫn
                       </Link>
                     </li>

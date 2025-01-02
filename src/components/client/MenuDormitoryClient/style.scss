@@ -7,10 +7,10 @@
   transition: width 0.3s ease;
 
   @media (max-width: $laptop) {
-    width: 60px;
+    width: 50px;
 
     .ant-menu-inline-collapsed {
-      width: 60px;
+      width: 50px;
     }
   }
 

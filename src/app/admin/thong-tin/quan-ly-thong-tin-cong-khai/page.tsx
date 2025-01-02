@@ -1,11 +1,13 @@
 "use client";
 
 import HeadAdminContent from "@/components/admin/HeadAdminContent/HeadAdminContent";
+import TextEditor from "@/components/admin/TextEditor/TextEditor";
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
   getSchoolAction,
   patchSchoolAction,
 } from "@/store/school/school.action";
+import { isContentValid } from "@/utils/contentValidator";
 import { Button, Col, Flex, Form, Input, message, Row } from "antd";
 import React, { useEffect, useState } from "react";
 
@@ -27,6 +29,8 @@ const School = () => {
   const { dataSchool } = useAppSelector((state) => state.schoolSlice);
   const [messageApi, contextHolder] = message.useMessage();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [rules, setRules] = useState<string>("");
+  const [guides, setGuides] = useState<string>("");
 
   useEffect(() => {
     dispatch(getSchoolAction());
@@ -37,6 +41,13 @@ const School = () => {
   }, [dataSchool.data]);
 
   const onFinish = async (values: SchoolInterface) => {
+    const isRules = isContentValid(rules);
+
+    if (!isRules) {
+      messageApi.warning("Vui lòng nhập nội quy - quy định của ký túc xá.");
+      return;
+    }
+
     setIsLoading(true);
 
     const response = await dispatch(
@@ -50,6 +61,8 @@ const School = () => {
         googleMapUrl: values.googleMapUrl,
         slogan: values.slogan,
         zaloUrl: values.zaloUrl,
+        rulesAndRegulations: rules,
+        guidelines: guides,
       })
     );
 
@@ -74,6 +87,8 @@ const School = () => {
       googleMapUrl,
       slogan,
       zaloUrl,
+      rulesAndRegulations,
+      guidelines,
     } = dataSchool.data;
 
     formRef.setFieldsValue({
@@ -87,6 +102,9 @@ const School = () => {
       slogan,
       zaloUrl,
     });
+
+    setRules(rulesAndRegulations);
+    setGuides(guidelines);
   };
 
   return (
@@ -232,6 +250,14 @@ const School = () => {
           ]}
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item label="Nội quy - quy định của ký túc xá">
+          <TextEditor value={rules} onBlur={setRules} />
+        </Form.Item>
+
+        <Form.Item label="Hướng dẫn">
+          <TextEditor value={guides} onBlur={setGuides} />
         </Form.Item>
 
         <div className="form-footer">

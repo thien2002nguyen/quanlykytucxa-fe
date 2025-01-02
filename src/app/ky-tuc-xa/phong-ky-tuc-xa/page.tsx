@@ -181,64 +181,66 @@ const RoomPage = () => {
         </Flex>
       </Flex>
 
-      <div className="wrapper-main-content-body">
-        {dataRooms.data?.length > 0 ? (
-          <>
-            <div className="wrapper-room-page-list">
-              <Row gutter={[16, 16]}>
-                {isClient &&
-                  Array.from({ length: 4 }).map((_, index) => (
-                    <Col
-                      key={uuidv4() + index}
-                      xs={24}
-                      sm={12}
-                      md={12}
-                      lg={8}
-                      xl={6}
-                    >
-                      <LoadingRoomCard />
-                    </Col>
-                  ))}
+      {!dataRooms.loading && !dataRoomTypes.loading && (
+        <div className="wrapper-main-content-body">
+          {dataRooms.data?.length > 0 ? (
+            <>
+              <div className="wrapper-room-page-list">
+                <Row gutter={[16, 16]}>
+                  {isClient &&
+                    Array.from({ length: 4 }).map((_, index) => (
+                      <Col
+                        key={uuidv4() + index}
+                        xs={24}
+                        sm={12}
+                        md={12}
+                        lg={8}
+                        xl={6}
+                      >
+                        <LoadingRoomCard />
+                      </Col>
+                    ))}
 
-                {!isClient &&
-                  dataRooms.data?.map((item) => (
-                    <Col key={item._id} xs={24} sm={12} md={12} lg={8} xl={6}>
-                      <RoomCard
-                        key={`room-card-${item._id}`}
-                        roomName={item.roomName}
-                        thumbnail={item.thumbnail}
-                        roomType={item.roomTypeId?.type}
-                        roomBlock={item.roomBlockId?.name}
-                        floor={item.floor}
-                        maximumCapacity={item.maximumCapacity}
-                        roomPrice={item.roomTypeId.price}
-                        roomSlug={item.roomSlug}
-                        registeredStudents={item.registeredStudents}
-                      />
-                    </Col>
-                  ))}
-              </Row>
-            </div>
+                  {!isClient &&
+                    dataRooms.data?.map((item) => (
+                      <Col key={item._id} xs={24} sm={12} md={12} lg={8} xl={6}>
+                        <RoomCard
+                          key={`room-card-${item._id}`}
+                          roomName={item.roomName}
+                          thumbnail={item.thumbnail}
+                          roomType={item.roomTypeId?.type}
+                          roomBlock={item.roomBlockId?.name}
+                          floor={item.floor}
+                          maximumCapacity={item.maximumCapacity}
+                          roomPrice={item.roomTypeId.price}
+                          roomSlug={item.roomSlug}
+                          registeredStudents={item.registeredStudents}
+                        />
+                      </Col>
+                    ))}
+                </Row>
+              </div>
 
-            <Flex justify="flex-end" key="dataRooms">
-              <Pagination
-                current={parameters.page || 1}
-                showSizeChanger
-                pageSize={parameters.limit || 12}
-                pageSizeOptions={[8, 12, 64]}
-                onChange={onChangePagination}
-                total={dataRooms.meta?.total}
-                locale={customLocale}
-              />
-            </Flex>
-          </>
-        ) : (
-          <Empty
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
-            description={<p>Không có phòng nào</p>}
-          />
-        )}
-      </div>
+              <Flex justify="flex-end" key="dataRooms">
+                <Pagination
+                  current={parameters.page || 1}
+                  showSizeChanger
+                  pageSize={parameters.limit || 12}
+                  pageSizeOptions={[8, 12, 64]}
+                  onChange={onChangePagination}
+                  total={dataRooms.meta?.total}
+                  locale={customLocale}
+                />
+              </Flex>
+            </>
+          ) : (
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description={<p>Không có phòng nào</p>}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

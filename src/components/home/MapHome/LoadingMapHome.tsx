@@ -1,7 +1,7 @@
 import React from "react";
 
-import "./style.scss";
 import { Spin } from "antd";
+import "./style.scss";
 
 const LoadingMapHome = () => {
   return (

@@ -49,8 +49,6 @@ import {
   getDetailContractAction,
 } from "@/store/contracts/contracts.action";
 import { TimeUnitEnum } from "@/store/contract-types/contract-types.type";
-import "./style.scss";
-import { GenderEnum } from "@/store/students/students.type";
 import { formatVND } from "@/utils/formatMoney";
 import { formatSchedule } from "@/utils/formatSchedule";
 import { filterStatusOptions } from "@/utils/getStatusLabel";
@@ -68,7 +66,7 @@ interface DataType {
   room: string;
   contractType: string;
   status: React.ReactNode;
-  serviceStatus: React.ReactNode | undefined;
+  services: React.ReactNode | undefined;
   createdAt: string;
   approvedDate: string | undefined;
   adminId: string | undefined;
@@ -124,9 +122,9 @@ const columns: TableProps<DataType>["columns"] = [
     className: "nowrap-column",
   },
   {
-    title: "Trạng thái dịch vụ",
-    dataIndex: "serviceStatus",
-    key: "serviceStatus",
+    title: "Dịch vụ",
+    dataIndex: "services",
+    key: "services",
     align: "center",
     className: "nowrap-column",
   },
@@ -327,22 +325,22 @@ const ManageContracts = () => {
     stt: ((parameters?.page || 1) - 1) * (parameters?.limit || 10) + index + 1,
     fullName: item.fullName,
     studentCode: item.studentCode,
-    room: item.room?.roomId?._id
-      ? `${item.room?.roomId?.roomName} - ${item.room?.roomId?.floor} - ${item.room?.roomId?.roomBlockId?.name} - ${item.room?.roomId?.roomTypeId?.type}`
+    room: item.roomId?._id
+      ? `${item.roomId?.roomName} - ${item.roomId?.floor} - ${item.roomId?.roomBlockId?.name} - ${item?.roomId?.roomTypeId?.type}`
       : "Phòng ký túc xá",
     contractType: `${
-      item.contractType?.contractTypeId?.title || "Loại hợp đồng ký túc xá"
-    } - ${item.contractType?.duration} ${
-      (item.contractType?.unit === TimeUnitEnum.DAY && "Ngày") ||
-      (item.contractType?.unit === TimeUnitEnum.MONTH && "Tháng") ||
+      item?.contractTypeId?.title || "Loại hợp đồng ký túc xá"
+    } - ${item.contractTypeId?.duration} ${
+      (item.contractTypeId?.unit === TimeUnitEnum.DAY && "Ngày") ||
+      (item.contractTypeId?.unit === TimeUnitEnum.MONTH && "Tháng") ||
       "Năm"
     }`,
     status: getStatusTag(item._id, item.status, item.endDate || ""),
-    serviceStatus: (
+    services: (
       <Button
         type="primary"
         icon={<BellOutlined />}
-        className="btn-service-room"
+        className="btn-notification-custom"
         onClick={() => {
           setModalService(item._id);
           dispatch(getDetailContractAction(item._id));
@@ -383,7 +381,7 @@ const ManageContracts = () => {
         <Button
           icon={<EyeOutlined />}
           type="primary"
-          className="btn-view-contract"
+          className="btn-view-custom"
           onClick={() => {
             setModalSeeMore(item._id);
             dispatch(getDetailContractAction(item._id));
@@ -571,106 +569,108 @@ const ManageContracts = () => {
         centered
         footer={null}
       >
-        {
-          <List
-            locale={{
-              emptyText: (
-                <Empty
-                  description="Không có dịch vụ nào"
-                  image={Empty.PRESENTED_IMAGE_SIMPLE}
-                />
-              ),
-            }}
-            dataSource={dataDetailContract.data?.service}
-            renderItem={(item) => (
-              <List.Item key={item.serviceId?._id}>
-                <List.Item.Meta
-                  title={
-                    item.serviceId?._id
-                      ? item.serviceId?.name
-                      : "Dịch vụ ký túc xá"
-                  }
-                  description={
-                    item.serviceId?._id ? (
-                      <>
-                        <p>{formatVND(item.serviceId?.price || 0)} VNĐ</p>
-                        <p>{formatSchedule(item.serviceId?.schedule)}</p>
-                        <p>
-                          {item.createdAt
-                            ? `Ngày đăng ký dịch vụ: ${dayjs(
-                                item.createdAt
-                              ).format("HH:mm - DD/MM/YYYY")}`
-                            : "Hợp đồng chưa được phê duyệt"}
-                        </p>
-                      </>
-                    ) : (
-                      <p>Ngừng hoạt động</p>
-                    )
-                  }
-                />
-                <Flex gap={4}>
-                  <Popover
-                    content={
-                      <Flex gap={4}>
-                        <Button
-                          type="primary"
-                          ghost
-                          onClick={() => setCancelService(undefined)}
-                        >
-                          Để sau
-                        </Button>
-                        <Button
-                          type="primary"
-                          onClick={async () => {
-                            const response = await dispatch(
-                              cancelRoomServiceAction({
-                                contractId: dataDetailContract.data?._id,
-                                serviceId: cancelService as string,
-                              })
-                            );
+        <List
+          locale={{
+            emptyText: (
+              <Empty
+                description="Không có dịch vụ nào"
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+              />
+            ),
+          }}
+          dataSource={dataDetailContract.data?.services}
+          renderItem={(item) => (
+            <List.Item key={item.serviceId?._id}>
+              <List.Item.Meta
+                title={
+                  item.serviceId?._id
+                    ? item.serviceId?.name
+                    : "Dịch vụ ký túc xá"
+                }
+                description={
+                  item.serviceId?._id ? (
+                    <>
+                      <p>
+                        Giá dịch vụ: {formatVND(item.serviceId?.price || 0)} VNĐ
+                      </p>
+                      <p>
+                        Lịch trình: {formatSchedule(item.serviceId?.schedule)}
+                      </p>
+                      <p>
+                        {item.createdAt
+                          ? `Ngày đăng ký dịch vụ: ${dayjs(
+                              item.createdAt
+                            ).format("HH:mm - DD/MM/YYYY")}`
+                          : "Hợp đồng chưa được phê duyệt"}
+                      </p>
+                    </>
+                  ) : (
+                    <p>Ngừng hoạt động</p>
+                  )
+                }
+              />
+              <Flex gap={4}>
+                <Popover
+                  content={
+                    <Flex gap={4}>
+                      <Button
+                        type="primary"
+                        ghost
+                        onClick={() => setCancelService(undefined)}
+                      >
+                        Để sau
+                      </Button>
+                      <Button
+                        type="primary"
+                        onClick={async () => {
+                          const response = await dispatch(
+                            cancelRoomServiceAction({
+                              contractId: dataDetailContract.data?._id,
+                              serviceId: cancelService as string,
+                            })
+                          );
 
-                            if (response?.payload?.error) {
-                              messageApi.error(response.payload.error);
-                            } else {
-                              messageApi.success("Hủy dịch vụ thành công.");
-                              dispatch(
-                                getDetailContractAction(
-                                  dataDetailContract.data?._id
-                                )
-                              );
-                              setCancelService(undefined);
-                            }
-                          }}
-                        >
-                          Hủy dịch vụ
-                        </Button>
-                      </Flex>
-                    }
-                    trigger="click"
-                    getPopupContainer={(triggerNode) => triggerNode}
-                    arrow={false}
-                    placement="topRight"
-                    open={cancelService === item.serviceId?._id}
-                    onOpenChange={() => setCancelService(undefined)}
-                  >
-                    <Button
-                      type="primary"
-                      icon={<DisconnectOutlined />}
-                      disabled={!item.serviceId?._id}
-                      onClick={() => {
-                        if (cancelService) {
-                          setCancelService(undefined);
-                        } else {
-                          setCancelService(item.serviceId?._id);
-                        }
-                      }}
-                    />
-                  </Popover>
-                </Flex>
-              </List.Item>
-            )}
-          />
-        }
+                          if (response?.payload?.error) {
+                            messageApi.error(response.payload.error);
+                          } else {
+                            messageApi.success("Hủy dịch vụ thành công.");
+                            dispatch(
+                              getDetailContractAction(
+                                dataDetailContract.data?._id
+                              )
+                            );
+                            setCancelService(undefined);
+                          }
+                        }}
+                      >
+                        Hủy dịch vụ
+                      </Button>
+                    </Flex>
+                  }
+                  trigger="click"
+                  getPopupContainer={(triggerNode) => triggerNode}
+                  arrow={false}
+                  placement="topRight"
+                  open={cancelService === item.serviceId?._id}
+                  onOpenChange={() => setCancelService(undefined)}
+                >
+                  <Button
+                    type="primary"
+                    icon={<DisconnectOutlined />}
+                    disabled={!item.serviceId?._id}
+                    onClick={() => {
+                      if (cancelService) {
+                        setCancelService(undefined);
+                      } else {
+                        setCancelService(item.serviceId?._id);
+                      }
+                    }}
+                  />
+                </Popover>
+              </Flex>
+            </List.Item>
+          )}
+        />
       </Modal>
 
       {/* Chi tiết hợp đồng */}
@@ -683,72 +683,51 @@ const ManageContracts = () => {
       >
         <div className="modal-see-more">
           <h4>Thông tin sinh viên</h4>
-          {dataDetailContract.data?.studentInfomation?._id ? (
-            <>
-              <p>
-                <span className="label">Họ và tên: </span>
-                {dataDetailContract.data?.fullName}
-              </p>
-              <p>
-                <span className="label">Căn cước công dân: </span>
-                {dataDetailContract.data?.studentInfomation?.nationalIdCard}
-              </p>
-              <p>
-                <span className="label">Giới tính: </span>
-                {dataDetailContract.data?.studentInfomation?.gender ===
-                GenderEnum.nam
-                  ? "Nam"
-                  : "Nữ"}
-              </p>
-              <p>
-                <span className="label">Email: </span>
-                {dataDetailContract.data?.email}
-              </p>
-              <p>
-                <span className="label">Số điện thoại: </span>
-                {dataDetailContract.data?.phoneNumber}
-              </p>
-              <p>
-                <span className="label">Phòng (Khoa): </span>
-                {dataDetailContract.data?.studentInfomation?.department}
-              </p>
-              <p>
-                <span className="label">Lớp: </span>
-                {dataDetailContract.data?.studentInfomation?.takeClass}
-              </p>
-              <p>
-                <span className="label">Năm nhập học: </span>
-                {dataDetailContract.data?.studentInfomation?.enrollmentYear}
-              </p>
-            </>
-          ) : (
-            <p>Thông tin sinh viên ký túc xá</p>
-          )}
+          <p>
+            <span className="label">Mã số sinh viên: </span>
+            {dataDetailContract.data?.studentCode}
+          </p>
+          <p>
+            <span className="label">Họ và tên: </span>
+            {dataDetailContract.data?.fullName}
+          </p>
+          <p>
+            <span className="label">Email: </span>
+            {dataDetailContract.data?.email}
+          </p>
+          <p>
+            <span className="label">Số điện thoại: </span>
+            {dataDetailContract.data?.phoneNumber}
+          </p>
 
           <h4>Thông tin phòng</h4>
-          {dataDetailContract.data?.room?.roomId?._id ? (
+          {dataDetailContract.data?.roomId?._id ? (
             <>
               <p>
                 <span className="label">Tên phòng: </span>
-                {dataDetailContract.data?.room?.roomId?.roomName}
+                {dataDetailContract.data?.roomId?.roomName}
+              </p>
+              <p>
+                <span className="label">Tầng: </span>
+                {dataDetailContract.data?.roomId?.floor}
               </p>
               <p>
                 <span className="label">Loại phòng: </span>
-                {dataDetailContract.data?.room?.roomId?.roomTypeId?.type}
+                {dataDetailContract.data?.roomId?.roomTypeId?.type}
               </p>
               <p>
                 <span className="label">Dãy phòng: </span>
-                {dataDetailContract.data?.room?.roomId?.roomBlockId?.name}
+                {dataDetailContract.data?.roomId?.roomBlockId?.name}
               </p>
               <p>
                 <span className="label">Sức chứa: </span>
-                {dataDetailContract.data?.room?.roomId?.registeredStudents}/
-                {dataDetailContract.data?.room?.roomId?.maximumCapacity} người
+                {dataDetailContract.data?.roomId?.registeredStudents}/
+                {dataDetailContract.data?.roomId?.maximumCapacity} người
               </p>
               <p>
                 <span className="label">Giá phòng: </span>
                 {formatVND(
-                  dataDetailContract.data?.room?.roomId?.roomTypeId?.price || 0
+                  dataDetailContract.data?.roomId?.roomTypeId?.price || 0
                 )}{" "}
                 VNĐ
               </p>
@@ -758,8 +737,8 @@ const ManageContracts = () => {
           )}
 
           <h4>Dịch vụ phòng</h4>
-          {dataDetailContract.data?.service?.length > 0 ? (
-            dataDetailContract.data?.service?.map((item, index) => (
+          {dataDetailContract.data?.services?.length > 0 ? (
+            dataDetailContract.data?.services?.map((item, index) => (
               <Flex key={index} align="flex-start" gap={4}>
                 <p>{index + 1}.</p>
                 <div>
@@ -770,8 +749,12 @@ const ManageContracts = () => {
                   )}
                   {item.serviceId?._id ? (
                     <>
-                      <p>{formatVND(item.serviceId?.price || 0)} VNĐ</p>
-                      <p>{formatSchedule(item.serviceId?.schedule)}</p>
+                      <p>
+                        Giá dịch vụ: {formatVND(item.serviceId?.price || 0)} VNĐ
+                      </p>
+                      <p>
+                        Lịch trình: {formatSchedule(item.serviceId?.schedule)}
+                      </p>
                       <p>
                         {item.createdAt
                           ? `Ngày đăng ký dịch vụ: ${dayjs(

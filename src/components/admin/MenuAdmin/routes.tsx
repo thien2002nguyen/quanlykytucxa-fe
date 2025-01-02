@@ -9,6 +9,7 @@ import {
   GroupOutlined,
   FormOutlined,
   FileSyncOutlined,
+  WarningOutlined,
 } from "@ant-design/icons";
 
 export interface MenuItem {
@@ -109,5 +110,10 @@ export const adminRoutes: MenuItem[] = [
     key: "quan-ly-hoa-don",
     icon: <FileSyncOutlined />,
     label: "Quản lý hóa đơn",
+  },
+  {
+    key: "quan-ly-bao-cao-su-co",
+    icon: <WarningOutlined />,
+    label: "Quản lý báo cáo sự cố",
   },
 ];

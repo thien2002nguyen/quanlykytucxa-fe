@@ -97,7 +97,7 @@ const ResetPasswordComponent = ({ onChangeTypeForm }: Props) => {
             { required: true, message: "Vui lòng nhập mã số sinh viên!" },
           ]}
         >
-          <Input size="large" />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -114,17 +114,12 @@ const ResetPasswordComponent = ({ onChangeTypeForm }: Props) => {
             },
           ]}
         >
-          <Input size="large" />
+          <Input />
         </Form.Item>
 
         <Flex justify="center" style={{ marginTop: 16 }}>
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              loading={isLoading}
-            >
+            <Button type="primary" htmlType="submit" loading={isLoading}>
               Tiếp tục
             </Button>
           </Form.Item>

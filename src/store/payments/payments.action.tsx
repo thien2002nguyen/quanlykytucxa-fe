@@ -1,8 +1,10 @@
 import paymentsApi from "@/store/payments/payments.api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  ParameterCreatePaymentUrl,
   ParameterGetPayment,
   ParameterGetPaymentByUser,
+  ParameterPayBillById,
 } from "./payments.type";
 
 // Action to create the list of payments
@@ -66,9 +68,74 @@ const getDetailPaymentAction = createAsyncThunk(
   }
 );
 
+const payBillByIdAction = createAsyncThunk(
+  "payments/payBillById",
+  async (params: ParameterPayBillById, thunkAPI) => {
+    try {
+      const res = await paymentsApi.payBillById(params);
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        error:
+          error?.response?.data?.message ||
+          "Cập nhật hóa đơn thanh toán thất bại.",
+      });
+    }
+  }
+);
+
+// const createPaymentVnPayUrlAction = createAsyncThunk(
+//   "payments/createPaymentVnPayUrl",
+//   async (params: ParameterCreatePaymentUrl, thunkAPI) => {
+//     try {
+//       const res = await paymentsApi.createPaymentVnPayUrl(params);
+//       return res;
+//     } catch (error: any) {
+//       return thunkAPI.rejectWithValue({
+//         error:
+//           error?.response?.data?.message || "Tạo đường dẫn hóa đơn thất bại.",
+//       });
+//     }
+//   }
+// );
+
+const createPaymentMomoUrlAction = createAsyncThunk(
+  "payments/createPaymentMomoUrl",
+  async (params: ParameterCreatePaymentUrl, thunkAPI) => {
+    try {
+      const res = await paymentsApi.createPaymentMomoUrl(params);
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        error:
+          error?.response?.data?.message || "Tạo đường dẫn hóa đơn thất bại.",
+      });
+    }
+  }
+);
+
+const checkStatusPaymentMomoAction = createAsyncThunk(
+  "payments/checkStatusPaymentMomo",
+  async (params: { orderId: string }, thunkAPI) => {
+    try {
+      const res = await paymentsApi.checkStatusPaymentMomo(params);
+      return res;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({
+        error:
+          error?.response?.data?.message || "Tạo đường dẫn hóa đơn thất bại.",
+      });
+    }
+  }
+);
+
 export {
   createPaymentsAction,
   getPaymentsAction,
   getPaymentsByUserAction,
   getDetailPaymentAction,
+  payBillByIdAction,
+  // createPaymentUrlAction,
+  createPaymentMomoUrlAction,
+  checkStatusPaymentMomoAction,
 };

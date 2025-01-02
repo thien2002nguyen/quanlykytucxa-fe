@@ -11,6 +11,8 @@ export type School = {
   timeWork: string;
   updatedAt: string;
   zaloUrl: string;
+  rulesAndRegulations: string;
+  guidelines: string;
 };
 
 export type SchoolResponse = {
@@ -27,6 +29,8 @@ export type ParameterPatchSchool = {
   address: string;
   slogan: string;
   timeWork: string;
+  rulesAndRegulations: string;
+  guidelines: string;
 };
 
 export interface SchoolState {

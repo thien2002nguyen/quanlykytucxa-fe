@@ -1,0 +1,20 @@
+@import "@/styles/variables.scss";
+@import "@/styles/breakpoints.scss";
+
+.total-payment-cash {
+  margin-top: 16px;
+
+  p,
+  strong {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: $tabletL) {
+    margin-top: 8px;
+
+    p,
+    strong {
+      font-size: 1.4rem;
+    }
+  }
+}

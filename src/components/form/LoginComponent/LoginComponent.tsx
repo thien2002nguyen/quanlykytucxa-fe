@@ -97,7 +97,7 @@ const LoginComponent = ({ onChangeTypeForm }: Props) => {
           name="userName"
           rules={[{ required: true, message: "Vui lòng nhập tên đăng nhập!" }]}
         >
-          <Input size="large" />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -105,7 +105,7 @@ const LoginComponent = ({ onChangeTypeForm }: Props) => {
           name="password"
           rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
         >
-          <Input.Password size="large" />
+          <Input.Password />
         </Form.Item>
 
         <Flex justify="flex-end">
@@ -120,12 +120,7 @@ const LoginComponent = ({ onChangeTypeForm }: Props) => {
 
         <Flex justify="center" style={{ marginTop: 16 }}>
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              loading={loading}
-            >
+            <Button type="primary" htmlType="submit" loading={loading}>
               Đăng nhập
             </Button>
           </Form.Item>

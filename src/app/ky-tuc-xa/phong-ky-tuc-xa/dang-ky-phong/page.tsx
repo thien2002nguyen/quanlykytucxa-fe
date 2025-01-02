@@ -80,43 +80,21 @@ const RegisterRoomPage = () => {
     setAccepted(e.target.checked); // Lấy trạng thái từ Checkbox
   };
 
-  const onFinish = async (value: any) => {
+  const onFinish = async (values: any) => {
     setIsLoading(true);
 
-    const contractType = dataContractTypes.data?.find(
-      (item) => item._id === value.contractTypeId
-    );
-
-    const servicesSelected = dataServices.data
-      ?.filter((item) => value.serviceId?.includes(item._id))
-      .map(({ _id, name, price }) => ({ serviceId: _id, name, price }));
-
-    const termsInfo = dataContractTerms.data?.map(({ _id, content }) => ({
-      termId: _id,
-      content,
+    const servicesSelected = values.services?.map((item: any) => ({
+      serviceId: item,
     }));
 
-    if (!contractType) {
-      toast.error("Đã xảy ra lỗi vui lòng thử lại sau.");
-      return;
-    }
-
     const dataPost: ParameterPostContract = {
-      fullName: dataAuthMeStudent.data?.fullName ?? "",
-      studentCode: dataAuthMeStudent.data?.studentCode ?? "",
-      email: user.email ?? "",
-      phoneNumber: user.phoneNumber ?? "",
-      room: {
-        roomId: dataDetailRoom.data._id,
-        price: dataDetailRoom.data?.roomTypeId?.price,
-      },
-      service: servicesSelected,
-      contractType: {
-        contractTypeId: contractType._id,
-        duration: contractType.duration,
-        unit: contractType.unit,
-      },
-      term: termsInfo,
+      fullName: dataAuthMeStudent.data?.fullName || "",
+      studentCode: dataAuthMeStudent.data?.studentCode || "",
+      email: user.email || "",
+      phoneNumber: user.phoneNumber || "",
+      roomId: dataDetailRoom.data._id,
+      services: servicesSelected,
+      contractTypeId: values.contractTypeId,
     };
 
     const response = await dispatch(postContractAction(dataPost));
@@ -188,18 +166,12 @@ const RegisterRoomPage = () => {
             <div className="infomation-student">
               <h4 className="title-form">Thông tin cá nhân</h4>
               <p>
+                <strong>Mã số sinh viên: </strong>
+                {dataAuthMeStudent.data?.studentCode}
+              </p>
+              <p>
                 <strong>Họ và tên: </strong>
                 {dataAuthMeStudent.data?.fullName}
-              </p>
-              <p>
-                <strong>Căn cước công dân: </strong>
-                {dataAuthMeStudent.data?.nationalIdCard}
-              </p>
-              <p>
-                <strong>Giới tính: </strong>
-                {dataAuthMeStudent.data?.gender === GenderEnum.nam
-                  ? "Nam"
-                  : "Nữ"}
               </p>
               <p>
                 <strong>Email: </strong>
@@ -208,18 +180,6 @@ const RegisterRoomPage = () => {
               <p>
                 <strong>Số điện thoại: </strong>
                 {user.phoneNumber}
-              </p>
-              <p>
-                <strong>Phòng (Khoa): </strong>
-                {dataAuthMeStudent.data?.department}
-              </p>
-              <p>
-                <strong>Lớp: </strong>
-                {dataAuthMeStudent.data?.takeClass}
-              </p>
-              <p>
-                <strong>Năm nhập học: </strong>
-                {dataAuthMeStudent.data?.enrollmentYear}
               </p>
               <small>
                 (Nếu có bất kỳ thông tin sai sót nào, vui lòng liên hệ với ban
@@ -260,8 +220,7 @@ const RegisterRoomPage = () => {
                     <p>
                       <strong>Sức chứa: </strong>
                       {dataDetailRoom.data?.registeredStudents}/
-                      {dataDetailRoom.data?.maximumCapacity}
-                      người
+                      {dataDetailRoom.data?.maximumCapacity} người
                     </p>
                     <p>
                       <strong>Giá phòng: </strong>
@@ -302,7 +261,7 @@ const RegisterRoomPage = () => {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={12} md={12} lg={12} xl={12}>
-                <Form.Item name="serviceId" label="Dịch vụ">
+                <Form.Item name="services" label="Dịch vụ">
                   <Select
                     getPopupContainer={(triggerNode) => triggerNode.parentNode}
                     mode="multiple"

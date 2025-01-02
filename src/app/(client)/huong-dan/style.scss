@@ -1,7 +1,7 @@
 @import "@/styles/variables.scss";
 @import "@/styles/breakpoints.scss";
 
-.wrapper-infomation-page {
+.wrapper-guides-page {
   padding-top: 32px;
 
   @media (max-width: $tabletL) {
@@ -25,7 +25,7 @@
   }
 
   &-detail {
-    min-height: 200px;
+    min-height: 275px;
 
     .title-detail {
       text-transform: uppercase;

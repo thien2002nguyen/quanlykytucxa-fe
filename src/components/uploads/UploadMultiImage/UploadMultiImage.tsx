@@ -9,12 +9,14 @@ type UploadMultiImageProps = {
   currentFileList: UploadFile[];
   onChange: (fileList: UploadFile[]) => void;
   formAction?: FormAction;
+  disabled?: boolean;
 };
 
 const UploadMultiImage: React.FC<UploadMultiImageProps> = ({
   currentFileList,
   onChange,
   formAction = FormAction.UPDATE,
+  disabled = false,
 }) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -89,7 +91,9 @@ const UploadMultiImage: React.FC<UploadMultiImageProps> = ({
   return (
     <>
       {contextHolder}
+
       <Upload
+        disabled={disabled}
         action={`${process.env.NEXT_PUBLIC_API_URL}/upload/image`}
         listType="picture-card"
         fileList={fileList}
@@ -108,8 +112,9 @@ const UploadMultiImage: React.FC<UploadMultiImageProps> = ({
         }}
         className="upload-container"
       >
-        {fileList.length < 5 ? uploadButton : null}
+        {fileList.length < 5 ? (!disabled ? uploadButton : null) : null}
       </Upload>
+
       {previewImage && (
         <Image
           wrapperStyle={{ display: "none" }}

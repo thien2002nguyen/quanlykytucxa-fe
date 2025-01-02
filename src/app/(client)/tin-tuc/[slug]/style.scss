@@ -9,7 +9,7 @@
   }
 
   @media (max-width: $mobileL) {
-    padding-top: 16px;
+    padding-top: 8px;
   }
 
   &-breadcrumb {
@@ -25,6 +25,8 @@
   }
 
   &-detail {
+    min-height: 200px;
+
     .title-detail {
       text-transform: uppercase;
       text-align: center;

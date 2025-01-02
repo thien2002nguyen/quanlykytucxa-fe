@@ -20,6 +20,8 @@ import infomationSlice from "./infomation/infomation.reducer";
 import contractTermsSlice from "./contract-terms/contract-terms.reducer";
 import contractTypesSlice from "./contract-types/contract-types.reducer";
 import contractsSlice from "./contracts/contracts.reducer";
+import paymentsSlice from "./payments/payments.reducer";
+import incidentsSlice from "./incidents/incidents.reducer";
 
 // Tạo storage cho redux-persist
 const createNoopStorage = () => ({
@@ -61,6 +63,8 @@ export const store = configureStore({
     contractTermsSlice,
     contractTypesSlice,
     contractsSlice,
+    paymentsSlice,
+    incidentsSlice,
   },
   devTools: true,
   middleware: (getDefaultMiddleware) =>

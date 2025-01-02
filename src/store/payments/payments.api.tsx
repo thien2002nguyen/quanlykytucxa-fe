@@ -5,6 +5,9 @@ import {
   DetailPaymentResponse,
   ParameterGetPayment,
   ParameterGetPaymentByUser,
+  ParameterPayBillById,
+  PaymentsByUserResponse,
+  ParameterCreatePaymentUrl,
 } from "./payments.type";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 
@@ -26,7 +29,7 @@ const paymentsApi = {
   // Get payments by user
   async getPaymentsByUser(
     params: ParameterGetPaymentByUser
-  ): Promise<PaymentsResponse> {
+  ): Promise<PaymentsByUserResponse> {
     const newParams = cleanAndSerializeQueryParams(params);
     const url = `${baseUrl}/by-user?${newParams}`;
     return instanceAxios.get(url);
@@ -36,6 +39,26 @@ const paymentsApi = {
   async getDetailPayment(id: string): Promise<DetailPaymentResponse> {
     const url = `${baseUrl}/${id}`;
     return instanceAxios.get(url);
+  },
+
+  async payBillById(params: ParameterPayBillById): Promise<any> {
+    const url = `${baseUrl}/pay-bill/${params.paymentId}`;
+    return instanceAxios.put(url, omit(params, "paymentId"));
+  },
+
+  // async createPaymentVnPayUrl(params: ParameterCreatePaymentUrl): Promise<any> {
+  //   const url = `${baseUrl}/vnpay/create-payment`;
+  //   return instanceAxios.post(url, params);
+  // },
+
+  async createPaymentMomoUrl(params: ParameterCreatePaymentUrl): Promise<any> {
+    const url = `${baseUrl}/momo/create-payment`;
+    return instanceAxios.post(url, params);
+  },
+
+  async checkStatusPaymentMomo(params: { orderId: string }): Promise<any> {
+    const url = `${baseUrl}/momo/check-status`;
+    return instanceAxios.post(url, params);
   },
 };
 

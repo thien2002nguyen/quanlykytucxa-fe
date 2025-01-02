@@ -145,6 +145,11 @@ const Service = () => {
   }));
 
   const handleSubmit = async () => {
+    if (!formRef.getFieldValue("schedule")) {
+      messageApi.error("Vui lòng thêm lịch trình.");
+      return;
+    }
+
     const messageSuccess =
       formAction === FormAction.CREATE
         ? "Thêm mới dịch vụ thành công."
@@ -160,7 +165,7 @@ const Service = () => {
           price: parseVND(formRef.getFieldValue("price") || "0"),
           schedule: formRef
             .getFieldValue("schedule")
-            .map((item: ScheduleItem) => ({
+            ?.map((item: ScheduleItem) => ({
               dayOfWeek: item.dayOfWeek,
               time: dayjs(item.time).format("HH:mm"),
             })),
@@ -174,7 +179,7 @@ const Service = () => {
           price: parseVND(formRef.getFieldValue("price") || "0"),
           schedule: formRef
             .getFieldValue("schedule")
-            .map((item: ScheduleItem) => ({
+            ?.map((item: ScheduleItem) => ({
               dayOfWeek: item.dayOfWeek,
               time: dayjs(item.time).format("HH:mm"),
             })),

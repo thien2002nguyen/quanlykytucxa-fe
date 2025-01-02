@@ -9,6 +9,8 @@ import {
   Payment,
   PaymentsState,
   DetailPaymentResponse,
+  TotalBillInterface,
+  PaymentsByUserResponse,
 } from "./payments.type";
 import { MetaPagination } from "@/utils/contants";
 
@@ -23,6 +25,7 @@ const initialState: PaymentsState = {
   dataPaymentsByUser: {
     data: [] as Payment[],
     meta: {} as MetaPagination,
+    totalBill: {} as TotalBillInterface,
     loading: false,
     error: undefined,
   },
@@ -80,11 +83,12 @@ const paymentsSlice = createSlice({
 
     builder.addCase(
       getPaymentsByUserAction.fulfilled,
-      (state, action: PayloadAction<PaymentsResponse>) => {
+      (state, action: PayloadAction<PaymentsByUserResponse>) => {
         state.dataPaymentsByUser = {
           ...state.dataPaymentsByUser,
           data: action.payload.data,
           meta: action.payload.meta,
+          totalBill: action.payload.totalBill,
           loading: false,
           error: undefined,
         };
