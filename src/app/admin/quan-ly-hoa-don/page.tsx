@@ -25,6 +25,7 @@ import {
   EyeOutlined,
   HistoryOutlined,
   MoneyCollectOutlined,
+  PlusOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -43,6 +44,7 @@ import {
   PaymentStatusEnum,
 } from "@/store/payments/payments.type";
 import {
+  createPaymentsAction,
   getDetailPaymentAction,
   getPaymentsAction,
   payBillByIdAction,
@@ -379,6 +381,18 @@ const ManagePayments = () => {
     setIsPaymentLoading(false);
   };
 
+  const handleCreatePayment = async () => {
+    const response = await dispatch(createPaymentsAction());
+
+    if (response?.payload?.error) {
+      messageApi.error(response.payload.error);
+    } else {
+      messageApi.success("Tạo hóa đơn trong tháng thành công.");
+      handleCancel();
+      dispatch(getPaymentsAction({}));
+    }
+  };
+
   const handleCancel = () => {
     formRef.resetFields();
     setModalPayment(undefined);
@@ -408,6 +422,13 @@ const ManagePayments = () => {
             prefix={<SearchOutlined />}
             defaultValue={searchKey}
           />,
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={handleCreatePayment}
+          >
+            Tạo hóa đơn
+          </Button>,
         ]}
       />
 
