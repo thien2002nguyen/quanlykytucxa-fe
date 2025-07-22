@@ -4,6 +4,14 @@ header {
   position: fixed;
   width: 100%;
   z-index: 1000;
+
+  .wrapper-warning {
+    font-weight: bold;
+    background-color: white;
+    text-align: center;
+    text-decoration: underline;
+    padding: 8px;
+  }
 }
 
 main {

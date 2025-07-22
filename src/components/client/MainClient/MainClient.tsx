@@ -30,6 +30,10 @@ const MainClient = ({
   return (
     <>
       <header>
+        <div className="wrapper-warning">
+          Website đang trong quá trình phát triển vui lòng không thực hiện bất
+          kì thanh toán nào
+        </div>
         <HeaderClient />
       </header>
       <main>{children}</main>
