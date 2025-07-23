@@ -108,7 +108,7 @@ const FooterClient = () => {
               </Link>
 
               <Link
-                href={`mailto:${dataSchool.data.email}`}
+                href={`mailto:${dataSchool.data?.email}`}
                 className="social-link"
                 target="_blank"
               >
