@@ -306,22 +306,30 @@ const HeaderClient = () => {
                       </ul>
                     </li>
                     <li className="menu-item-nav">
-                      <Link
-                        href={`/thong-tin/${dataInfomations?.data?.[0]?.slug}`}
-                        className="item-nav"
-                        onClick={() => setIsShowMenuResponsive(false)}
-                      >
-                        Thông tin
-                      </Link>
+                      {dataInfomations?.data?.[0]?.slug ? (
+                        <Link
+                          href={`/thong-tin/${dataInfomations?.data[0]?.slug}`}
+                          className="item-nav"
+                          onClick={() => setIsShowMenuResponsive(false)}
+                        >
+                          Thông tin
+                        </Link>
+                      ) : (
+                        <span className="item-nav">Thông tin</span>
+                      )}
                     </li>
                     <li className="menu-item-nav">
-                      <Link
-                        href={`/tin-tuc/${dataNews?.data?.[0]?.slug}`}
-                        className="item-nav"
-                        onClick={() => setIsShowMenuResponsive(false)}
-                      >
-                        Tin tức
-                      </Link>
+                      {dataNews?.data?.[0]?.slug ? (
+                        <Link
+                          href={`/tin-tuc/${dataNews.data[0].slug}`}
+                          className="item-nav"
+                          onClick={() => setIsShowMenuResponsive(false)}
+                        >
+                          Tin tức
+                        </Link>
+                      ) : (
+                        <span className="item-nav">Tin tức</span>
+                      )}
                     </li>
                     <li className="menu-item-nav">
                       <Link
@@ -405,20 +413,30 @@ const HeaderClient = () => {
                       </ul>
                     </li>
                     <li className="menu-item-nav">
-                      <Link
-                        href={`/thong-tin/${dataInfomations?.data?.[0]?.slug}`}
-                        className="item-nav"
-                      >
-                        Thông tin
-                      </Link>
+                      {dataInfomations?.data?.[0]?.slug ? (
+                        <Link
+                          href={`/thong-tin/${dataInfomations?.data[0]?.slug}`}
+                          className="item-nav"
+                          onClick={() => setIsShowMenuResponsive(false)}
+                        >
+                          Thông tin
+                        </Link>
+                      ) : (
+                        <span className="item-nav">Thông tin</span>
+                      )}
                     </li>
                     <li className="menu-item-nav">
-                      <Link
-                        href={`/tin-tuc/${dataNews?.data?.[0]?.slug}`}
-                        className="item-nav"
-                      >
-                        Tin tức
-                      </Link>
+                      {dataNews?.data?.[0]?.slug ? (
+                        <Link
+                          href={`/tin-tuc/${dataNews.data[0].slug}`}
+                          className="item-nav"
+                          onClick={() => setIsShowMenuResponsive(false)}
+                        >
+                          Tin tức
+                        </Link>
+                      ) : (
+                        <span className="item-nav">Tin tức</span>
+                      )}
                     </li>
                     <li className="menu-item-nav">
                       <Link href="/noi-quy" className="item-nav">

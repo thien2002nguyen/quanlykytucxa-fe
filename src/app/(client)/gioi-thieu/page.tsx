@@ -8,6 +8,7 @@ import Link from "next/link";
 import { HomeOutlined } from "@ant-design/icons";
 import { Introduction } from "@/store/introduction/introduction.type";
 import { UnitPrice } from "@/store/unit-price/unit-price.type";
+import NotFoundPage from "@/app/not-found";
 
 async function getIntroduction() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/introductions`);
@@ -25,6 +26,10 @@ const IntroductionPage = async () => {
   const dataIntroduction = await getIntroduction();
   const dataUnitPrice = await getUnitPrice();
 
+  if (!dataUnitPrice || !dataIntroduction) {
+    return <NotFoundPage />;
+  }
+
   // DOM nếu đang chạy trên SSR
   const window = new JSDOM("").window;
   const purify = DOMPurify(window);
@@ -35,8 +40,8 @@ const IntroductionPage = async () => {
     {
       id: uuidv4(),
       link: "/gioi-thieu",
-      title: dataIntroduction.title,
-      description: dataIntroduction.description,
+      title: dataIntroduction?.title,
+      description: dataIntroduction?.description,
     },
     {
       id: uuidv4(),
@@ -71,10 +76,10 @@ const IntroductionPage = async () => {
         >
           <Col xs={24} sm={24} md={24} lg={16} xl={18}>
             <div className="wrapper-introduction-page-left">
-              <h3 className="title-introduction">{dataIntroduction.title}</h3>
+              <h3 className="title-introduction">{dataIntroduction?.title}</h3>
 
               <iframe
-                src={dataIntroduction.youtubeUrl}
+                src={dataIntroduction?.youtubeUrl || ""}
                 width="100%"
                 allow="encrypted-media"
                 className="ifram-introduction-page"
@@ -94,7 +99,7 @@ const IntroductionPage = async () => {
             <div className="wrapper-introduction-page-right">
               <h3 className="title-list">Thông tin chung</h3>
               <div className="content-list">
-                {dataList.map((item) => (
+                {dataList?.map((item) => (
                   <div
                     key={item.id}
                     className={`item-list ${

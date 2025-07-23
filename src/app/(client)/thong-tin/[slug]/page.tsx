@@ -26,7 +26,7 @@ const InfomationPage = async ({
   const window = new JSDOM("").window;
   const purify = DOMPurify(window);
 
-  const sanitizedContent = purify.sanitize(dataDetailInfomation.content || "");
+  const sanitizedContent = purify.sanitize(dataDetailInfomation?.content || "");
 
   return (
     <div className="wrapper-infomation-page">

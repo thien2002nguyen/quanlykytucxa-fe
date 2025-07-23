@@ -6,6 +6,7 @@ import { HomeOutlined } from "@ant-design/icons";
 import InfomationAndNews from "@/components/home/InfomationAndNews/InfomationAndNews";
 import { JSDOM } from "jsdom";
 import { News } from "@/store/news/news.type";
+import NotFoundPage from "@/app/not-found";
 
 async function getDetailNews(slug: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/news/${slug}`);
@@ -20,11 +21,15 @@ const NewsPage = async ({
 }>) => {
   const dataDetailNews = await getDetailNews(params.slug);
 
+  if (!dataDetailNews) {
+    return <NotFoundPage />;
+  }
+
   // DOM nếu đang chạy trên SSR
   const window = new JSDOM("").window;
   const purify = DOMPurify(window);
 
-  const sanitizedContent = purify.sanitize(dataDetailNews.content || "");
+  const sanitizedContent = purify.sanitize(dataDetailNews?.content || "");
 
   return (
     <div className="wrapper-news-page">

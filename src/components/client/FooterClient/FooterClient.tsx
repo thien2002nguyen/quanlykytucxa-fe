@@ -52,16 +52,28 @@ const FooterClient = () => {
                 Đơn giá ký túc xá
               </Link>
             </p>
-            <p>
-              <Link href={`/thong-tin/${dataInfomations?.data?.[0]?.slug}`}>
-                Thông tin
-              </Link>
-            </p>
-            <p>
-              <Link href={`/tin-tuc/${dataNews?.data?.[0]?.slug}`}>
-                Tin tức
-              </Link>
-            </p>
+            {dataInfomations?.data?.[0]?.slug ? (
+              <p>
+                <Link href={`/thong-tin/${dataInfomations.data[0].slug}`}>
+                  Thông tin
+                </Link>
+              </p>
+            ) : (
+              <p>
+                <Link href="#">Thông tin</Link>
+              </p>
+            )}
+
+            {dataNews?.data?.[0]?.slug ? (
+              <p>
+                <Link href={`/tin-tuc/${dataNews.data[0].slug}`}>Tin tức</Link>
+              </p>
+            ) : (
+              <p>
+                <Link href="#">Tin tức</Link>
+              </p>
+            )}
+
             <p>
               <Link href="/noi-quy">Nội quy - quy định</Link>
             </p>
@@ -96,7 +108,7 @@ const FooterClient = () => {
               </Link>
 
               <Link
-                href="mailto:ktx@ueh.edu.vn"
+                href={`mailto:${dataSchool.data.email}`}
                 className="social-link"
                 target="_blank"
               >

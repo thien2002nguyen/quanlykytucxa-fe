@@ -36,7 +36,7 @@ const IntroductionHome = async () => {
       >
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
           <iframe
-            src={dataIntroduction.youtubeUrl}
+            src={dataIntroduction?.youtubeUrl || ""}
             width="100%"
             allow="encrypted-media"
             className="ifram-video-introduction"
@@ -45,8 +45,8 @@ const IntroductionHome = async () => {
         </Col>
         <Col xs={24} sm={24} md={12} lg={12} xl={12} xxl={12}>
           <Flex vertical align="center" gap={16}>
-            <h2>{dataIntroduction.title}</h2>
-            <p>{dataIntroduction.description}</p>
+            <h2>{dataIntroduction?.title}</h2>
+            <p>{dataIntroduction?.description}</p>
             <Link
               className="btn-see-more"
               href={{
