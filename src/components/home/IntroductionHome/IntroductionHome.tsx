@@ -17,7 +17,7 @@ export type Introduction = {
 };
 
 async function getIntroduction() {
-  const res = await fetch(`${baseURL}/introductions`);
+  const res = await fetch(`${baseURL}/api/introductions`);
   const dataIntroduction: { data: Introduction } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }

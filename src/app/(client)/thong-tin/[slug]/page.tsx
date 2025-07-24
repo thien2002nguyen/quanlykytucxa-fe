@@ -9,7 +9,7 @@ import { JSDOM } from "jsdom";
 import { baseURL } from "@/config/axios";
 
 async function getDetailInfomation(slug: string) {
-  const res = await fetch(`${baseURL}/infomations/${slug}`);
+  const res = await fetch(`${baseURL}/api/infomations/${slug}`);
   const dataInfomation: { data: Infomation } = await res.json();
   return dataInfomation.data;
 }

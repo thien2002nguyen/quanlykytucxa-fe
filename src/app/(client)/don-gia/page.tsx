@@ -12,13 +12,13 @@ import NotFoundPage from "@/app/not-found";
 import { baseURL } from "@/config/axios";
 
 async function getIntroduction() {
-  const res = await fetch(`${baseURL}/introductions`);
+  const res = await fetch(`${baseURL}/api/introductions`);
   const dataIntroduction: { data: Introduction } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
 
 async function getUnitPrice() {
-  const res = await fetch(`${baseURL}/unit-prices`);
+  const res = await fetch(`${baseURL}/api/unit-prices`);
   const dataIntroduction: { data: UnitPrice } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
