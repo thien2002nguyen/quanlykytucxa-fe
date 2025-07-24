@@ -9,16 +9,15 @@ import { HomeOutlined } from "@ant-design/icons";
 import { Introduction } from "@/store/introduction/introduction.type";
 import { UnitPrice } from "@/store/unit-price/unit-price.type";
 import NotFoundPage from "@/app/not-found";
-import { baseURL_SSR } from "@/config/axios";
 
 async function getIntroduction() {
-  const res = await fetch(`${baseURL_SSR}/introductions`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/introductions`);
   const dataIntroduction: { data: Introduction } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
 
 async function getUnitPrice() {
-  const res = await fetch(`${baseURL_SSR}/unit-prices`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/unit-prices`);
   const dataIntroduction: { data: UnitPrice } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
