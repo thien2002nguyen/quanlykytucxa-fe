@@ -65,14 +65,18 @@ const Introduction = () => {
   };
 
   const onReset = () => {
-    const { title, description, content } = dataUnitPrice.data;
+    const {
+      title = "",
+      description = "",
+      content = "",
+    } = dataUnitPrice?.data || {};
 
     formRef.setFieldsValue({
-      title: title || "",
-      description: description || "",
+      title,
+      description,
     });
 
-    setContent(content || "");
+    setContent(content);
   };
 
   return (

@@ -69,15 +69,20 @@ const Introduction = () => {
   };
 
   const onReset = () => {
-    const { title, youtubeUrl, description, content } = dataIntroduction.data;
+    const {
+      title = "",
+      youtubeUrl = "",
+      description = "",
+      content = "",
+    } = dataIntroduction?.data || {};
 
     formRef.setFieldsValue({
-      title: title || "",
-      youtubeUrl: youtubeUrl || "",
-      description: description || "",
+      title,
+      youtubeUrl,
+      description,
     });
 
-    setContent(content || "");
+    setContent(content);
   };
 
   return (
