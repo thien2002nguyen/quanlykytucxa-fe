@@ -7,14 +7,14 @@ header {
 }
 
 main {
-  padding-top: 135px;
+  padding-top: 167px;
   min-height: 317px;
 
   @media (max-width: $laptopM) {
-    padding-top: 124px;
+    padding-top: 156px;
   }
 
   @media (max-width: $tabletL) {
-    padding-top: 100px;
+    padding-top: 157px;
   }
 }

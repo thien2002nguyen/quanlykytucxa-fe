@@ -207,6 +207,10 @@ const HeaderClient = () => {
       {contextHolder}
 
       <div className="wrapper-header">
+        <p className="warning-text">
+          Website đang trong quá trình phát triển vui lòng không thực hiện bất
+          kì giao dịch nào
+        </p>
         <div className="wrapper-header-top">
           <div className="container">
             <Flex justify="space-between" align="center">

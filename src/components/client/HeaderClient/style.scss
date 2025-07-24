@@ -2,6 +2,14 @@
 @import "@/styles/breakpoints.scss";
 
 .wrapper-header {
+  .warning-text {
+    background: white;
+    color: black;
+    text-align: center;
+    padding: 4px;
+    text-decoration: underline;
+  }
+
   &-top {
     background-color: $color-main;
     padding: 16px 0;
