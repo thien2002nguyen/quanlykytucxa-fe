@@ -7,10 +7,10 @@ import InfomationAndNews from "@/components/home/InfomationAndNews/InfomationAnd
 import { JSDOM } from "jsdom";
 import { News } from "@/store/news/news.type";
 import NotFoundPage from "@/app/not-found";
-import { baseURL } from "@/config/axios";
+import { baseURL_SSR } from "@/config/axios";
 
 async function getDetailNews(slug: string) {
-  const res = await fetch(`${baseURL}/news/${slug}`);
+  const res = await fetch(`${baseURL_SSR}/news/${slug}`);
   const dataInfomation: { data: News } = await res.json();
   return dataInfomation.data;
 }

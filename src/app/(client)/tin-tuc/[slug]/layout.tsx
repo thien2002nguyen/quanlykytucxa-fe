@@ -1,4 +1,4 @@
-import { baseURL } from "@/config/axios";
+import { baseURL_SSR } from "@/config/axios";
 import { Metadata } from "next";
 import Head from "next/head";
 import { notFound } from "next/navigation";
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const fetchAPi = async (slug: string): Promise<any> => {
-  const url = `${baseURL}/news/${slug}`;
+  const url = `${baseURL_SSR}/news/${slug}`;
   try {
     const res = await fetch(url);
     return await res.json();
