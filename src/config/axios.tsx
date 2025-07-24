@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 const routerNotRefreshed = ["admin/dang-nhap", "truy-cap"];
 
 // Thiết lập baseURL từ biến môi trường
-export const baseURL = process.env.NEXT_PUBLIC_API_URL;
+export const baseURL = process.env.API_INTERNAL_URL;
 
 // Tạo một instance Axios với baseURL và headers mặc định
 export const instanceAxios: AxiosInstance = axios.create({
