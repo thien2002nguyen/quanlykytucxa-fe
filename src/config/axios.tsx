@@ -101,7 +101,7 @@ instanceAxios.interceptors.response.use(
         };
 
         // Thực hiện yêu cầu làm mới token
-        const refreshTokenURL = `${baseURL}/api/users/refresh-token`;
+        const refreshTokenURL = `${baseURL}/users/refresh-token`;
 
         try {
           const response = await axios.post(refreshTokenURL, refreshTokenData, {

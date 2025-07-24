@@ -11,14 +11,14 @@ import { baseURL } from "@/config/axios";
 
 async function getInfomation(parameters: ParameterGet) {
   const newParams = cleanAndSerializeQueryParams(parameters);
-  const res = await fetch(`${baseURL}/api/infomations?${newParams}`);
+  const res = await fetch(`${baseURL}/infomations?${newParams}`);
   const dataInfomation: { data: Infomation[] } = await res.json();
   return dataInfomation.data;
 }
 
 async function getNews(parameters: ParameterGet) {
   const newParams = cleanAndSerializeQueryParams(parameters);
-  const res = await fetch(`${baseURL}/api/news?${newParams}`);
+  const res = await fetch(`${baseURL}/news?${newParams}`);
   const dataNews: { data: News[] } = await res.json();
   return dataNews.data;
 }

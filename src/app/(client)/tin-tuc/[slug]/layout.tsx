@@ -11,7 +11,7 @@ type Props = {
 };
 
 const fetchAPi = async (slug: string): Promise<any> => {
-  const url = `${baseURL}/api/news/${slug}`;
+  const url = `${baseURL}/news/${slug}`;
   try {
     const res = await fetch(url);
     return await res.json();

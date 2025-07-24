@@ -10,7 +10,7 @@ import NotFoundPage from "@/app/not-found";
 import { baseURL } from "@/config/axios";
 
 async function getDetailNews(slug: string) {
-  const res = await fetch(`${baseURL}/api/news/${slug}`);
+  const res = await fetch(`${baseURL}/news/${slug}`);
   const dataInfomation: { data: News } = await res.json();
   return dataInfomation.data;
 }
