@@ -16,7 +16,9 @@ export type Introduction = {
 };
 
 async function getIntroduction() {
-  const res = await fetch(`${process.env.INTERNAL_API_URL}/introductions`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/introductions`, {
+    cache: "no-store", // Ngăn cache SSR
+  });
   const dataIntroduction: { data: Introduction } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
@@ -25,11 +27,6 @@ const IntroductionHome = async () => {
   // Gọi hàm getIntroduction để lấy dữ liệu
 
   const dataIntroduction = await getIntroduction();
-
-  console.log(
-    "INTERNAL_API_URL",
-    `${process.env.INTERNAL_API_URL}/introductions`
-  );
 
   return (
     <div className="wrapper-introduction-home">
