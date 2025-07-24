@@ -26,9 +26,6 @@ const IntroductionPage = async () => {
   const dataIntroduction = await getIntroduction();
   const dataUnitPrice = await getUnitPrice();
 
-  console.log("dataIntroduction: ", dataIntroduction);
-  console.log("dataUnitPrice: ", dataUnitPrice);
-
   if (!dataUnitPrice || !dataIntroduction) {
     return <NotFoundPage />;
   }
