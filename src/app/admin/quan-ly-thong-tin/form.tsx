@@ -60,7 +60,7 @@ const FormInfomation = ({ formAction, onBack }: FormProps) => {
     } else {
       onReset();
     }
-  }, [formRef, dataDetailInfomation.data]);
+  }, [formRef, dataDetailInfomation?.data]);
 
   const onFinish = async (values: InfomationInterface) => {
     if (!currentFile?.[0]) {
