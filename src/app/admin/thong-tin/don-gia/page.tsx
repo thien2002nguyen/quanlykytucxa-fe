@@ -68,11 +68,11 @@ const Introduction = () => {
     const { title, description, content } = dataUnitPrice.data;
 
     formRef.setFieldsValue({
-      title,
-      description,
+      title: title || "",
+      description: description || "",
     });
 
-    setContent(content);
+    setContent(content || "");
   };
 
   return (

@@ -38,7 +38,7 @@ const School = () => {
 
   useEffect(() => {
     onReset();
-  }, [dataSchool.data]);
+  }, [dataSchool?.data]);
 
   const onFinish = async (values: SchoolInterface) => {
     const isRules = isContentValid(rules);
@@ -92,19 +92,19 @@ const School = () => {
     } = dataSchool.data;
 
     formRef.setFieldsValue({
-      schoolName,
-      timeWork,
-      email,
-      phoneNumber,
-      address,
-      facebookUrl,
-      googleMapUrl,
-      slogan,
-      zaloUrl,
+      schoolName: schoolName || "",
+      timeWork: timeWork || "",
+      email: email || "",
+      phoneNumber: phoneNumber || "",
+      address: address || "",
+      facebookUrl: facebookUrl || "",
+      googleMapUrl: googleMapUrl || "",
+      slogan: slogan || "",
+      zaloUrl: zaloUrl || "",
     });
 
-    setRules(rulesAndRegulations);
-    setGuides(guidelines);
+    setRules(rulesAndRegulations || "");
+    setGuides(guidelines || "");
   };
 
   return (

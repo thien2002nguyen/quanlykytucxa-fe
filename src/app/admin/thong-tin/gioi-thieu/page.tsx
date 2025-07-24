@@ -37,7 +37,7 @@ const Introduction = () => {
 
   useEffect(() => {
     onReset();
-  }, [dataIntroduction.data]);
+  }, [dataIntroduction?.data]);
 
   const onFinish = async (values: IntroductionInterface) => {
     const isContent = isContentValid(content);
@@ -72,12 +72,12 @@ const Introduction = () => {
     const { title, youtubeUrl, description, content } = dataIntroduction.data;
 
     formRef.setFieldsValue({
-      title,
-      youtubeUrl,
-      description,
+      title: title || "",
+      youtubeUrl: youtubeUrl || "",
+      description: description || "",
     });
 
-    setContent(content);
+    setContent(content || "");
   };
 
   return (
