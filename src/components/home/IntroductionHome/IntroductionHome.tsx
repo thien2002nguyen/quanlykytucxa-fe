@@ -2,6 +2,7 @@ import { Col, Flex, Row } from "antd";
 import Link from "next/link";
 import React from "react";
 import "./style.scss";
+import { baseURL } from "@/config/axios";
 
 // Định nghĩa kiểu dữ liệu Introduction
 export type Introduction = {
@@ -16,7 +17,7 @@ export type Introduction = {
 };
 
 async function getIntroduction() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/introductions`);
+  const res = await fetch(`${baseURL}/introductions`);
   const dataIntroduction: { data: Introduction } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }

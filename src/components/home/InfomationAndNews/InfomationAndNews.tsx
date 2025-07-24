@@ -7,21 +7,18 @@ import { ParameterGet } from "@/utils/contants";
 import { cleanAndSerializeQueryParams } from "@/utils/cleanAndSerializeQueryParams";
 import { News } from "@/store/news/news.type";
 import { Infomation } from "@/store/infomation/infomation.type";
+import { baseURL } from "@/config/axios";
 
 async function getInfomation(parameters: ParameterGet) {
   const newParams = cleanAndSerializeQueryParams(parameters);
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/infomations?${newParams}`
-  );
+  const res = await fetch(`${baseURL}/infomations?${newParams}`);
   const dataInfomation: { data: Infomation[] } = await res.json();
   return dataInfomation.data;
 }
 
 async function getNews(parameters: ParameterGet) {
   const newParams = cleanAndSerializeQueryParams(parameters);
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/news?${newParams}`
-  );
+  const res = await fetch(`${baseURL}/news?${newParams}`);
   const dataNews: { data: News[] } = await res.json();
   return dataNews.data;
 }
