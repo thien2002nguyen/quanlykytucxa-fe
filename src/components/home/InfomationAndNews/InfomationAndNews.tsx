@@ -11,7 +11,10 @@ import { Infomation } from "@/store/infomation/infomation.type";
 async function getInfomation(parameters: ParameterGet) {
   const newParams = cleanAndSerializeQueryParams(parameters);
   const res = await fetch(
-    `${process.env.INTERNAL_API_URL}/infomations?${newParams}`
+    `${process.env.INTERNAL_API_URL}/infomations?${newParams}`,
+    {
+      cache: "no-store", // Ngăn cache SSR
+    }
   );
   const dataInfomation: { data: Infomation[] } = await res.json();
   return dataInfomation.data;
@@ -19,7 +22,9 @@ async function getInfomation(parameters: ParameterGet) {
 
 async function getNews(parameters: ParameterGet) {
   const newParams = cleanAndSerializeQueryParams(parameters);
-  const res = await fetch(`${process.env.INTERNAL_API_URL}/news?${newParams}`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/news?${newParams}`, {
+    cache: "no-store", // Ngăn cache SSR
+  });
   const dataNews: { data: News[] } = await res.json();
   return dataNews.data;
 }

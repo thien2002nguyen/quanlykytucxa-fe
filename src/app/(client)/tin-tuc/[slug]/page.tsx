@@ -9,7 +9,9 @@ import { News } from "@/store/news/news.type";
 import NotFoundPage from "@/app/not-found";
 
 async function getDetailNews(slug: string) {
-  const res = await fetch(`${process.env.INTERNAL_API_URL}/news/${slug}`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/news/${slug}`, {
+    cache: "no-store", // Ngăn cache SSR
+  });
   const dataInfomation: { data: News } = await res.json();
   return dataInfomation.data;
 }

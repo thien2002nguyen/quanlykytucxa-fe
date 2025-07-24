@@ -12,7 +12,9 @@ type Props = {
 const fetchAPi = async (slug: string): Promise<any> => {
   const url = `${process.env.INTERNAL_API_URL}/rooms/${slug}`;
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      cache: "no-store", // Ngăn cache SSR
+    });
     return await res.json();
   } catch (error) {
     console.log(error);

@@ -9,7 +9,10 @@ import { JSDOM } from "jsdom";
 
 async function getDetailInfomation(slug: string) {
   const res = await fetch(
-    `${process.env.INTERNAL_API_URL}/infomations/${slug}`
+    `${process.env.INTERNAL_API_URL}/infomations/${slug}`,
+    {
+      cache: "no-store", // Ngăn cache SSR
+    }
   );
   const dataInfomation: { data: Infomation } = await res.json();
   return dataInfomation.data;

@@ -11,13 +11,17 @@ import { UnitPrice } from "@/store/unit-price/unit-price.type";
 import NotFoundPage from "@/app/not-found";
 
 async function getIntroduction() {
-  const res = await fetch(`${process.env.INTERNAL_API_URL}/introductions`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/introductions`, {
+    cache: "no-store", // Ngăn cache SSR
+  });
   const dataIntroduction: { data: Introduction } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
 
 async function getUnitPrice() {
-  const res = await fetch(`${process.env.INTERNAL_API_URL}/unit-prices`);
+  const res = await fetch(`${process.env.INTERNAL_API_URL}/unit-prices`, {
+    cache: "no-store", // Ngăn cache SSR
+  });
   const dataIntroduction: { data: UnitPrice } = await res.json();
   return dataIntroduction.data; // Trả về dữ liệu 'data' từ API
 }
