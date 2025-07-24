@@ -214,7 +214,7 @@ const HeaderClient = () => {
                 <div className="text">{dataSchool.data?.slogan}</div>
               </div>
               <Flex gap={10} align="center">
-                <Link href="/ho-tro">Hỗ trợ</Link>
+                <p onClick={onClickContact}>Hỗ trợ</p>
                 <Divider type="vertical" className="line-center" />
                 <p onClick={onClickContact}>Liên hệ</p>
                 <Link
